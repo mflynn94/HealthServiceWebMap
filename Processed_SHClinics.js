@@ -422,25 +422,6 @@ var SHClinics = {
     {
       "type": "Feature",
       "properties": {
-        "Name": "youngpeople@Sandyford Drop In Clinic (< 18's) South West",
-        "Address1": "Pollok Health Centre",
-        "Address2": "21 Cowglen Road",
-        "Address3": "Glasgow",
-        "Postcode": "G53 3EQ",
-        "Services": "Young People",
-        "OpeningTimes": NaN
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "youngpeople@Sandyford Drop In Clinic (< 18's) West Dunbartonshire",
         "Address1": "Clydebank Health Centre",
         "Address2": "Kilbowie Road",

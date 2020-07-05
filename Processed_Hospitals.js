@@ -259,23 +259,6 @@ var Hospitals = {
     {
       "type": "Feature",
       "properties": {
-        "LocationName": "Shawpark Resource Centre",
-        "AddressLine": "41 Shawpark Street, Glasgow",
-        "Postcode": "G20 9DR",
-        "Telephone": NaN,
-        "Website": NaN
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "LocationName": "Springpark Resource Centre/Day Hosp",
         "AddressLine": "101 Denmark Street, Glasgow",
         "Postcode": "G22 5EU",

@@ -4095,29 +4095,7 @@ var Pharmacies = {
         ]
       }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "Graeme Pharmacy",
-        "DispenserName": "MILNGAVIE APOTHECARY'S CO LTD",
-        "Address1": "33 STATION ROAD",
-        "Address2": "MILNGAVIE",
-        "Address3": "GLASGOW",
-        "Address4": " ",
-        "Postcode": "G62 8PQ",
-        "Telephone": "0141 956 1710",
-        "Opening Times": "Monday08:30 - 18:00Tuesday08:30 - 18:00Wednesday08:30 - 18:00Thursday08:30 - 18:00Friday08:30 - 18:00Saturday08:30 - 17:00",
-        "Website": NaN,
-        "WA": "y"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
+
     {
       "type": "Feature",
       "properties": {
@@ -5685,52 +5663,6 @@ var Pharmacies = {
     {
       "type": "Feature",
       "properties": {
-        "Name": "Your Local Boots Pharmacy",
-        "DispenserName": "BOOTS UK LTD",
-        "Address1": "1-2 STEWART PLACE",
-        "Address2": "BRIDGE OF WEIR ROAD",
-        "Address3": "KILMALCOLM",
-        "Address4": " ",
-        "Postcode": "PA134AF",
-        "Telephone": "01505 872926",
-        "Opening Times": "Monday08:30 - 18:00Tuesday08:30 - 18:00Wednesday08:30 - 18:00Thursday08:30 - 18:00Friday08:30 - 18:00Saturday09:00 - 17:00",
-        "Website": NaN,
-        "WA": "y"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": NaN,
-        "DispenserName": "DRS E MANASSES & PARTNERS",
-        "Address1": "DRS E MANASSES & PARTNERS",
-        "Address2": "THE NEW SURGERY",
-        "Address3": "THE CARGILL CENTRE",
-        "Address4": "LOCHWINNOCH ROAD, KILMACOLM",
-        "Postcode": "PA134LE",
-        "Telephone": "01505 872844",
-        "Opening Times": NaN,
-        "Website": NaN,
-        "WA": NaN
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "M & D Green",
         "DispenserName": "M & D GREEN DISPENSING CHEMIST LTD",
         "Address1": "11-13 FORE STREET",
@@ -5748,29 +5680,6 @@ var Pharmacies = {
         "coordinates": [
           -4.687909779428387,
           55.93475078164399
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "M & D Green",
-        "DispenserName": "M & D GREEN DISPENSING CHEMIST LTD",
-        "Address1": "12 JOHN WOOD GREEN",
-        "Address2": "PORT GLASGOW",
-        "Address3": " ",
-        "Address4": " ",
-        "Postcode": "PA145HU",
-        "Telephone": "01475 741035",
-        "Opening Times": "Monday09:00 - 17:30Tuesday09:00 - 17:30Wednesday09:00 - 17:30Thursday09:00 - 17:30Friday09:00 - 17:30Saturday09:00 - 16:30",
-        "Website": NaN,
-        "WA": "y"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
         ]
       }
     },
@@ -5984,29 +5893,6 @@ var Pharmacies = {
     {
       "type": "Feature",
       "properties": {
-        "Name": "TLC Inverkip Pharmacy",
-        "DispenserName": "INVERCOAST LTD",
-        "Address1": "64 MAIN STREET",
-        "Address2": "INVERKIP",
-        "Address3": "RENFREWSHIRE",
-        "Address4": " ",
-        "Postcode": "PA160AS",
-        "Telephone": "01475 522784",
-        "Opening Times": "Emergency Contraception\nMinor Ailments Scheme\nNicotine Replacement Therapy\nSupervised Methadone Supply\nTreatment For Impetigo\nTreatment for Urinary Tract Infection (UTI)",
-        "Website": NaN,
-        "WA": NaN
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "Still Pharmacy",
         "DispenserName": "A C STILL LTD",
         "Address1": "1 BURNS SQUARE",
@@ -6073,29 +5959,7 @@ var Pharmacies = {
         ]
       }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "TLC Gourock Pharmacy",
-        "DispenserName": "INVERCOAST LTD",
-        "Address1": "2A COWAL VIEW",
-        "Address2": "GOUROCK",
-        "Address3": " ",
-        "Address4": " ",
-        "Postcode": "PA191EH",
-        "Telephone": "01475 638712",
-        "Opening Times": "Monday09:00 - 17:30Tuesday09:00 - 17:30Wednesday09:00 - 17:30Thursday09:00 - 17:30Friday09:00 - 17:30Saturday09:00 - 13:00\nClosed for lunch 1pm to 1:30pm.",
-        "Website": NaN,
-        "WA": NaN
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
+
     {
       "type": "Feature",
       "properties": {

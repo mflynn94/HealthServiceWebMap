@@ -1942,25 +1942,6 @@ var Dentists = {
     {
       "type": "Feature",
       "properties": {
-        "AddressLine1": "CLARKSTON TOLL DENTAL PRACTICE",
-        "AddressLine2": "153 EASTWOOD MAINS RD",
-        "AddressLine3": "CLARKSTON, GLASGOW",
-        "Postcode": "G76  7HP",
-        "Telephone": "0141 638 2944",
-        "Opening Times": NaN,
-        "Website": "https://www.clarkstontolldentalpractice.com/home"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "AddressLine1": "ALISTAIR J MCPHAIL",
         "AddressLine2": "259 MEARNS ROAD",
         "AddressLine3": "NEWTON MEARNS",
@@ -4355,25 +4336,6 @@ var Dentists = {
     {
       "type": "Feature",
       "properties": {
-        "AddressLine1": "PLEAN STREET DENTAL",
-        "AddressLine2": "18 PLEAN STREET",
-        "AddressLine3": "GLASGOW",
-        "Postcode": "G14  0YJ",
-        "Telephone": "0141 207 9520",
-        "Opening Times": "Monday09:00 - 17:30Tuesday09:00 - 17:30Wednesday09:00 - 17:30Thursday09:00 - 17:30Friday08:30 - 16:00\nClosed for lunch between 1pm and 2pm (Mon-Thurs).",
-        "Website": "https://www.nhsggc.org.uk/locations/health-centresclinics/centre-for-health-and-care-plean-street/"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "AddressLine1": "PARK DENTAL COMPANY",
         "AddressLine2": "19 MAIN STREET",
         "AddressLine3": "BRIDGETON GLASGOW",
@@ -5147,25 +5109,6 @@ var Dentists = {
         "coordinates": [
           -4.271126852495535,
           55.87967420818235
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "AddressLine1": "GOVAN DENTAL CARE",
-        "AddressLine2": "788 GOVAN ROAD",
-        "AddressLine3": "GLASGOW",
-        "Postcode": "G51  3YL",
-        "Telephone": "0141 445 1829",
-        "Opening Times": "Monday08:45 - 17:30Tuesday08:45 - 19:30Wednesday08:45 - 19:30Thursday08:45 - 17:30Friday08:45 - 17:00Saturday09:00 - 13:00",
-        "Website": "http://www.govandentalcare.co.uk/"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          NaN,
-          NaN
         ]
       }
     },
