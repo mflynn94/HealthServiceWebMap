@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>>OS Open Zoomstack</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<script src="https://rawgit.com/mapbox/mapbox-gl-leaflet/master/leaflet-mapbox-gl.js"></script>
+<script src="Processed_Pharmacies.js"></script>
+<script src="Processed_Dentists.js"></script>
+<script src="Processed_GPs.js"></script>
+<script src="Processed_Hospitals.js"></script>
+<script src="Processed_Opticians.js"></script>
+<script src="Processed_SHClinics.js"></script>
+
+var map = L.map('map', {
+minZoom: 7,
+maxZoom: 18,
+maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]]
+});
+
+var gl = L.mapboxGL({
+style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json',
+accessToken: 'no-token'
+}).addTo(map);
+
+map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
+map.setView([ 52.567, -1.485 ], 10);
+
+
+</script>
+
+</body>
+</html>
