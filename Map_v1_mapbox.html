@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!–– -->
+<html>
+
+<head>
+    <title>>OS Open Zoomstack</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
+    <link href="plugins/leaflet-custom-searchbox/dist/searchbox.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+    
+    <script src="Processed_Pharmacies.js"></script>
+    <script src="Processed_Dentists.js"></script>
+    <script src="Processed_GPs.js"></script>
+    <script src="Processed_Hospitals.js"></script>
+    <script src="Processed_Opticians.js"></script>
+    <script src="Processed_SHClinics.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+
+</head>
+<body>
+
+<div id='map'></div>
+
+
+<script>
+
+// initialise map
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibWZseW5uOTQiLCJhIjoiY2s4NGZvc2VoMTQ4MDNtbXdxdTRmYWo2ZCJ9.yhJ8sbTu4gvcvDla1-160w'; // you can add a Mapbox access token here
+var map = new mapboxgl.Map({
+ container: 'map', // container id
+ style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json', //stylesheet location
+ center: [-4.45, 55.8652], // starting position [lng, lat]
+ zoom: 10, // starting zoom
+ attributionControl: false
+});
+
+// add attribution
+map.addControl(new mapboxgl.AttributionControl({
+        customAttribution: 'Contains OS data &copy; Crown copyright and database rights 2018'
+}));
+
+// add navigation control
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+
+// add search function
+map.addControl(
+    new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+    })
+);
+
+// add geolocate control 
+map.addControl(new mapboxgl.GeolocateControl({
+positionOptions: {
+    enableHighAccuracy: true
+    },
+    trackUserLocation: true
+    }));
+
+
+
+// add points
+
+map.on('load', function() {
+    
+    map.addSource('pharmacies', {
+        'type': 'geojson',
+        'data': Pharmacies
+    });
+    map.addLayer({
+        'id': 'Pharmacies',
+        'type': 'circle',
+        'source': 'pharmacies',
+        'paint': {
+            'circle-radius': 8,
+            'circle-color': '#33cc33'
+        },
+    });
+});
+
+
+
+</script>
+
+</body>
+</html>
