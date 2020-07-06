@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
     <link href="plugins/leaflet-custom-searchbox/dist/searchbox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@[VERSION]/dist/L.Control.Locate.min.css" />
+
 
     <style>
         body { margin:0; padding:0; }
@@ -31,6 +35,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 <script src="plugins/leaflet-custom-searchbox/dist/leaflet.customsearchbox.min.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
 <script src="Processed_Pharmacies.js"></script>
 <script src="Processed_Dentists.js"></script>
@@ -55,43 +61,12 @@ var gl = L.mapboxGL({
 style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json',
 accessToken: 'no-token'
 }).addTo(map);
-map.zoomControl.setPosition('topright');
+map.zoomControl.setPosition('topleft');
 map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
 map.setView([ 55.8652, -4.45 ], 10);
 
 
-// Locate the user
-
-map.locate({setView: true, maxZoom: 16});
-function onLocationFound(e) {
-    var radius = e.accuracy;
-    
-    var locationMarker = {
-        radius: 6,
-        fillColor: "#2392FF",
-        color: "#111",
-        weight: 2,
-        opacity: 0,
-        fillOpacity: 0.8
-    };
-
-    var accuracyMarker = {
-        radius: radius,
-        fillColor: "#2392FF",
-        color: "#111",
-        weight: 1,
-        opacity: 0,
-        fillOpacity: 0.1
-    };
-
-    //L.circle(e.latlng, accuracyMarker).addTo(map);
-
-    L.circleMarker(e.latlng, locationMarker).addTo(map);
-
-}
-
-map.on('locationfound', onLocationFound);
-
+L.control.locate().addTo(map);
 
 // create a function for pop up information 
 
@@ -130,22 +105,14 @@ function addPoints(service, colour) {
 addPoints(Pharmacies, "#ffff00")
 //addPoints(Dentists, "#6600cc")
 
-
+/*
 $(document).ready(function () {
 	    
         var searchboxControl=createSearchboxControl();
         var control = new searchboxControl({
             sidebarTitleText: 'Header',
-            sidebarMenuItems: {
-                Items: [
-                    { type: "link", name: "Link 1 (github.com)", href: "http://github.com", icon: "icon-local-carwash" },
-                    { type: "link", name: "Link 2 (google.com)", href: "http://google.com", icon: "icon-cloudy" },
-                    { type: "button", name: "Button 1", onclick: "alert('button 1 clicked !')", icon: "icon-potrait" },
-                    { type: "button", name: "Button 2", onclick: "button2_click();", icon: "icon-local-dining" },
-                    { type: "link", name: "Link 3 (stackoverflow.com)", href: 'http://stackoverflow.com', icon: "icon-bike" },
-                ]
             }
-        });
+        );
         control._searchfunctionCallBack = function (searchkeywords)
         {
             if (!searchkeywords) {
@@ -155,14 +122,17 @@ $(document).ready(function () {
         }
         map.addControl(control);
     });
-    
     function button2_click()
     {
         alert('button 2 clicked !!!');
     }
-
+*/
     
-L.Control.geocoder().addTo(map);
+L.Control.geocoder({
+    position: 'topleft'
+}).addTo(map);
+
+
 
 </script>
 
