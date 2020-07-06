@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
     <link href="plugins/leaflet-custom-searchbox/dist/searchbox.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -28,6 +30,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 <script src="plugins/leaflet-custom-searchbox/dist/leaflet.customsearchbox.min.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
 <script src="Processed_Pharmacies.js"></script>
 <script src="Processed_Dentists.js"></script>
@@ -81,7 +84,7 @@ function onLocationFound(e) {
         fillOpacity: 0.1
     };
 
-    L.circle(e.latlng, accuracyMarker).addTo(map);
+    //L.circle(e.latlng, accuracyMarker).addTo(map);
 
     L.circleMarker(e.latlng, locationMarker).addTo(map);
 
@@ -157,6 +160,10 @@ $(document).ready(function () {
     {
         alert('button 2 clicked !!!');
     }
+
+    
+L.Control.geocoder().addTo(map);
+
 </script>
 
 </body>
