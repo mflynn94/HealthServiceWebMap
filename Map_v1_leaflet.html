@@ -38,12 +38,12 @@
 <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
-<script src="Processed_Pharmacies.js"></script>
-<script src="Processed_Dentists.js"></script>
-<script src="Processed_GPs.js"></script>
-<script src="Processed_Hospitals.js"></script>
-<script src="Processed_Opticians.js"></script>
-<script src="Processed_SHClinics.js"></script>
+<script src="2020_07_07_Processed_Pharmacies.js"></script>
+<script src="2020_07_07_Processed_Dentists.js"></script>
+<script src="2020_07_07_Processed_GPs.js"></script>
+<script src="2020_07_07_Processed_Hospitals.js"></script>
+<script src="2020_07_07_Processed_Opticians.js"></script>
+<script src="2020_07_07_Processed_SHClinics.js"></script>
 
 <!–– Script for map containing javascript code begins -->
 
@@ -51,16 +51,56 @@
 
 // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
 
+
+var basemapLayers = L.layerGroup();
+
+var light_basemap = L.mapboxGL({
+style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json',
+accessToken: 'no-token'
+});
+
+var night_basemap = L.mapboxGL({
+style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-night/style.json',
+accessToken: 'no-token'
+})
+
+var outdoor_basemap = L.mapboxGL({
+style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-outdoor/style.json',
+accessToken: 'no-token'
+})
+
+var roads_basemap = L.mapboxGL({
+style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-road/style.json',
+accessToken: 'no-token'
+})
+
+var baseMaps = {
+    "Light": light_basemap,
+    "Night": night_basemap,
+    "Outdoors": outdoor_basemap,
+    "Road" : roads_basemap
+};
+
+var Opticians_layer = L.layerGroup(),
+    GPs_layer = L.layerGroup(),
+    Dentists_layer = L.layerGroup(),
+    SHClinics_layer = L.layerGroup(),
+    Pharmacies_layer = L.layerGroup(),
+    Hospitals_layer = L.layerGroup();
+
+
 var map = L.map('map', {
 minZoom: 7,
 maxZoom: 18,
-maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]]
+maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]],
+layers: [light_basemap]
 });
 
-var gl = L.mapboxGL({
-style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json',
-accessToken: 'no-token'
-}).addTo(map);
+
+
+
+
+
 map.zoomControl.setPosition('topleft');
 map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
 map.setView([ 55.8652, -4.45 ], 10);
@@ -76,7 +116,8 @@ function onEachFeature(feature, layer) {
 
 // create a function for styling points and adding them to the map
 
-function addPoints(service, colour) {
+
+function addPoints(service, colour, layerName) {
 
     var geojsonMarker = {
     radius: 8,
@@ -92,47 +133,30 @@ function addPoints(service, colour) {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, geojsonMarker);
         }
-    }).addTo(map);
+    }).addTo(layerName);
 }
 
 
 
-
-//addPoints(GPs)/addPoints(Opticians, "#ff2200")
-//addPoints(Dentists, "#66ccff")
-//addPoints(GPs, "#aa2233")
+addPoints(Opticians, "#ff2200", Opticians_layer)
+addPoints(Dentists, "#66ccff", Dentists_layer)
+addPoints(GPs, "#aa2233", GPs_layer)
 //addPoints(Hospitals, "#33cc33")
-addPoints(Pharmacies, "#ffff00")
+//addPoints(Pharmacies, "#ffff00")
 //addPoints(Dentists, "#6600cc")
 
-/*
-$(document).ready(function () {
-	    
-        var searchboxControl=createSearchboxControl();
-        var control = new searchboxControl({
-            sidebarTitleText: 'Header',
-            }
-        );
-        control._searchfunctionCallBack = function (searchkeywords)
-        {
-            if (!searchkeywords) {
-                searchkeywords = "The search call back is clicked !!"
-            }
-            alert(searchkeywords);
-        }
-        map.addControl(control);
-    });
-    function button2_click()
-    {
-        alert('button 2 clicked !!!');
-    }
-*/
+
+var overlayMaps = {
+    "Opticians": Opticians_layer,
+    "Dentists" : Dentists_layer,
+    "GPs": GPs_layer
+};
     
 L.Control.geocoder({
     position: 'topleft'
 }).addTo(map);
 
-
+L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 </script>
 
