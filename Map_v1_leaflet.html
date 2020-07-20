@@ -141,23 +141,26 @@ function addPoints(service, colour, layerName) {
 addPoints(Opticians, "#ff2200", Opticians_layer)
 addPoints(Dentists, "#66ccff", Dentists_layer)
 addPoints(GPs, "#aa2233", GPs_layer)
-//addPoints(Hospitals, "#33cc33")
-//addPoints(Pharmacies, "#ffff00")
-//addPoints(Dentists, "#6600cc")
+addPoints(Hospitals, "#33cc33", Hospitals_layer)
+addPoints(Pharmacies, "#ffff00", Pharmacies_layer)
+addPoints(SHClinics, "#6600cc", SHClinics_layer)
 
 
 var overlayMaps = {
     "Opticians": Opticians_layer,
     "Dentists" : Dentists_layer,
-    "GPs": GPs_layer
+    "GPs": GPs_layer,
+    "Hospitals": Hospitals_layer,
+    "Pharmacies": Pharmacies_layer,
+    "Sexual Health Clinics": SHClinics_layer
 };
     
 L.Control.geocoder({
     position: 'topleft'
 }).addTo(map);
 
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-
+L.control.layers(baseMaps).addTo(map);
+L.control.layers(overlayMaps).addTo(map);
 </script>
 
 </body>
