@@ -126,6 +126,14 @@ var lc = L.control.locate({
         },
     }
 }).addTo(map);
+
+function onLocationfound(e) {
+    var user_location = e.latlng;
+    console.log(user_location);
+}
+
+map.on('locationfound', onLocationfound);
+
 lc.start();
 
 
