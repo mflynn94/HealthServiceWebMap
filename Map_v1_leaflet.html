@@ -12,12 +12,12 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
-    <link href="plugins/leaflet-custom-searchbox/dist/searchbox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
+    <link rel="stylesheet" href="Plugins/sidebar-v2/css/leaflet-sidebar.css" />
 
     <style>
         body { margin:0; padding:0; }
@@ -26,8 +26,55 @@
 </head>
 <body>
 
-<div id="map"></div>
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+                <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+                <li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+            </ul>
 
+            <ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Health Service Finder
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <p>A responsive sidebar for mapping libraries like <a href="http://leafletjs.com/">Leaflet</a> or <a href="http://openlayers.org/">OpenLayers</a>.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </div>
+
+            <div class="sidebar-pane" id="profile">
+                <h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="messages">
+                <h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="map" class="sidebar-map"></div>
 
 <!–– Reference all sources -->
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
@@ -39,6 +86,9 @@
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+<script src="Plugins/sidebar-v2/js/leaflet-sidebar.js"></script>
+
+
 
 <script src="2020_07_07_Processed_Pharmacies.js"></script>
 <script src="2020_07_07_Processed_Dentists.js"></script>
@@ -46,7 +96,7 @@
 <script src="2020_07_07_Processed_Hospitals.js"></script>
 <script src="2020_07_07_Processed_Opticians.js"></script>
 <script src="2020_07_07_Processed_SHClinics.js"></script>
-
+<script src="ggandc.js"></script>
 <!–– Script for map containing javascript code begins -->
 
 <script>
@@ -111,32 +161,40 @@ layers: [light_basemap]
 
 //map.on('locationfound', onLocationFound);
 
-
-map.zoomControl.setPosition('topleft');
+L.Control.geocoder({
+    position: 'topleft'
+}).addTo(map);
+map.zoomControl.setPosition('bottomright');
 map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
 
 
 map.setView([ 55.8652, -4.45 ], 10);
 
 
-var lc = L.control.locate({
-    options: {
-        circleStyle: {
-            fillOpacity: 0
-        },
+//var lc = L.control.locate({
+//    options: {
+//        circleStyle: {
+//            fillOpacity: 0
+//        }       
+ //   }
+//}).addTo(map);
+
+//function onLocationfound(e) {
+//    var user_location = e.latlng;
+//    console.log(user_location);
+//}
+
+//map.on('locationfound', onLocationfound);
+
+//lc.start();
+
+var GGandC_poly = L.geoJSON(ggandc_polygon, {
+    style: {
+        "color": "#000000",
+        "weight": 2,
+        "fill": false
     }
 }).addTo(map);
-
-function onLocationfound(e) {
-    var user_location = e.latlng;
-    console.log(user_location);
-}
-
-map.on('locationfound', onLocationfound);
-
-lc.start();
-
-
 // create a function for pop up information 
 
 function onEachFeature(feature, layer) {
@@ -184,12 +242,15 @@ var overlayMaps = {
     "Sexual Health Clinics": SHClinics_layer
 };
     
-L.Control.geocoder({
-    position: 'topleft'
-}).addTo(map);
+
 
 L.control.layers(baseMaps).addTo(map);
 L.control.layers(overlayMaps).addTo(map);
+
+var sidebar = L.control.sidebar('sidebar').addTo(map);
+
+
+
 
 </script>
 
