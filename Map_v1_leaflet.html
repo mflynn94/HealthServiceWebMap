@@ -19,25 +19,18 @@
 
     <style>
         body { margin:10; padding:10; }
-        #map { position:absolute; top:20%; bottom:0; left:30%; width: 70%; }
-        .custom .leaflet-popup-tip,
-        .custom .leaflet-popup-content-wrapper {
-            background: #e93434;
-            color: #ffffff;
-        }
         
         h1 {
-	        text-align: center;
+	    text-align: center;
         }
 
         /* The popup form - hidden by default */
         .form-popup {
         display: true;
         position: fixed;
-        right: 30%;
-        left: 30%;
-        top: 30%;
-        border: 3px solid #f1f1f1;
+        right: 70%;
+        top: 20%;
+        border: none;
         z-index: 9;
         }
 
@@ -48,7 +41,8 @@
         vertical-align: middle;
         right: 30%;
         left: 30%;
-        top: 30%;
+        top: 20%;
+        height:100%;
         }
 
 
@@ -67,31 +61,48 @@
         font-size: 16px;
         }
 
+
         /* Add some hover effects to buttons */
         .form-container .btn:hover, .open-button:hover {
         opacity: 1;
         }
-
+        
+        #map { position:fixed; top:20%; bottom:0; left:30%; width: 70%; }
+        .custom .leaflet-popup-tip,
+        .custom .leaflet-popup-content-wrapper {
+            background: #e93434;
+            color: #ffffff;
+        }
     </style>
 </head>
 
 <body>
     <div class="form-popup" id="myForm">
         <div class="form-container">
-          <h1>NHS Scotland Service Finder</h1>
+        
           <h4>Please choose which service you are looking for today</h4>
-          <button type="button" class="btn GPs"><onclick="closeForm()">General Practitioner</button>
+          <p></p>
+          <button type="button" class="btn GPs"><onclick="showLayer()">General Practitioner</button>
+          <p></p>
           <button type="button" class="btn Dentist"><onclick="closeForm()">Dentist</button>
+          <p></p>
           <button type="button" class="btn Optician"><onclick="closeForm()">Optician</button>
+          <p></p>
           <button type="button" class="btn Pharmacy"><onclick="closeForm()">Pharmacy</button>
+          <p></p>
           <button type="button" class="btn Hospital"><onclick="closeForm()">Hospital</button>
+          <p></p>
           <button type="button" class="btn SHClinic"><onclick="closeForm()">Sexual Health Clinic</button>
+          <p></p>
+          <button type="button" class="btn all"><onclick="closeForm()">ShowAll</button>
+
         </div>
     </div>
-      
+    
+    <!--
     <div id="sidebar" class="sidebar collapsed">
         
-        <!-- Nav tabs -->
+        
         <div class="sidebar-tabs">
             <ul role="tablist">
                 <li><a href="#home" role="tab"><i class="fa fa-info"></i></a></li>
@@ -105,7 +116,7 @@
             </ul>
         </div>
 
-        <!-- Tab panes -->
+         
         <div class="sidebar-content">
             <div class="sidebar-pane" id="home">
                 <h1 class="sidebar-header">
@@ -130,6 +141,7 @@
             </div>
         </div>
     </div>
+    -->
 
     <div id="map" class="sidebar-map"></div>
 
@@ -153,7 +165,7 @@
     <script src="2020_07_07_Processed_Hospitals.js"></script>
     <script src="2020_07_07_Processed_Opticians.js"></script>
     <script src="2020_07_07_Processed_SHClinics.js"></script>
-    <script src="ggandc.js"></script>
+    <script src="mappolygon.js"></script>
     <!–– Script for map containing javascript code begins -->
 
     <script>
@@ -251,11 +263,11 @@
 
     lc.start();
 
-    var GGandC_poly = L.geoJSON(ggandc_polygon, {
+    var GGandC_poly = L.geoJSON(mappolygons, {
         style: {
             "color": "#808080",
             "weight": 2,
-            "fill": false
+            "fill": true
         }
     }).addTo(map);
     // create a function for pop up information 
