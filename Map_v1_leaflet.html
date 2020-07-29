@@ -67,16 +67,18 @@
         opacity: 1;
         }
         
-        #map { position:fixed; top:20%; bottom:0; left:30%; width: 70%; }
+        #map { position:absolute; top:0; bottom:0; left:0; width: 100%; }
         .custom .leaflet-popup-tip,
         .custom .leaflet-popup-content-wrapper {
-            background: #e93434;
-            color: #ffffff;
+            background: #ffffff;
+            color: #09325C;
         }
+
     </style>
 </head>
 
 <body>
+    <!--
     <div class="form-popup" id="myForm">
         <div class="form-container">
         
@@ -98,8 +100,8 @@
 
         </div>
     </div>
-    
-    <!--
+    -->
+
     <div id="sidebar" class="sidebar collapsed">
         
         
@@ -124,7 +126,7 @@
                     <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
                 </h1>
 
-                <p>A responsive sidebar for mapping libraries like <a href="http://leafletjs.com/">Leaflet</a> or <a href="http://openlayers.org/">OpenLayers</a>.</p>
+                <p>A responsive sidebar for mapping libraries like <href onclick="http://leafletjs.com/">Leaflet or <a href="http://openlayers.org/">OpenLayers</a>.</p>
 
             </div>
 
@@ -141,7 +143,7 @@
             </div>
         </div>
     </div>
-    -->
+   
 
     <div id="map" class="sidebar-map"></div>
 
@@ -171,10 +173,6 @@
     <script>
 
 
-        function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-        }
-
 
 
     // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
@@ -201,6 +199,7 @@
     accessToken: 'no-token'
     })
 
+    // store base maps in group
     var baseMaps = {
         "Light": light_basemap,
         "Night": night_basemap,
@@ -208,6 +207,7 @@
         "Road" : roads_basemap
     };
 
+    // store each service in layer group
     var Opticians_layer = L.layerGroup(),
         GPs_layer = L.layerGroup(),
         Dentists_layer = L.layerGroup(),
@@ -215,7 +215,7 @@
         Pharmacies_layer = L.layerGroup(),
         Hospitals_layer = L.layerGroup();
 
-
+    // initialise map with max and min zoom, max bounds and the default basemap layer
     var map = L.map('map', {
     minZoom: 7,
     maxZoom: 18,
@@ -224,69 +224,76 @@
     });
 
 
-    //map.locate({setView: true, maxZoom: 16});
-
-    //function onLocationFound(e) {
-        //var radius = e.accuracy;
-
-        //L.circle(e.latlng).addTo(map)
-        //   .bindPopup("You are here").openPopup();
-
-    //}
-
-    //map.on('locationfound', onLocationFound);
-
+    // Add a search bar to the map
     L.Control.geocoder({
         position: 'topleft'
     }).addTo(map);
+
+    // add zoom control to the map
     map.zoomControl.setPosition('bottomright');
+
+    // add attribution to the map
     map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
 
-
+    // set the initial view of the map to Glasgow area
     map.setView([ 55.8652, -4.45 ], 10);
 
-
+    // add user location to the map
     var lc = L.control.locate({
         options: {
             circleStyle: {
                 fillOpacity: 0
-            }       
+            },
+            keepCurrentZoomLevel: true,
+            flyTo: true
         }
     }).addTo(map);
 
+    // store user coordinates
     function onLocationfound(e) {
         var user_location = e.latlng;
         console.log(user_location);
     }
 
+
     map.on('locationfound', onLocationfound);
 
+    // ask user location on map load
     lc.start();
 
+    // load polygon on the map and grey out areas around Greater Glasgow and Clyde
     var GGandC_poly = L.geoJSON(mappolygons, {
         style: {
             "color": "#808080",
-            "weight": 2,
+            "weight": 0,
             "fill": true
         }
     }).addTo(map);
-    // create a function for pop up information 
 
+    // create custom options for pop up information
     var customOptions =
             {
-            'maxWidth': '500',
+            'maxWidth': '200',
             'className' : 'custom'
             }
 
+    // create a function for what to do for each feature        
     function onEachFeature(feature, layer) {
-        layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        
+        if (layerName = Opticians_layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        } else {
+            layer.bindPopup(feature.properties.Name);
+        }
+
     }
 
+
+    /*
     // create a function for styling points and adding them to the map
-
-
-    function addPoints(service, colour, layerName, figureURL) {
-
+    function addPoints(service, layerName, figureURL, popup_list) {
+        
+        // add icons for the services and style them appropriately
         var mapIcon = L.icon({
             iconUrl: figureURL,
             iconSize: [30, 30],
@@ -294,42 +301,150 @@
             popupAnchor: [0, -15],
         });
 
+        // add the geoJSON files to the defined layer groups and run the on each feature function
         L.geoJSON(service, {
             onEachFeature: onEachFeature,
             pointToLayer: function (feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon});
             }
         }).addTo(layerName);
+    }*/
+
+    
+    // create a function for styling points and adding them to the map
+    function addIcon(figureURL) {
+        // add icons for the services and style them appropriately
+        var mapIcon = L.icon({
+            iconUrl: figureURL,
+            iconSize: [30, 30],
+            iconAnchor: [15,15],
+            popupAnchor: [0, -15],
+        });
     }
 
 
 
-    addPoints(Opticians, "#ff2200", Opticians_layer, 'MapFigures/Opticians.png')
-    addPoints(Dentists, "#66ccff", Dentists_layer, 'MapFigures/Dentists.png')
-    addPoints(GPs, "#aa2233", GPs_layer, 'MapFigures/GPs.png')
-    addPoints(Hospitals, "#33cc33", Hospitals_layer, 'MapFigures/Hospitals.png')
-    addPoints(Pharmacies, "#ffff00", Pharmacies_layer, 'MapFigures/Pharmacies.png')
-    addPoints(SHClinics, "#6600cc", SHClinics_layer, 'MapFigures/SHClinics.png')
+        // add the geoJSON files to the defined layer groups and run the on each feature function
+    L.geoJSON(GPs, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h2>"+ feature.properties.Name + "</h2>" + feature.properties.Address1 + 
+            "<br>" + feature.properties.Postcode + "<br><br>" + "Telephone: <a href=tel:"+ feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a>" + "<br><br><b>Opening Times</b><br>Monday: " + 
+            feature.properties.Monday + "<br>Tuesday: " + feature.properties.Tuesday + "<br>Wednesday: " + feature.properties.Wednesday + 
+            "<br>Thursday: " + feature.properties.Thursday + "<br>Friday: " + feature.properties.Friday + "<br> " + feature.properties.ExtraOTInfo
+            + "<br><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><a href=https://www.google.com/maps/dir//" + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>", customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/GPs.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(GPs_layer);
+    
+    L.geoJSON(Dentists, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone + "<br>Monday:" + feature.properties.Monday, customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/Dentists.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(Dentists_layer);
 
+    L.geoJSON(Opticians, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/Opticians.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(Opticians_layer);
 
+    L.geoJSON(Pharmacies, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/Pharmacies.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(Pharmacies_layer);
+
+    L.geoJSON(Hospitals, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/Hospitals.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(Hospitals_layer);
+
+    L.geoJSON(SHClinics, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: L.icon({
+                                            iconUrl: 'MapFigures/SHClinics.png',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15,15],
+                                            popupAnchor: [0, -15]
+            })
+        });
+        }
+    }).addTo(SHClinics_layer);
+    /*
+    // run the add Points function for each service
+    addPoints(Opticians, Opticians_layer, 'MapFigures/Opticians.png', ['Name', 'Address1', 'Monday', 'Tuesday'])
+    addPoints(Dentists, Dentists_layer, 'MapFigures/Dentists.png')
+    addPoints(GPs, GPs_layer, 'MapFigures/GPs.png')
+    addPoints(Hospitals, Hospitals_layer, 'MapFigures/Hospitals.png')
+    addPoints(Pharmacies, Pharmacies_layer, 'MapFigures/Pharmacies.png')
+    addPoints(SHClinics, SHClinics_layer, 'MapFigures/SHClinics.png')
+    */
+
+    // store layers in overlay group
     var overlayMaps = {
-        "Opticians": Opticians_layer,
-        "Dentists" : Dentists_layer,
         "GPs": GPs_layer,
-        "Hospitals": Hospitals_layer,
+        "Dentists" : Dentists_layer,
         "Pharmacies": Pharmacies_layer,
+        "Opticians": Opticians_layer,
+        "Hospitals": Hospitals_layer,
         "Sexual Health Clinics": SHClinics_layer
     };
         
 
-
+    // add a legend control for the overlay maps and the base maps to allow users to swap between services 
+    L.control.layers(overlayMaps,null,{collapsed:false}).addTo(map);
     L.control.layers(baseMaps).addTo(map);
-    L.control.layers(overlayMaps).addTo(map);
 
+    // add responsive side bar to the map
     var sidebar = L.control.sidebar('sidebar').addTo(map);
-
-
-
 
     </script>
 
