@@ -100,9 +100,14 @@
     </div>
    -->
    <div id="sidebar">
-        <h1>leaflet-sidebar</h1>
+        <h1>leaflet-sidebar
+        </h1>
+        
+
+        </div>
     </div>
-    <div id="map" class="sidebar-map"></div>
+    
+    <div id="map"></div>
 
     <!–– Reference all sources -->
 
@@ -282,13 +287,11 @@
     }
 
 var sidebar = L.control.sidebar('sidebar', {
-    position: 'left'
-    });
-
-map.addControl(sidebar);
-setTimeout(function () {
-    sidebar.show();
-}, 500);
+    closeButton: true,
+    position: 'left',
+    }).addTo(map);
+//map.addControl(sidebar);
+sidebar.show();
 
 function openSidebar(feature) {
     sidebar.toggle();
@@ -296,30 +299,17 @@ function openSidebar(feature) {
 
 }
 
-var markerHighlight = {
-    color: "blue",
-    radius: 35,
-    weight: 3,
-    opacity: 1,
-    fillOpacity: 0.75
-};
-
-function highlightFeature(e) {
-    var layer = e.target;
-    layer.setStyle(markerHighlight);
-};
-
-function resetHighlight(e) {
-    var layer = e.target;
-    layer.setStyle(markerDefault);
-};
-
         // add the geoJSON files to the defined layer groups and run the on each feature function
     L.geoJSON(GPs, {
         onEachFeature: function(feature, layer) {
             layer.on('click', function (e) {
-                sidebar.toggle();
-                sidebar.setContent(e.target.feature.properties.Name);
+            
+                sidebar.show();
+                sidebar.setContent("<h2>"+ e.target.feature.properties.Name + "</h2>" + e.target.feature.properties.Address1 + 
+            "<br>" + e.target.feature.properties.Postcode + "<br><br>" + "Telephone: <a href=tel:"+ e.target.feature.properties.Telephone+ ">" + e.target.feature.properties.Telephone+"</a>" + "<br><br><b>Opening Times</b><br>Monday: " + 
+            e.target.feature.properties.Monday + "<br>Tuesday: " + e.target.feature.properties.Tuesday + "<br>Wednesday: " + e.target.feature.properties.Wednesday + 
+            "<br>Thursday: " + e.target.feature.properties.Thursday + "<br>Friday: " + e.target.feature.properties.Friday + "<br> " + e.target.feature.properties.ExtraOTInfo
+            + "<br><br><a href=" + e.target.feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><a href=https://www.google.com/maps/dir//" + ((e.target.feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>");
             }),
             //console.log(e.target.feature.properties)
                 //'mouseover': highlightFeature,
