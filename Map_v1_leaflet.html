@@ -16,56 +16,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="Plugins/sidebar-v2/css/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="Plugins/leaflet-sidebar/src/L.Control.Sidebar.css" />
 
     <style>
         body { margin:10; padding:10; }
         
-        h1 {
-	    text-align: center;
-        }
-
-        /* The popup form - hidden by default */
-        .form-popup {
-        display: true;
-        position: fixed;
-        right: 70%;
-        top: 20%;
-        border: none;
-        z-index: 9;
-        }
-
-        /* Add styles to the form container */
-        .form-container {
-        padding: 10px;
-        background-color: white;
-        vertical-align: middle;
-        right: 30%;
-        left: 30%;
-        top: 20%;
-        height:100%;
-        }
-
-
-        /* Set a style for the submit/login button */
-        .form-container .btn {
-        background-color: navy;
-        color: white;
-        padding: 16px 20px;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        height: 100%;
-        margin-bottom:10px;
-        opacity: 0.8;
-        vertical-align: middle;
-        font-size: 16px;
-        }
-
-
-        /* Add some hover effects to buttons */
-        .form-container .btn:hover, .open-button:hover {
-        opacity: 1;
-        }
         
         #map { position:absolute; top:0; bottom:0; left:0; width: 100%; }
         .custom .leaflet-popup-tip,
@@ -100,7 +55,7 @@
 
         </div>
     </div>
-    -->
+    
 
     <div id="sidebar" class="sidebar collapsed">
         
@@ -143,8 +98,10 @@
             </div>
         </div>
     </div>
-   
-
+   -->
+   <div id="sidebar">
+        <h1>leaflet-sidebar</h1>
+    </div>
     <div id="map" class="sidebar-map"></div>
 
     <!–– Reference all sources -->
@@ -158,6 +115,8 @@
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="Plugins/sidebar-v2/js/leaflet-sidebar.js"></script>
+    <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
+    
 
 
 
@@ -262,7 +221,7 @@
     lc.start();
 
     // load polygon on the map and grey out areas around Greater Glasgow and Clyde
-    var GGandC_poly = L.geoJSON(mappolygons, {
+    var map_poly = L.geoJSON(mappolygons, {
         style: {
             "color": "#808080",
             "weight": 0,
@@ -322,11 +281,51 @@
         });
     }
 
+var sidebar = L.control.sidebar('sidebar', {
+    position: 'left'
+    });
 
+map.addControl(sidebar);
+setTimeout(function () {
+    sidebar.show();
+}, 500);
+
+function openSidebar(feature) {
+    sidebar.toggle();
+    sidebar.html('<h1> this is ' + feature.properties.Name + '</h1>');
+
+}
+
+var markerHighlight = {
+    color: "blue",
+    radius: 35,
+    weight: 3,
+    opacity: 1,
+    fillOpacity: 0.75
+};
+
+function highlightFeature(e) {
+    var layer = e.target;
+    layer.setStyle(markerHighlight);
+};
+
+function resetHighlight(e) {
+    var layer = e.target;
+    layer.setStyle(markerDefault);
+};
 
         // add the geoJSON files to the defined layer groups and run the on each feature function
     L.geoJSON(GPs, {
         onEachFeature: function(feature, layer) {
+            layer.on('click', function (e) {
+                sidebar.toggle();
+                sidebar.setContent(e.target.feature.properties.Name);
+            }),
+            //console.log(e.target.feature.properties)
+                //'mouseover': highlightFeature,
+                //'mouseout': resetHighlight,
+            
+        
             layer.bindPopup("<h2>"+ feature.properties.Name + "</h2>" + feature.properties.Address1 + 
             "<br>" + feature.properties.Postcode + "<br><br>" + "Telephone: <a href=tel:"+ feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a>" + "<br><br><b>Opening Times</b><br>Monday: " + 
             feature.properties.Monday + "<br>Tuesday: " + feature.properties.Tuesday + "<br>Wednesday: " + feature.properties.Wednesday + 
@@ -444,7 +443,10 @@
     L.control.layers(baseMaps).addTo(map);
 
     // add responsive side bar to the map
-    var sidebar = L.control.sidebar('sidebar').addTo(map);
+    //var sidebar = L.control.sidebar('sidebar').addTo(map);
+   
+    
+
 
     </script>
 
