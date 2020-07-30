@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="Plugins/sidebar-v2/css/leaflet-sidebar.css" />
     <link rel="stylesheet" href="Plugins/leaflet-sidebar/src/L.Control.Sidebar.css" />
+    <!--<link rel="stylesheet" href="Plugins/Leaflet.EasyButton/src/easy-button.js" />-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
 
     <style>
         body { margin:10; padding:10; }
@@ -121,7 +123,8 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="Plugins/sidebar-v2/js/leaflet-sidebar.js"></script>
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
-    
+    <!--<script src="Plugins/Leaflet.EasyButton/src/easy-button.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
 
 
@@ -286,26 +289,30 @@
         });
     }
 
-var sidebar = L.control.sidebar('sidebar', {
-    closeButton: true,
-    position: 'left',
+    var sidebar = L.control.sidebar('sidebar', {
+        closeButton: true,
+        position: 'left',
+        }).addTo(map);
+    //map.addControl(sidebar);
+    sidebar.show();
+
+    function openSidebar(feature) {
+        sidebar.toggle();
+        sidebar.html('<h1> this is ' + feature.properties.Name + '</h1>');
+
+    }
+
+    L.easyButton("fa fa-info-circle", function(btn, map){
+        sidebar.toggle();
     }).addTo(map);
-//map.addControl(sidebar);
-sidebar.show();
 
-function openSidebar(feature) {
-    sidebar.toggle();
-    sidebar.html('<h1> this is ' + feature.properties.Name + '</h1>');
-
-}
-
-        // add the geoJSON files to the defined layer groups and run the on each feature function
+    // add the GP data and set the sidebar and popup content 
     L.geoJSON(GPs, {
         onEachFeature: function(feature, layer) {
             layer.on('click', function (e) {
             
                 sidebar.show();
-                sidebar.setContent("<h2>"+ e.target.feature.properties.Name + "</h2>" + e.target.feature.properties.Address1 + 
+                sidebar.setContent("<h2>"+ feature.properties.Name + "</h2>" + e.target.feature.properties.Address1 + 
             "<br>" + e.target.feature.properties.Postcode + "<br><br>" + "Telephone: <a href=tel:"+ e.target.feature.properties.Telephone+ ">" + e.target.feature.properties.Telephone+"</a>" + "<br><br><b>Opening Times</b><br>Monday: " + 
             e.target.feature.properties.Monday + "<br>Tuesday: " + e.target.feature.properties.Tuesday + "<br>Wednesday: " + e.target.feature.properties.Wednesday + 
             "<br>Thursday: " + e.target.feature.properties.Thursday + "<br>Friday: " + e.target.feature.properties.Friday + "<br> " + e.target.feature.properties.ExtraOTInfo
@@ -333,6 +340,9 @@ function openSidebar(feature) {
         }
     }).addTo(GPs_layer);
     
+
+    // add the Dentists data and set the sidebar and popup content
+
     L.geoJSON(Dentists, {
         onEachFeature: function(feature, layer) {
             layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone + "<br>Monday:" + feature.properties.Monday, customOptions);
