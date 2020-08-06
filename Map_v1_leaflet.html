@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
-    <link rel="stylesheet" href="Plugins/sidebar-v2/css/leaflet-sidebar.css" />
+    
     <link rel="stylesheet" href="Plugins/leaflet-sidebar/src/L.Control.Sidebar.css" />
     <!--<link rel="stylesheet" href="Plugins/Leaflet.EasyButton/src/easy-button.js" />-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
@@ -53,6 +53,27 @@
             opacity: 0.5;
         }
 
+        .btn {
+            position: relative;
+            background-color: #fff;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #09325C;
+            color: #09325C;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 80%;
+            left: 10%;
+            right: 10%;
+            height: 5%;
+            margin-bottom:10px;
+            opacity: 0.8;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 15px;
+            font-family: Helvetica;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+            }
 
     </style>
 </head>
@@ -60,13 +81,27 @@
 <body>
     
    <div id="sidebar">
+
         <div class = 'box top'></div>
-        <h1>Scotland Health Service Finder
+        <h1>Find your local Health Services
         </h1>
         <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>
         <p>Whether you are looking for a GP, Dentist, Optician, Pharmacy, Hospital or Sexual Health Service, you can find the address and contact details of the ones closest to you.</p>
-        <p> Please begin by selecting an option within the legend. You can hover to view the name and telephone number of each location, or click to see extra details! </p>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <p> Please choose the service you are looking for today. You can then hover to view the name and telephone number of each location, or click to see extra details. </p>
+        <br>
+        <button type="button" class=btn onclick="addLayer(GPs_layer)">GPs</button>
+        <br>
+        <button type="button" class=btn onclick="addLayer(Dentists_layer)">Dentists</button>
+        <br>
+        <button type="button" class=btn onclick="addLayer(Opticians_layer)">Opticians</button>
+        <br>
+        <button type="button" class=btn onclick="addLayer(Pharmacies_Layer">Pharmacies</button>
+        <br>
+        <button type="button" class=btn onclick="addLayer(Hospitals_layer)">Hospitals</button>
+        <br>
+        <button type="button" class=btn onclick="addLayer(SHClinics_layer)">Sexual Health Service</button>
+
+        <br><br>
         <div class = 'box bottom'></div>
         </div>
     </div>
@@ -83,13 +118,13 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script src="Plugins/sidebar-v2/js/leaflet-sidebar.js"></script>
+    
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     <!--<script src="Plugins/Leaflet.EasyButton/src/easy-button.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
 
-
+    <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
     <script src="2020_07_07_Processed_Pharmacies.js"></script>
     <script src="2020_07_07_Processed_Dentists.js"></script>
     <script src="2020_07_07_Processed_GPs.js"></script>
@@ -152,6 +187,8 @@
     layers: [outdoor_basemap]
     });
 
+    // set the initial view of the map to Glasgow area
+    map.setView([ 55.8652, -4.45 ], 10);
 
     // Add a search bar to the map
     L.Control.geocoder({
@@ -164,10 +201,16 @@
     // add attribution to the map
     map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018');
 
-    // set the initial view of the map to Glasgow area
-    map.setView([ 55.8652, -4.45 ], 10);
+    // add sidebar to the map. Ensure it has a close button, appears on the left hand side, and 
+    // is shown on map start up.
+    var sidebar = L.control.sidebar('sidebar', {
+        closeButton: true,
+        position: 'left',
+        }).addTo(map);
+    
+        sidebar.show();
 
-    // add user location to the map
+    // add user location control to the map
     var lc = L.control.locate({
         options: {
             circleStyle: {
@@ -178,6 +221,9 @@
         }
     }).addTo(map);
 
+      // ask user location on map load
+     // lc.start();
+
     // store user coordinates
     function onLocationfound(e) {
         var user_location = e.latlng;
@@ -187,17 +233,16 @@
 
     map.on('locationfound', onLocationfound);
 
-    // ask user location on map load
-    lc.start();
+  
 
     // load polygon on the map and grey out areas around Greater Glasgow and Clyde
-    var map_poly = L.geoJSON(mappolygons, {
+    /*var map_poly = L.geoJSON(mappolygons, {
         style: {
             "color": "#808080",
             "weight": 0,
             "fill": true
         }
-    }).addTo(map);
+    }).addTo(map);*/
 
     // create custom options for pop up information
     var customOptions =
@@ -206,17 +251,7 @@
             'className' : 'custom'
             }
 
-    // create a function for what to do for each feature        
-    function onEachFeature(feature, layer) {
-        
-        if (layerName = Opticians_layer) {
-            layer.bindPopup(feature.properties.Name + "<br>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br>" + feature.properties.Telephone, customOptions);
-        } else {
-            layer.bindPopup(feature.properties.Name);
-        }
-
-    }
-
+    
 
     /*
     // create a function for styling points and adding them to the map
@@ -251,51 +286,74 @@
         });
     }
 
-    var sidebar = L.control.sidebar('sidebar', {
-        closeButton: true,
-        position: 'left',
-        }).addTo(map);
-    //map.addControl(sidebar);
-    sidebar.show();
 
-    function openSidebar(feature) {
-        sidebar.toggle();
-        sidebar.html('<h1> this is ' + feature.properties.Name + '</h1>');
 
-    }
-
+   
+    
+    // add a button control for toggling the sidebar on and off
     L.easyButton("fa fa-info-circle", function(btn, map){
-        
         sidebar.toggle();
         sidebar.setContent("<div class = 'box top'></div><h1>Scotland Health Service Finder</h1><h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4><p>Whether you are looking for a GP, Dentist, Optician, Pharmacy, Hospital or Sexual Health Service, you can find the address and contact details of the ones closest to you.</p><p> Please begin by selecting an option within the legend. You can hover to view the name and telephone number of each location, or click to see extra details! </p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class = 'box bottom'></div></div>")
     }).addTo(map);
 
 
+    function saveAsPDF() {
+        
+        var opt = {
+            margin:       1,
+            filename:     'MyLocalService.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
 
+        var element = document.getElementById('sidebar');
+        console.log(element);
+        var elementHTML = element.outerHTML;
+        var element2 = elementHTML.replace("Save as PDF", '');
+        html2pdf().set(opt).from(element2).save()
+    }
 
     // add the GP data and set the sidebar and popup content 
     L.geoJSON(GPs, {
         onEachFeature: function(feature, layer) {
+            var fp = feature.properties;
             layer.on('click', function (e) {
                 sidebar.show();
-                sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-            "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-            + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><b>Opening Times</b><br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
-            feature.properties.Monday + "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Tuesday + "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Wednesday + 
-            "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Thursday + "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Friday + "<br> " 
-            + "<br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-            + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
+                //var Name = feature.properties.Name
+                sidebar.setContent(
+                    "<div class = 'box top'></div><h2>" + 
+                    fp.Name + 
+                    "</h2><div class ='line'></div><b><br>Address<br></b>" + 
+                    feature.properties.Address1 + 
+                    "<br>" + 
+                    fp.Postcode + 
+                    "<br><br><div class ='line'></div><br>" 
+                    + "<b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br><br>" +
+                    "<div class ='line'></div><br><b>Opening Times</b>"+
+                    "<br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Monday + 
+                    "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Tuesday + 
+                    "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Wednesday + 
+                    "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Thursday + 
+                    "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Friday + 
+                    "<br><br><br>" +
+                    "<div class ='line'></div><br>"+
+                    "<a href=" + fp.Website + " target=_blank>Visit Website</a>"  + 
+                    "<br><br><div class ='line'></div><br>"+
+                    "<a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>" +
+                    "<br><br><div class ='line'></div>" +
+                    "<br><a href='#sidebar' <span onclick='saveAsPDF()'>Save as PDF</span></a>" +
+                    "<br><br><div class = 'box top'></div><h2>"
+                )
             });
             
-            layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-            + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
+    
+            layer.bindPopup("<h4>"+ fp.Name + "</h4>" + fp.Address1 + "<br>" + fp.Postcode + "<br><a href=tel:"
+            + fp.Telephone+ ">" + fp.Telephone + "</a><br><br>Click for more info" , customOptions);
 
             layer.on('mouseover', function () {
                 this.openPopup()
             });
-            /*layer.on('mouseout', function () {
-                this.closePopup();
-            });*/
         },
 
             pointToLayer: function (feature, latlng) {
@@ -479,6 +537,7 @@
     addPoints(SHClinics, SHClinics_layer, 'MapFigures/SHClinics.png')
     */
 
+
     // store layers in overlay group
     var overlayMaps = {
         "GPs": GPs_layer,
@@ -489,16 +548,24 @@
         "Sexual Health Clinics": SHClinics_layer
     };
         
-
-    // add a legend control for the overlay maps and the base maps to allow users to swap between services 
+    // add a legend control for the overlay maps to allow users to swap between services 
     L.control.layers(overlayMaps,null,{collapsed:false}).addTo(map);
+    
     L.control.layers(baseMaps).addTo(map);
 
     // add responsive side bar to the map
     //var sidebar = L.control.sidebar('sidebar').addTo(map);
    
     
+    function addLayer(layer) {
+        sidebar.toggle();
+        map.addLayer(layer)    
+     };
 
+     function addDentistsLayer() {
+        map.removeLayer(GPs_layer);
+        map.addLayer(Dentists_layer)    
+     };
 
     </script>
 
