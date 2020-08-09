@@ -9,7 +9,8 @@ var SHClinics = {
         "Address2": "Sauchiehall Street",
         "Address3": "Glasgow",
         "Postcode": "G3 7NB",
-        "Services": "Emergency Contraception\nSexual Assault or Rape\nTesting for Sexually Transmitted Infections",
+        "Telephone": "0141 211 8175",
+        "Services": "Emergency Contraception\r\nSexual Assault or Rape\r\nTesting for Sexually Transmitted Infections",
         "Sunday": "24 Hours",
         "Monday": "24 Hours",
         "Tuesday": "24 Hours",
@@ -17,13 +18,14 @@ var SHClinics = {
         "Thursday": "24 Hours",
         "Friday": "24 Hours",
         "Saturday": "24 Hours",
-        "ExtraOTInfo": "\nMondays/Tuesdays/Wednesdays/Thursdays/Fridays/Saturdays/Sundays: 00:00-24:00 call 0141 211 8175 for appointment."
+        "ExtraOTInf": "\r\nMondays/Tuesdays/Wednesdays/Thursdays/Fridays/Saturdays/Sundays: 00:00-24:00 call 0141 211 8175 for appointment.",
+        "GoogleDirections": "https://www.google.com/maps/dir//55.86559630985803,-4.279351721930682"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.278733,
-          55.865652000000004
+          -4.279351721930682,
+          55.86559630985803
         ]
       }
     },
@@ -35,7 +37,8 @@ var SHClinics = {
         "Address2": "Sauchiehall Street",
         "Address3": "Glasgow",
         "Postcode": "G3 7NB",
-        "Services": "Contraception\nCounselling and Support Services\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGender Identity\nGUM Clinic\nPregnancy Testing\nPsychosexual Service\nSexual Assault or Rape\nTermination of Pregnancy and Referral (TOPAR)\nTesting for Sexually Transmitted Infections\nYoung People\nEssential services include...\n\nUrgent sexual health care\nAbortion services\nArchway - Sexual Assault & Rape service\nPEP -Sexual exposure to HIV & Hep B\nEmergency Contraception\nPrEP - return appointments only for people already prescribed PrEP.",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nCounselling and Support Services\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGender Identity\r\nGUM Clinic\r\nPregnancy Testing\r\nPsychosexual Service\r\nSexual Assault or Rape\r\nTermination of Pregnancy and Referral (TOPAR)\r\nTesting for Sexually Transmitted Infections\r\nYoung People\r\nEssential services include...\r\n\r\nUrgent sexual health care\r\nAbortion services\r\nArchway - Sexual Assault & Rape service\r\nPEP -Sexual exposure to HIV & Hep B\r\nEmergency Contraception\r\nPrEP - return appointments only for people already prescribed PrEP.",
         "Sunday": NaN,
         "Monday": "08:00 - 20:00",
         "Tuesday": "08:00 - 20:00",
@@ -43,13 +46,14 @@ var SHClinics = {
         "Thursday": "08:00 - 20:00",
         "Friday": "08:00 - 17:00",
         "Saturday": NaN,
-        "ExtraOTInfo": "\nMon, Tues, Wed, Thurs: 08:00 to 20.00 Appointments.\nMon to Thurs: 16:00 to 18:00 Walk-in YoungPeople@Sandyford for young people aged 17 and under.\nFriday: 08.00 to 17.00 Appointments.\n\nSRP @ Sandyford Central (For men who have sex with men)\nMon: 17:00 - 20:00 Appointments\nTues: 17:00 - 20:00 Appointments\nWed: 17:00 - 20:00 Appointments\nThur: 17:00 - 20:00 Testing\nFri: Closed\nSat: Closed\nSun: Closed"
+        "ExtraOTInf": "\r\nMon, Tues, Wed, Thurs: 08:00 to 20.00 Appointments.\r\nMon to Thurs: 16:00 to 18:00 Walk-in YoungPeople@Sandyford for young people aged 17 and under.\r\nFriday: 08.00 to 17.00 Appointments.\r\n\r\nSRP @ Sandyford Central (For men who have sex with men)\r\nMon: 17:00 - 20:00 Appointments\r\nTues: 17:00 - 20:00 Appointments\r\nWed: 17:00 - 20:00 Appointments\r\nThur: 17:00 - 20:00 Testing\r\nFri: Closed\r\nSat: Closed\r\nSun: Closed",
+        "GoogleDirections": "https://www.google.com/maps/dir//55.86559630985803,-4.279351721930682"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.278733,
-          55.865652000000004
+          -4.279351721930682,
+          55.86559630985803
         ]
       }
     },
@@ -61,7 +65,8 @@ var SHClinics = {
         "Address2": "Kilbowie Road",
         "Address3": "Clydebank",
         "Postcode": "G81 2TQ",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -69,13 +74,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.91276999372653,-4.4055599926065545"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.405456,
-          55.912875
+          -4.4055599926065545,
+          55.91276999372653
         ]
       }
     },
@@ -87,7 +93,8 @@ var SHClinics = {
         "Address2": "213 Main Street",
         "Address3": "Barrhead",
         "Postcode": "G78 1SW",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -95,13 +102,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.8020600144761,-4.389779970231359"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.386976,
-          55.802455
+          -4.389779970231359,
+          55.8020600144761
         ]
       }
     },
@@ -113,7 +121,8 @@ var SHClinics = {
         "Address2": "101 Salamanca Street",
         "Address3": "Glasgow",
         "Postcode": "G31 5BA",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -121,13 +130,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.85222000528697,-4.194620011464991"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.19456,
-          55.85244300000001
+          -4.194620011464991,
+          55.85222000528697
         ]
       }
     },
@@ -139,7 +149,8 @@ var SHClinics = {
         "Address2": "9 Auchinlea Road",
         "Address3": "Glasgow",
         "Postcode": "G34 9HQ",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -147,13 +158,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.86870000039633,-4.12602997577099"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.125973999999999,
-          55.868922
+          -4.12602997577099,
+          55.86870000039633
         ]
       }
     },
@@ -165,7 +177,8 @@ var SHClinics = {
         "Address2": "20 Duncan Street",
         "Address3": "Greenock",
         "Postcode": "PA15 4LY",
-        "Services": "Emergency Contraception\nSexual Assault or Rape\nTesting for Sexually Transmitted Infections",
+        "Telephone": "0141 211 8130",
+        "Services": "Emergency Contraception\r\nSexual Assault or Rape\r\nTesting for Sexually Transmitted Infections",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -173,13 +186,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.94567998589281,-4.766790012254745"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.7666260000000005,
-          55.94590600000001
+          -4.766790012254745,
+          55.94567998589281
         ]
       }
     },
@@ -191,7 +205,8 @@ var SHClinics = {
         "Address2": "200 Springburn Way",
         "Address3": "Glasgow",
         "Postcode": "G21 1TR",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -199,13 +214,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.882569996585396,-4.229189997645648"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.22906,
-          55.882676000000004
+          -4.229189997645648,
+          55.882569996585396
         ]
       }
     },
@@ -217,7 +233,8 @@ var SHClinics = {
         "Address2": "8 New Sneddon Street",
         "Address3": "Paisley",
         "Postcode": "PA3 2AD",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People\nEssential services include...\n\nUrgent sexual health care\nAbortion services\nArchway - Sexual Assault & Rape service\nPEP -Sexual exposure to HIV & Hep B\nEmergency Contraception\nPrEP - return appointments only for people already prescribed PrEP.",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People\r\nEssential services include...\r\n\r\nUrgent sexual health care\r\nAbortion services\r\nArchway - Sexual Assault & Rape service\r\nPEP -Sexual exposure to HIV & Hep B\r\nEmergency Contraception\r\nPrEP - return appointments only for people already prescribed PrEP.",
         "Sunday": NaN,
         "Monday": "09:00 - 17:00",
         "Tuesday": "09:00 - 12:30",
@@ -225,13 +242,14 @@ var SHClinics = {
         "Thursday": "09:00 - 17:00",
         "Friday": "09:00 - 17:00",
         "Saturday": NaN,
-        "ExtraOTInfo": "\nMonday/Wednesday/Thursday/Friday: 09.00 to 17.00\n\nTuesday: 9.00 to 12.30 Appointments\n\nWednesday/Thursday/Friday: 15.30 to 16.30 Walk-in YoungPeople@Sandyford for young people aged 17 and under"
+        "ExtraOTInf": "\r\nMonday/Wednesday/Thursday/Friday: 09.00 to 17.00\r\n\r\nTuesday: 9.00 to 12.30 Appointments\r\n\r\nWednesday/Thursday/Friday: 15.30 to 16.30 Walk-in YoungPeople@Sandyford for young people aged 17 and under",
+        "GoogleDirections": "https://www.google.com/maps/dir//55.848169995401115,-4.4234400170033155"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.423436,
-          55.848115
+          -4.4234400170033155,
+          55.848169995401115
         ]
       }
     },
@@ -243,7 +261,8 @@ var SHClinics = {
         "Address2": "233 Calder Street",
         "Address3": "Glasgow",
         "Postcode": "G42 7DR",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -251,13 +270,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": "09:00 - 17:00",
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.839945000000064,-4.259132328999954"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.257838,
-          55.837219
+          -4.259132328999954,
+          55.839945000000064
         ]
       }
     },
@@ -269,7 +289,8 @@ var SHClinics = {
         "Address2": "Vale of Leven Hospital",
         "Address3": "Alexandria",
         "Postcode": "G83 0UA",
-        "Services": "Contraception\nDrop-in\nEmergency Contraception\nFamily Planning\nFree Condoms\nGUM Clinic\nPregnancy Testing\nTesting for Sexually Transmitted Infections\nYoung People",
+        "Telephone": "0141 211 8130",
+        "Services": "Contraception\r\nDrop-in\r\nEmergency Contraception\r\nFamily Planning\r\nFree Condoms\r\nGUM Clinic\r\nPregnancy Testing\r\nTesting for Sexually Transmitted Infections\r\nYoung People",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -277,13 +298,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.99328001774535,-4.591960024364283"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.591825,
-          55.993086
+          -4.591960024364283,
+          55.99328001774535
         ]
       }
     },
@@ -295,7 +317,8 @@ var SHClinics = {
         "Address2": "Sauchiehall Street",
         "Address3": "Glasgow",
         "Postcode": "G3 7NB",
-        "Services": "Emergency Contraception\nHepatitis\nHIV Counselling\nMen Who Have Sex With Men\nTesting for HIV\nTesting for Sexually Transmitted Infections",
+        "Telephone": "0141 211 8628",
+        "Services": "Emergency Contraception\r\nHepatitis\r\nHIV Counselling\r\nMen Who Have Sex With Men\r\nTesting for HIV\r\nTesting for Sexually Transmitted Infections",
         "Sunday": NaN,
         "Monday": NaN,
         "Tuesday": NaN,
@@ -303,13 +326,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.86559630985803,-4.279351721930682"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.278733,
-          55.865652000000004
+          -4.279351721930682,
+          55.86559630985803
         ]
       }
     },
@@ -321,6 +345,7 @@ var SHClinics = {
         "Address2": "71 Dougrie Drive",
         "Address3": "Glasgow",
         "Postcode": "G45 9AW",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -329,13 +354,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.80564000914137,-4.235150033717588"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.234939,
-          55.805791000000006
+          -4.235150033717588,
+          55.80564000914137
         ]
       }
     },
@@ -347,6 +373,7 @@ var SHClinics = {
         "Address2": "Sauchiehall Street",
         "Address3": "Glasgow",
         "Postcode": "G3 7NB",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -355,13 +382,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.8656900170565,-4.2787599862919885"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.278733,
-          55.865652000000004
+          -4.2787599862919885,
+          55.8656900170565
         ]
       }
     },
@@ -373,6 +401,7 @@ var SHClinics = {
         "Address2": "80-90 Kinfauns Drive",
         "Address3": "Glasgow",
         "Postcode": "G15 7TS",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -381,13 +410,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.909730003173344,-4.371350009167259"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.371052,
-          55.909749
+          -4.371350009167259,
+          55.909730003173344
         ]
       }
     },
@@ -399,6 +429,7 @@ var SHClinics = {
         "Address2": "Saramango Street",
         "Address3": "Kirkintilloch",
         "Postcode": "G66 3BF",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -407,13 +438,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.934380006945865,-4.151669966127572"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.151712,
-          55.934566000000004
+          -4.151669966127572,
+          55.934380006945865
         ]
       }
     },
@@ -425,6 +457,7 @@ var SHClinics = {
         "Address2": "213 Main Street",
         "Address3": "Barrhead",
         "Postcode": "G78 1SW",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -433,13 +466,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.8020600144761,-4.389779970231359"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.386976,
-          55.802455
+          -4.389779970231359,
+          55.8020600144761
         ]
       }
     },
@@ -451,6 +485,7 @@ var SHClinics = {
         "Address2": "9 Auchinlea Road",
         "Address3": "Glasgow",
         "Postcode": "G34 9HQ",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -459,13 +494,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.86870000039633,-4.12602997577099"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.125973999999999,
-          55.868922
+          -4.12602997577099,
+          55.86870000039633
         ]
       }
     },
@@ -477,6 +513,7 @@ var SHClinics = {
         "Address2": "20 Duncan Street",
         "Address3": "Greenock",
         "Postcode": "PA15 4LY",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -485,13 +522,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.94567998589281,-4.766790012254745"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.7666260000000005,
-          55.94590600000001
+          -4.766790012254745,
+          55.94567998589281
         ]
       }
     },
@@ -503,6 +541,7 @@ var SHClinics = {
         "Address2": "200 Springburn Way",
         "Address3": "Glasgow",
         "Postcode": "G21 1TR",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -511,13 +550,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.882569996585396,-4.229189997645648"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.22906,
-          55.882676000000004
+          -4.229189997645648,
+          55.882569996585396
         ]
       }
     },
@@ -529,6 +569,7 @@ var SHClinics = {
         "Address2": "8 New Sneddon Street",
         "Address3": "Paisley",
         "Postcode": "PA3 2AD",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -537,13 +578,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.848169995401115,-4.4234400170033155"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.423436,
-          55.848115
+          -4.4234400170033155,
+          55.848169995401115
         ]
       }
     },
@@ -551,10 +593,11 @@ var SHClinics = {
       "type": "Feature",
       "properties": {
         "Name": "youngpeople@Sandyford Drop In Clinic (< 18's) South East",
-        "Address1": "Govanhill Health Centre\nCommunity Wing",
+        "Address1": "Govanhill Health Centre\r\nCommunity Wing",
         "Address2": "233 Calder Street",
         "Address3": "Glasgow",
         "Postcode": "G42 7DR",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -563,13 +606,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.839945000000064,-4.259132328999954"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.257838,
-          55.837219
+          -4.259132328999954,
+          55.839945000000064
         ]
       }
     },
@@ -581,6 +625,7 @@ var SHClinics = {
         "Address2": "21 Cowglen Road",
         "Address3": "Glasgow",
         "Postcode": "G53 6EW",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -589,13 +634,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.82343998636279,-4.3444399928415285"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.344869999999999,
-          55.823218000000004
+          -4.3444399928415285,
+          55.82343998636279
         ]
       }
     },
@@ -607,6 +653,7 @@ var SHClinics = {
         "Address2": "Kilbowie Road",
         "Address3": "Clydebank",
         "Postcode": "G81 2TQ",
+        "Telephone": "0141 211 8130",
         "Services": "Young People",
         "Sunday": NaN,
         "Monday": NaN,
@@ -615,13 +662,14 @@ var SHClinics = {
         "Thursday": NaN,
         "Friday": NaN,
         "Saturday": NaN,
-        "ExtraOTInfo": NaN
+        "ExtraOTInf": NaN,
+        "GoogleDirections": "https://www.google.com/maps/dir//55.91276999372653,-4.4055599926065545"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.405456,
-          55.912875
+          -4.4055599926065545,
+          55.91276999372653
         ]
       }
     }

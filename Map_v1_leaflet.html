@@ -34,17 +34,20 @@
 
         .box{
             width:100%;
-            
             background:#09325C;
-            opacity: 0.8;
+            opacity: 1;
         }
         .top {
-            height:8%;
+            position:relative;
+            top: 0.2%;
+            height:1px;
         }
         .bottom{
-            position: absolute;
-            bottom: 1%;
-            height:80px;
+            position: relative;
+            bottom: 0;
+            left: 5%;
+            right: 5%;
+            height: 1%;
             width: 90%;
         }
 
@@ -61,14 +64,15 @@
             border-style: solid;
             border-width: 1px;
             border-color: #09325C;
+            border-radius: 5px;
             color: #09325C;
-            padding: 10px 20px;
+            padding: 5px 20px;
             cursor: pointer;
             width: 80%;
             left: 10%;
             right: 10%;
-            height: 5%;
-            margin-bottom:10px;
+            height: 55px;
+            margin-bottom:px;
             opacity: 0.8;
             vertical-align: middle;
             font-weight: bold;
@@ -76,6 +80,28 @@
             font-family: Helvetica;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
             }
+
+        .leaflet-touch .leaflet-bar a {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            background-color: white;
+            font-size: 1.7em
+            }
+
+        .leaflet-bar a:hover {
+            background-color: #f4f4f4;
+        }
+        .leaflet-touch .leaflet-bar button {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            font-size: 1.7em
+            }
+        
+        .leaflet-bar button:hover {
+            background-color: #f4f4f4;
+        }
 
     </style>
 </head>
@@ -105,13 +131,14 @@
 
 
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
-    <script src="2020_07_07_Processed_Pharmacies.js"></script>
-    <script src="2020_07_07_Processed_Dentists.js"></script>
-    <script src="2020_07_07_Processed_GPs.js"></script>
-    <script src="2020_07_07_Processed_Hospitals.js"></script>
-    <script src="2020_07_07_Processed_Opticians.js"></script>
-    <script src="2020_07_07_Processed_SHClinics.js"></script>
-    <script src="mappolygon.js"></script>
+    <script src="Data/2020_07_07_Processed_Pharmacies.js"></script>
+    <script src="Data/2020_07_07_Processed_Dentists.js"></script>
+    <script src="Data/2020_07_07_Processed_GPs.js"></script>
+    <script src="Data/2020_07_07_Processed_Hospitals.js"></script>
+    <script src="Data/2020_07_07_Processed_Opticians.js"></script>
+    <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
+    
+    
     <!–– Script for map containing javascript code begins -->
 
     <script>
@@ -151,13 +178,55 @@
         "Road" : roads_basemap
     };
 
-    // store each service in layer group
+    // Create layer groups that will be  filled by each service and also by each sub category for each service
+
     var Opticians_layer = L.layerGroup(),
+        
         GPs_layer = L.layerGroup(),
+   
         Dentists_layer = L.layerGroup(),
+        Dentists_Saturday = L.layerGroup(),
+
+        Opticians_layer = L.layerGroup(),
+        Opticians_Saturday = L.layerGroup(),
+    
         SHClinics_layer = L.layerGroup(),
+        SHClinics_Cont = L.layerGroup(), 
+        SHClinics_CSS = L.layerGroup(),
+        SHClinics_Drop = L.layerGroup(),
+        SHClinics_EC = L.layerGroup(),
+        SHClinics_FP = L.layerGroup(),
+        SHClinics_FC = L.layerGroup(),
+        SHClinics_GI = L.layerGroup(),
+        SHClinics_GUM = L.layerGroup(),
+        SHClinics_Hep = L.layerGroup(),
+        SHClinics_HV = L.layerGroup(),
+        SHClinics_MM = L.layerGroup(),
+        SHClinics_PT = L.layerGroup(),
+        SHClinics_PS = L.layerGroup(),
+        SHClinics_SR = L.layerGroup(),
+        SHClinics_TOPAR = L.layerGroup(),
+        SHClinics_THV = L.layerGroup(),
+        SHClinics_TSTI = L.layerGroup(),
+        SHClinics_YP = L.layerGroup(),
+
         Pharmacies_layer = L.layerGroup(),
-        Hospitals_layer = L.layerGroup();
+        Pharmacies_Saturday = L.layerGroup(),
+
+        Pharmacies_EC = L.layerGroup(),
+        Pharmacies_FC = L.layerGroup(),
+        Pharmacies_MAS = L.layerGroup(),
+        Pharmacies_NE = L.layerGroup(),
+        Pharmacies_NRT = L.layerGroup(),
+        Pharmacies_PCN = L.layerGroup(),
+        Pharmacies_PTC = L.layerGroup(),
+        Pharmacies_SBS = L.layerGroup(),
+        Pharmacies_SMS = L.layerGroup(),
+        Pharmacies_TfI = L.layerGroup(),
+        Pharmacies_TUTI = L.layerGroup(),
+
+        Hospitals_layer = L.layerGroup(),
+        Hospitals_AandE = L.layerGroup();
 
     // initialise map with max and min zoom, max bounds and the default basemap layer
     var map = L.map('map', {
@@ -170,11 +239,6 @@
     // set the initial view of the map to Glasgow area
     map.setView([ 55.8652, -4.45 ], 10);
 
-    // Add a search bar to the map
-    L.Control.geocoder({
-        position: 'topleft'
-    }).addTo(map);
-
     // add zoom control to the map
     map.zoomControl.setPosition('bottomright');
 
@@ -184,6 +248,28 @@
     // add sidebar to the map. Ensure it has a close button, appears on the left hand side, and 
     // is shown on map start up.
     
+    var sidebar_default_content = "<div class = 'box top'></div> \
+        <h1>Find your local Health Services \
+        </h1><div class ='line'></div>\
+        <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
+        <p> Please choose the service you are looking for today. You can then hover to view the name and telephone number of each location, or click to see extra details. </p>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'>Dentists</button>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</button>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</button>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</button>\
+        <br><br>\
+        <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'>Sexual Health Clinics</button>\
+        <br><br>\
+        </div>"
+
+   
+
     var sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
         position: 'left',
@@ -192,28 +278,24 @@
     
         setTimeout(function () {
             sidebar.show();
-            sidebar.setContent("<div class = 'box top'></div> \
-        <h1>Find your local Health Services \
-        </h1>\
-        <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
-        <p>Whether you are looking for a GP, Dentist, Optician, Pharmacy, Hospital or Sexual Health Service, you can find the address and contact details of the ones closest to you.</p>\
-        <p> Please choose the service you are looking for today. You can then hover to view the name and telephone number of each location, or click to see extra details. </p>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(Dentists_layer)'>Dentists</button>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(Opticians_layer)>Opticians</button>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(Pharmacies_Layer)'>Pharmacies</button>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(Hospitals_layer)'>Hospitals</button>\
-        <br>\
-        <button type='button' class=btn onclick='addLayer(SHClinics_layer)''>Sexual Health Service</button>\
-        <br><br>\
-        <div class = 'box bottom'></div>\
-        </div>")
+            sidebar.setContent(sidebar_default_content)
             }, 500)     
+
+    // add a button control for toggling the sidebar on and off
+    L.easyButton('fa fa-home', function(btn, map){
+        if (sidebar.isVisible() == true) {
+            $("#sidebar").hide().fadeIn('slow');
+        } else {
+            sidebar.show();
+        }
+        sidebar.setContent(sidebar_default_content)
+        }).addTo(map);
+
+     // Add a search bar to the map
+     L.Control.geocoder({
+        position: 'topleft'
+    }).addTo(map);
+
 
     // add user location control to the map
     var lc = L.control.locate({
@@ -235,10 +317,7 @@
         console.log(user_location);
     }
 
-
     map.on('locationfound', onLocationfound);
-
-  
 
     // load polygon on the map and grey out areas around Greater Glasgow and Clyde
     /*var map_poly = L.geoJSON(mappolygons, {
@@ -255,58 +334,15 @@
             'maxWidth': '200',
             'className' : 'custom'
             }
-
-    
-
-    /*
-    // create a function for styling points and adding them to the map
-    function addPoints(service, layerName, figureURL, popup_list) {
-        
-        // add icons for the services and style them appropriately
-        var mapIcon = L.icon({
-            iconUrl: figureURL,
-            iconSize: [30, 30],
-            iconAnchor: [15,15],
-            popupAnchor: [0, -15],
-        });
-
-        // add the geoJSON files to the defined layer groups and run the on each feature function
-        L.geoJSON(service, {
-            onEachFeature: onEachFeature,
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {icon: mapIcon});
-            }
-        }).addTo(layerName);
-    }*/
-
-    
-    // create a function for styling points and adding them to the map
-    function addIcon(figureURL) {
-        // add icons for the services and style them appropriately
-        var mapIcon = L.icon({
-            iconUrl: figureURL,
-            iconSize: [30, 30],
-            iconAnchor: [15,15],
-            popupAnchor: [0, -15],
-        });
-    }
-
-
-
    
     
-    // add a button control for toggling the sidebar on and off
-    L.easyButton("fa fa-info-circle", function(btn, map){
-        sidebar.toggle();
-        sidebar.setContent("<div class = 'box top'></div><h1>Scotland Health Service Finder</h1><h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4><p>Whether you are looking for a GP, Dentist, Optician, Pharmacy, Hospital or Sexual Health Service, you can find the address and contact details of the ones closest to you.</p><p> Please begin by selecting an option within the legend. You can hover to view the name and telephone number of each location, or click to see extra details! </p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class = 'box bottom'></div></div>")
-    }).addTo(map);
+    
 
 
-    function saveAsPDF() {
-        
+    function saveAsPDF(Name) {
         var opt = {
             margin:       1,
-            filename:     'MyLocalService.pdf',
+            filename:     Name + '.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
@@ -320,229 +356,209 @@
         html2pdf().set(opt).from(element2).save()
     }
 
+
+
+    // create a function for styling points and adding them to the map
+    function addIcon(figureURL) {
+        // add icons for the services and style them appropriately
+        return L.icon({
+            iconUrl: figureURL,
+            iconSize: [30, 30],
+            iconAnchor: [15,15],
+            popupAnchor: [0, -15]
+        });
+    };
+
+    var DentistString;
+    var GpString;
+
+    function createSidebarContent(fp) {
+        
+        GpString = "<div class = 'box top'></div><h2>" + 
+                        fp.Name + 
+                        "</h2><div class ='line'></div><b><br>Address<br></b>" + 
+                        fp.Address1 + 
+                        "<br>" + 
+                        fp.Postcode + 
+                        "<br><br><div class ='line'></div><br>" 
+                        + "<b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br><br>" +
+                        "<div class ='line'></div><br><b>Opening Times</b>"+
+                        "<br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Monday + 
+                        "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Tuesday + 
+                        "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Wednesday + 
+                        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Thursday + 
+                        "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Friday + 
+                        "<br>Saturday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Saturday + 
+                        "<br><br><br>" +
+                        "<div class ='line'></div><br>"+
+                        "<a href=" + fp.Website + " target=_blank>Visit Website</a>"  + 
+                        "<br><br><div class ='line'></div><br>"+
+                        "<a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>" +
+                        "<br><br><div class ='line'></div>" +
+                        "<br><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a>" 
+
+    };
+
+
+    function updateSidebar(fp) {
+
+        if (sidebar.isVisible() == true) {
+            $("#sidebar").hide().fadeIn('slow');
+        } else {
+            sidebar.show();
+        }
+        createSidebarContent(fp);
+        sidebar.setContent(GpString);
+    };
+
+    function setPopUpContent(fp) {
+        var PopupString = "<h4>"+ fp.Name + "</h4>" + fp.Address1 + "<br>" + fp.Postcode + "<br><a href=tel:"
+            + fp.Telephone+ ">" + fp.Telephone + "</a><br><br>Click for more info"
+        return PopupString
+    }
+
+
     // add the GP data and set the sidebar and popup content 
-    var GPInfo = L.geoJSON(GPs, {
+    L.geoJSON(GPs, {
+        
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
             
-            layer.on('click', function (e) {
-                //sidebar.show();
-                var Name = feature.properties.Name
-                
-                if (sidebar.isVisible() == true) {
-                    $("#sidebar").hide().fadeIn('slow');
-                } else {
-                    sidebar.show();
-                }
-                
-               sidebar.setContent(
-                    "<div class = 'box top'></div><h2>" + 
-                    fp.Name + 
-                    "</h2><div class ='line'></div><b><br>Address<br></b>" + 
-                    feature.properties.Address1 + 
-                    "<br>" + 
-                    fp.Postcode + 
-                    "<br><br><div class ='line'></div><br>" 
-                    + "<b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br><br>" +
-                    "<div class ='line'></div><br><b>Opening Times</b>"+
-                    "<br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Monday + 
-                    "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Tuesday + 
-                    "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Wednesday + 
-                    "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Thursday + 
-                    "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Friday + 
-                    "<br><br><br>" +
-                    "<div class ='line'></div><br>"+
-                    "<a href=" + fp.Website + " target=_blank>Visit Website</a>"  + 
-                    "<br><br><div class ='line'></div><br>"+
-                    "<a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>" +
-                    "<br><br><div class ='line'></div>" +
-                    "<br><a href='#sidebar' <span onClick='saveAsPDF()' >Save as PDF</span></a>" +
-                    "<br><br><div class = 'box bottom'></div><h2><br><br>"
-                )
-                 
-            });
-            
-
-            layer.bindPopup("<h4>"+ fp.Name + "</h4>" + fp.Address1 + "<br>" + fp.Postcode + "<br><a href=tel:"
-            + fp.Telephone+ ">" + fp.Telephone + "</a><br><br>Click for more info" , customOptions);
-
-            layer.on('mouseover', function () {
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { 
                 this.openPopup()
             });
-        },
+            },
 
             pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/GPs.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/GPs.png')});
         }
     }).addTo(GPs_layer);
-    
-    
-    
-    // add the Dentists data and set the sidebar and popup content
 
+
+
+    // add the Dentists data and set the sidebar and popup content
     L.geoJSON(Dentists, {
         onEachFeature: function(feature, layer) {
-            layer.on('click', function (e) {
-            
-            sidebar.show();
-            sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-        "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><b>Opening Times</b><br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
-        feature.properties.Monday + "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Tuesday + "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Wednesday + 
-        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Thursday + "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Friday + "<br> " 
-        + "<br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-        + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
-        });
-        
-        layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
+            var fp = feature.properties;
 
-        layer.on('mouseover', function () {
-            this.openPopup()
-        });
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { this.openPopup()});
+            
+            if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday);
         },
+        
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/Dentists.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/Dentists.png')});
         }
     }).addTo(Dentists_layer);
 
+
+
     L.geoJSON(Opticians, {
         onEachFeature: function(feature, layer) {
-            layer.on('click', function (e) {
-            
-            sidebar.show();
-            sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-        "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><b>Opening Times</b><br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
-        feature.properties.Monday + "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Tuesday + "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Wednesday + 
-        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Thursday + "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Friday + "<br> " 
-        + "<br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-        + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
-        });
-        
-        layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
+            var fp = feature.properties;
 
-        layer.on('mouseover', function () {
-            this.openPopup()
-        });
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { this.openPopup()});
+            
+            if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);
         },
+        
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/Opticians.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/Opticians.png')});
         }
     }).addTo(Opticians_layer);
 
+
     L.geoJSON(Pharmacies, {
         onEachFeature: function(feature, layer) {
-            layer.on('click', function (e) {
             
-            sidebar.show();
-            sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-        "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><b>Opening Times</b><br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
-        feature.properties.Monday + "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Tuesday + "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Wednesday + 
-        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Thursday + "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Friday + "<br> " 
-        + "<br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-        + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
-        });
-        
-        layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
-
-        layer.on('mouseover', function () {
-            this.openPopup()
-        });
+            var fp = feature.properties;
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { this.openPopup()});
+            
+            if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
+            var serv = fp.Services;
+            console.log(typeof serv);
+            if (serv == serv && serv.includes('Emergency Contraception')) layer.addTo(Pharmacies_EC);
+            if (serv == serv && serv.includes('Free Condoms')) layer.addTo(Pharmacies_FC);
+            if (serv == serv && serv.includes('Minor Ailments Scheme')) layer.addTo(Pharmacies_MAS);
+            if (serv == serv && serv.includes('Needle Exchange')) layer.addTo(Pharmacies_NE);
+            if (serv == serv && serv.includes('Nicotine Replacement Therapy')) layer.addTo(Pharmacies_NRT);
+            if (serv == serv && serv.includes('Palliative Care Network')) layer.addTo(Pharmacies_PCN);
+            if (serv == serv && serv.includes('Supervised Buprenorphine Service')) layer.addTo(Pharmacies_SBS);
+            if (serv == serv && serv.includes('Supervised Methadone Supply')) layer.addTo(Pharmacies_SMS);
+            if (serv == serv && serv.includes('Treatment For Impetigo')) layer.addTo(Pharmacies_TfI);
+            if (serv == serv && serv.includes('Treatment for Urinary Tract Infection')) layer.addTo(Pharmacies_TUTI);
         },
+        
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/Pharmacies.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/Pharmacies.png')});
         }
     }).addTo(Pharmacies_layer);
 
+
     L.geoJSON(Hospitals, {
         onEachFeature: function(feature, layer) {
-            layer.on('click', function (e) {
-            
-            sidebar.show();
-            sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-        "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-        + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
-        });
-        
-        layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
 
-        layer.on('mouseover', function () {
-            this.openPopup()
-        });
+            var fp = feature.properties;
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { this.openPopup()})
+
+            AE = fp['A&E'];
+            if (AE == AE) layer.addTo(Hospitals_AandE);
         },
+        
+             
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/Hospitals.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/Hospitals.png')});
         }
     }).addTo(Hospitals_layer);
 
-    L.geoJSON(SHClinics, {
-        onEachFeature: function(feature, layer) {
-            layer.on('click', function (e) {
-            
-            sidebar.show();
-            
-            sidebar.setContent("<div class = 'box top'></div><h2>"+ feature.properties.Name + "</h2><div class ='line'></div><b><br>Address<br></b>" + feature.properties.Address1 + 
-        "<br>" + feature.properties.Postcode + "<br><br><div class ='line'></div><br>" + "<b>Telephone</b><br> <a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone+"</a><br><br><div class ='line'></div><br><b>Opening Times</b><br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
-        feature.properties.Monday + "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Tuesday + "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Wednesday + 
-        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Thursday + "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + feature.properties.Friday + "<br> " 
-        + "<br><br><div class ='line'></div><br><a href=" + feature.properties.Website + " target=_blank>Visit Website</a>"  + "<br><br><div class ='line'></div><br><a href=https://www.google.com/maps/dir//" 
-        + ((feature.properties.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><br><br><br><br><br><br><br><div class = 'box bottom'></div>");
-        });
-        
-        layer.bindPopup("<h4>"+ feature.properties.Name + "</h4>" + feature.properties.Address1 + "<br>" + feature.properties.Postcode + "<br><a href=tel:"
-        + feature.properties.Telephone+ ">" + feature.properties.Telephone + "</a><br><br>Click for more info" , customOptions);
 
-        layer.on('mouseover', function () {
-            this.openPopup()
-        });
+    L.geoJSON(SHClinics, {
+
+        onEachFeature: function(feature, layer) {
+
+            var fp = feature.properties;
+            layer.on('click', function (e) {updateSidebar(fp); });
+            layer.bindPopup(setPopUpContent(fp) , customOptions);
+            layer.on('mouseover', function () { this.openPopup()})
+
+            var serv = fp.Services
+
+            if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
+            if (serv == serv && serv.includes('Counselling and Support Services')) layer.addTo(SHClinics_CSS);
+            if (serv == serv && serv.includes('Drop-in')) layer.addTo(SHClinics_Drop);
+            if (serv == serv && serv.includes('Emergency Contraception')) layer.addTo(SHClinics_EC);
+            if (serv == serv && serv.includes('Family Planning')) layer.addTo(SHClinics_FP);
+            if (serv == serv && serv.includes('Free Condoms')) layer.addTo(SHClinics_FC);
+            if (serv == serv && serv.includes('Gender Identity')) layer.addTo(SHClinics_GI);
+            if (serv == serv && serv.includes('GUM Clinic')) layer.addTo(SHClinics_GUM);
+            if (serv == serv && serv.includes('Hepatitis')) layer.addTo(SHClinics_Hep);
+            if (serv == serv && serv.includes('HIV Counselling')) layer.addTo(SHClinics_HV);
+            if (serv == serv && serv.includes('Men Who Have Sex With Men')) layer.addTo(SHClinics_MM);
+            if (serv == serv && serv.includes('Pregnancy Testing')) layer.addTo(SHClinics_PT);
+            if (serv == serv && serv.includes('Psychosexual Service')) layer.addTo(SHClinics_PS);
+            if (serv == serv && serv.includes('Sexual Assault or Rape')) layer.addTo(SHClinics_SR);
+            if (serv == serv && serv.includes('Termination of Pregnancy and Referral')) layer.addTo(SHClinics_TOPAR);
+            if (serv == serv && serv.includes('Testing for HIV')) layer.addTo(SHClinics_THV);
+            if (serv == serv && serv.includes('Testing for Sexually Transmitted Infections')) layer.addTo(SHClinics_TSTI);
+            if (serv == serv && serv.includes('Young People')) layer.addTo(SHClinics_YP);
         },
+        
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: L.icon({
-                                            iconUrl: 'MapFigures/SHClinics.png',
-                                            iconSize: [30, 30],
-                                            iconAnchor: [15,15],
-                                            popupAnchor: [0, -15]
-            })
-        });
+            return L.marker(latlng, {icon: addIcon('MapFigures/SHClinics.png')});
         }
     }).addTo(SHClinics_layer);
+
+    
     /*
     // run the add Points function for each service
     addPoints(Opticians, Opticians_layer, 'MapFigures/Opticians.png', ['Name', 'Address1', 'Monday', 'Tuesday'])
@@ -563,33 +579,103 @@
         "Hospitals": Hospitals_layer,
         "Sexual Health Clinics": SHClinics_layer
     };
-        
 
-    var pharmacyServices = {
 
+    var DentistfilterLayers = {
+        "All": Dentists_layer,
+        "Open Saturdays": Dentists_Saturday
     }
 
-    var saturdayOpening = {
-        "Open on Saturdays": 
+    var OpticiansfilterLayers = {
+        "All": Opticians_layer,
+        "Open Saturdays": Opticians_Saturday
     }
+
+    var PharmaciesfilterLayers = {
+        "All": Pharmacies_layer,
+        "Open Saturdays": Pharmacies_Saturday,
+        "Emergency Contraception": Pharmacies_EC,
+        "Free Condoms": Pharmacies_FC,
+        "Minor Ailments Scheme": Pharmacies_MAS,
+        "Needle Exchange": Pharmacies_NE,
+        "Nicotine Replacement Therapy": Pharmacies_NRT,
+        "Palliative Care Network": Pharmacies_PCN,
+        'Supervised Buprenorphine Service': Pharmacies_SBS,
+        "Supervised Methadone Supply": Pharmacies_SMS,
+        "Treatment for Impetigo": Pharmacies_TfI,
+        "Treatment for Urinary Tract Infection":Pharmacies_TUTI
+    }
+
+    var HospitalsfilterLayers = {
+        "All": Hospitals_layer,
+        "Accidents & Emergency and Minor Injuries Units" : Hospitals_AandE
+    }
+
+    var SHClinicsfilterLayers = {
+        "All": SHClinics_layer,
+        "Contraception": SHClinics_Cont,
+        "Counselling and Support Services": SHClinics_CSS,
+        "Drop-in": SHClinics_Drop,
+        "Emergency Contraception": SHClinics_EC,
+        "Family Planning": SHClinics_FP,
+        "Free Condoms": SHClinics_FC,
+        "Gender Identity": SHClinics_GI,
+        "GUM Clinic": SHClinics_GUM,
+        "Hepatitis": SHClinics_Hep,
+        "HIV Counselling": SHClinics_HV,
+        "Men Who Have Sex With Men": SHClinics_MM,
+        "Pregnancy Testing": SHClinics_PT,
+        "Psychosexual Service": SHClinics_PS,
+        "Sexual Assault or Rape" : SHClinics_SR,
+        "Termination of Pregnancy and Referral": SHClinics_TOPAR,
+        "Testing for HIV": SHClinics_THV,
+        "Testing for STIs": SHClinics_TSTI,
+        "Young People": SHClinics_YP
+    }
+
     // add a legend control for the overlay maps to allow users to swap between services 
-    L.control.layers(overlayMaps).addTo(map);
-    
-    L.control.layers(baseMaps).addTo(map);
 
-    // add responsive side bar to the map
-    //var sidebar = L.control.sidebar('sidebar').addTo(map);
-   
+    function Dentistfilters() {
+        if (map.hasLayer(Dentists_layer) == true) {
+            L.control.layers(DentistfilterLayers).addTo(map);
+        }
+    }
+
+    L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
+
     
-    function addLayer(layer) {
+    var DentistControl = L.control.layers(DentistfilterLayers, null, {collapsed: false});
+    var OpticiansControl = L.control.layers(OpticiansfilterLayers, null, {collapsed: false});
+    var PharmaciesControl = L.control.layers(PharmaciesfilterLayers, null, {collapsed: true});
+    var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: false});
+    var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: false});
+
+
+    function addLayer(servicelayer, Control) {
+       
         sidebar.toggle();
-        map.addLayer(layer)    
+        
+        var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
+        
+        map.eachLayer(function (layer) {
+            if (layer !== outdoor_basemap) {
+            map.removeLayer(layer)
+            }
+        })
+      
+        var control;
+        for (control in layer_control_list) {
+            map.removeControl(layer_control_list[control]);
+        }
+
+        map.addLayer(servicelayer);
+ 
+        if (Control) {
+            Control.addTo(map); 
+        };
      };
 
-     function addDentistsLayer() {
-        map.removeLayer(GPs_layer);
-        map.addLayer(Dentists_layer)    
-     };
+     
 
     </script>
 
