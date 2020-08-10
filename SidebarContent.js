@@ -133,6 +133,8 @@ function setPopUpContent(fp) {
     }
 
     if (fp.Telephone == fp.Telephone) {
+        
+        fp.Telephone = fp.Telephone .replace(/-/g," ")
         var Telephone = "<a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br>"
     } else {
         Telephone = ''
