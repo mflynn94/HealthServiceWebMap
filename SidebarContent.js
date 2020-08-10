@@ -83,7 +83,7 @@ function createSidebarContent(fp) {
     // Check if there is extra opening times information (by checking the property is not equal to NaN). If there is, add this to the Opening Times string.
     // If there isn't, check to see if there was any other information added to this string other than the title, by checking it is over 50 characters.
     // If not, define the OpeningTimes variable as empty, so that no information is shown in the sidebar.
-    if (fp.ExtraOTInfo == fp.ExtraOTInfo) {
+    if (fp.ExtraOTInfo && fp.ExtraOTInfo == fp.ExtraOTInfo) {
         if (fp.ExtraOTInfo.includes("-")) {
             fp.ExtraOTInfo = fp.ExtraOTInfo.replace("-"," - ");
         }
@@ -141,7 +141,7 @@ function setPopUpContent(fp) {
     }
 
     PopupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
-    "<br><a href='#' " + "<span onClick='openSidebar()'><b>Further details...</b></span></a><br>"
+    "<br><a href='#' " + "<span onClick='openSidebar()'><b>More details...</b></span></a><br>"
     
     return PopupString
 }

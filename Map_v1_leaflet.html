@@ -33,6 +33,8 @@
             border-color: #09325C;
             opacity: 1;
             color: #09325C;
+            font-family: Helvetica;
+            font-size: 1.1em;
         }
 
         
@@ -550,16 +552,21 @@
             }
         }
 
+        function setmapview(e) {
+                    if (map.getZoom() < 13) {
+                        map.setView(e.latlng,13)
+                    } else {
+                        map.setView(e.latlng, map.getZoom())
+                    }
+                }
+
     // add the GP data and set the sidebar and popup content 
     L.geoJSON(GPs, {
         
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
-        
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
-            
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             },
 
             pointToLayer: function (feature, latlng) {
@@ -576,7 +583,7 @@
 
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday);
         },
@@ -594,7 +601,7 @@
 
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);
         },
@@ -611,7 +618,7 @@
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
             var serv = fp.Services;
@@ -640,13 +647,13 @@
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
 
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(Hospitals_AandE);
         },
         
-             
+    
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: addIcon('MapFigures/Hospitals.png')});
         }
@@ -660,7 +667,7 @@
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             var serv = fp.Services
 
             if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
@@ -769,7 +776,7 @@
     var DentistControl = L.control.layers(DentistfilterLayers, null, {collapsed: false});
     var OpticiansControl = L.control.layers(OpticiansfilterLayers, null, {collapsed: false});
     var PharmaciesControl = L.control.layers(PharmaciesfilterLayers, null, {collapsed: true});
-    var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: false});
+    var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: true});
     var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: true});
 
 
@@ -823,8 +830,8 @@
     legend.onAdd = function (map) {
         var div = L.DomUtil.create('div', 'info legend');
         div.innerHTML = "<div class='dropdown'>" +
-        "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
-        "<div id='myDropdown' class='dropdown-content'>" +
+            "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
+            "<div id='myDropdown' class='dropdown-content'>" +
             "<a href='#' onClick='addLayer(GPs_layer)'>GPs</a>" +
             "<a href='#' onClick='addLayer(Dentists_layer, DentistControl)'>Dentists</a>" +
             "<a href='#' onClick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</a>" +
@@ -833,9 +840,11 @@
             "<a href='#' onClick='addLayer(SHClinics_layer, SHClinicsControl)'>SH Clinics</a></div></div></div>" 
         
             div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-        return div;
+        
+            return div;
     };
     legend.addTo(map);
+
 </script>
     </body>
 </html>
