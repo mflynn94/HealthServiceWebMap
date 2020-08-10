@@ -43,7 +43,7 @@
             height:1px;
         }
         .bottom{
-            position: relative;
+            position: absolute;
             bottom: 0;
             left: 5%;
             right: 5%;
@@ -51,12 +51,7 @@
             width: 90%;
         }
 
-        .line{
-            width: 100%;
-            height:0.1%;
-            background:#09325C;
-            opacity: 0.5;
-        }
+        
 
         .btn {
             position: relative;
@@ -81,6 +76,10 @@
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
             }
 
+        .btn:hover {
+            background-color: #f4f4f4;
+        }
+
         .leaflet-touch .leaflet-bar a {
             width: 35px;
             height: 35px;
@@ -103,6 +102,118 @@
             background-color: #f4f4f4;
         }
 
+        .leaflet-control-layers {
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            bottom: 10px;
+            background: #fff;
+            border-radius: 5px;
+            }
+        .leaflet-control-layers-toggle {
+            width: 36px;
+            height: 36px;
+            }
+        .leaflet-retina .leaflet-control-layers-toggle {
+            background-size: 26px 26px;
+            }
+        .leaflet-touch .leaflet-control-layers-toggle {
+            width: 44px;
+            height: 44px;
+            }
+        .leaflet-control-layers .leaflet-control-layers-list,
+        .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+            display: none;
+            }
+        .leaflet-control-layers-expanded .leaflet-control-layers-list {
+            display: block;
+            position: relative;
+            text-align: right;
+            }
+        .leaflet-control-layers-expanded {
+            padding: 6px 10px 6px 6px;
+            color: #333;
+            background: #fff;
+            font-family: Helvetica;
+            font-size: 1.2em;
+            }
+
+        input[type="radio"] {
+            background-color: #333;
+            float: right;
+            
+        }
+        .leaflet-control-layers-scrollbar {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding-right: 5px;
+            }
+        .leaflet-control-layers-selector {
+            margin-top: 2px;
+            position: relative;
+            top: 1px;
+            }
+        .leaflet-control-layers label {
+            display: block;
+            }
+        .leaflet-control-layers-separator {
+            height: 0;
+            border-top: 1px solid #ddd;
+            margin: 5px -10px 5px -6px;
+            }
+
+        dl {
+            width: 100%;
+            overflow: hidden;
+            background:#fff;
+            padding-left: 65px;
+            margin: 0
+        }
+
+        dt {
+            
+            float:left;
+            width: 30%;
+            left: 0;
+            padding-left: 0;
+            margin: 0
+        }
+        dd {
+            position:relative;
+            float: right;
+            width: 70%;
+            padding: 0;
+            margin: 0
+        }
+
+        
+        .i {
+            
+            vertical-align:middle;
+            right:20px;
+            padding: 20;
+            margin:10px
+            
+        }
+
+        .sidetext {
+            display: inline-block;
+            width:60%;
+            padding-left: 40px;
+            margin: 0
+        }
+
+        .line{
+            width: 100%;
+            height:0.1%;
+            background:#09325C;
+            opacity: 0.5;
+            position: relative;
+            display:block;
+        }
+
+        .test {
+            display: flex;
+            align-items:center;
+        }
     </style>
 </head>
 
@@ -123,21 +234,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>    
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
-    <!--<script src="Plugins/Leaflet.EasyButton/src/easy-button.js"></script>-->
+    
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
-
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
+
     <script src="Data/2020_07_07_Processed_Pharmacies.js"></script>
     <script src="Data/2020_07_07_Processed_Dentists.js"></script>
     <script src="Data/2020_07_07_Processed_GPs.js"></script>
     <script src="Data/2020_07_07_Processed_Hospitals.js"></script>
     <script src="Data/2020_07_07_Processed_Opticians.js"></script>
     <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
-    
+    <script src="Plugins/Leaflet.Control.Custom.js"></script>
     
     <!–– Script for map containing javascript code begins -->
 
@@ -301,10 +411,8 @@
     var lc = L.control.locate({
         options: {
             circleStyle: {
-                fillOpacity: 0
+                fillOpacity: 1
             },
-            keepCurrentZoomLevel: true,
-            flyTo: true
         }
     }).addTo(map);
 
@@ -376,26 +484,27 @@
         
         GpString = "<div class = 'box top'></div><h2>" + 
                         fp.Name + 
-                        "</h2><div class ='line'></div><b><br>Address<br></b>" + 
+                        "</h2><div class ='line'></div><div class='test'><i class='fa fa-map-marker fa-3x' aria-hidden='true'></i> <div class = sidetext><span style=''><b><br>Address<br></b>" + 
                         fp.Address1 + 
                         "<br>" + 
                         fp.Postcode + 
-                        "<br><br><div class ='line'></div><br>" 
-                        + "<b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br><br>" +
+                        "</div></span></div><br><div class ='line'></div><br>" 
+                        + "<div class='test'><i class='fa fa-phone fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a></div><span></div><br>" +
                         "<div class ='line'></div><br><b>Opening Times</b>"+
-                        "<br><br>Monday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Monday + 
-                        "<br>Tuesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Tuesday + 
-                        "<br>Wednesday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Wednesday + 
-                        "<br>Thursday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Thursday + 
-                        "<br>Friday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Friday + 
-                        "<br>Saturday: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + fp.Saturday + 
-                        "<br><br><br>" +
+                        "<br><br><dl><dt>Monday:</dt> <dd>" + fp.Monday + "</dd>" +
+                        "<dt>Tuesday:</dt> <dd>" + fp.Tuesday + "</dd>" +
+                        "<dt>Wednesday:</dt> <dd>" + fp.Wednesday + "</dd>" + 
+                        "<dt>Thursday:</dt> <dd>" + fp.Thursday + "</dd>" +
+                        "<dt>Friday:</dt> <dd>" + fp.Friday + "</dd>" +
+                        "<dt>Saturday:</dt> <dd>" + fp.Saturday + "</dd></dl>" +
+                        "<br>" +
                         "<div class ='line'></div><br>"+
-                        "<a href=" + fp.Website + " target=_blank>Visit Website</a>"  + 
-                        "<br><br><div class ='line'></div><br>"+
-                        "<a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a>" +
-                        "<br><br><div class ='line'></div>" +
-                        "<br><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a>" 
+                        "<div class='test'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></span></div></div>"  + 
+                        "<br><div class ='line'></div><br>"+
+                        "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Directions</b><br><a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><span></div></div>" +
+                        "<br><div class ='line'></div>" +
+                        "<br><div class='test'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
+                        "<br><div class ='line'></div>"
 
     };
 
@@ -582,8 +691,8 @@
 
 
     var DentistfilterLayers = {
-        "All": Dentists_layer,
-        "Open Saturdays": Dentists_Saturday
+        "<b>All</b>": Dentists_layer,
+        "<i>Open Saturdays</i>": Dentists_Saturday
     }
 
     var OpticiansfilterLayers = {
@@ -592,8 +701,8 @@
     }
 
     var PharmaciesfilterLayers = {
-        "All": Pharmacies_layer,
-        "Open Saturdays": Pharmacies_Saturday,
+        "<b>All</b>": Pharmacies_layer, 
+        "<i>Open Saturdays</i>": Pharmacies_Saturday,
         "Emergency Contraception": Pharmacies_EC,
         "Free Condoms": Pharmacies_FC,
         "Minor Ailments Scheme": Pharmacies_MAS,
@@ -607,12 +716,12 @@
     }
 
     var HospitalsfilterLayers = {
-        "All": Hospitals_layer,
+        "<b>All</b>": Hospitals_layer,
         "Accidents & Emergency and Minor Injuries Units" : Hospitals_AandE
     }
 
     var SHClinicsfilterLayers = {
-        "All": SHClinics_layer,
+        "<b>All</b>": SHClinics_layer,
         "Contraception": SHClinics_Cont,
         "Counselling and Support Services": SHClinics_CSS,
         "Drop-in": SHClinics_Drop,
@@ -648,7 +757,7 @@
     var OpticiansControl = L.control.layers(OpticiansfilterLayers, null, {collapsed: false});
     var PharmaciesControl = L.control.layers(PharmaciesfilterLayers, null, {collapsed: true});
     var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: false});
-    var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: false});
+    var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: true});
 
 
     function addLayer(servicelayer, Control) {
@@ -658,7 +767,7 @@
         var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
         
         map.eachLayer(function (layer) {
-            if (layer !== outdoor_basemap) {
+            if ((layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== roads_basemap)) {
             map.removeLayer(layer)
             }
         })
@@ -675,6 +784,57 @@
         };
      };
 
+    L.Control.Custom({
+        position: 'topright',
+        content : '<button type="button" class="btn btn-default">'+
+                '    <i class="fa fa-crosshairs"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-info">'+
+                '    <i class="fa fa-compass"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-primary">'+
+                '    <i class="fa fa-spinner fa-pulse fa-fw"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-danger">'+
+                '    <i class="fa fa-times"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-success">'+
+                '    <i class="fa fa-check"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-warning">'+
+                '    <i class="fa fa-exclamation-triangle"></i>'+
+                '</button>',
+        classes : 'btn-group-vertical btn-group-sm',
+        style   :
+        {
+            margin: '10px',
+            padding: '0px 0 0 0',
+            cursor: 'pointer',
+        },
+        datas   :
+        {
+            'foo': 'bar',
+        },
+        events:
+        {
+            click: function(data)
+            {
+                console.log('wrapper div element clicked');
+                console.log(data);
+            },
+            dblclick: function(data)
+            {
+                console.log('wrapper div element dblclicked');
+                console.log(data);
+            },
+            contextmenu: function(data)
+            {
+                console.log('wrapper div element contextmenu');
+                console.log(data);
+            },
+        }
+    })
+    .addTo(map);
      
 
     </script>
