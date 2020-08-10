@@ -535,6 +535,15 @@
         });
     };
 
+    function bigIcon(figureURL) {
+        // add icons for the services and style them appropriately
+        return L.icon({
+            iconUrl: figureURL,
+            iconSize: [40, 40],
+            iconAnchor: [20,20],
+            popupAnchor: [0, -15]
+        });
+    };
  
     function updateSidebar(fp) {
 
@@ -567,8 +576,15 @@
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , customOptions);
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
+            
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/GPs.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/GPs.png'));//marker object is overwritten in the for loop each time                
+                });
             },
-
             pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: addIcon('MapFigures/GPs.png')});
         }
@@ -787,7 +803,7 @@
         var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
         
         map.eachLayer(function (layer) {
-            if ((layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== roads_basemap)) {
+            if ((layer !== lc._layer) && (layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== roads_basemap)) {
             map.removeLayer(layer)
             }
         })
@@ -801,7 +817,10 @@
  
         if (Control) {
             Control.addTo(map); 
-        };
+        }
+        console.log(map.getCenter());
+        
+                
      };
      
 
