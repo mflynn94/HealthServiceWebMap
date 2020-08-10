@@ -139,7 +139,7 @@ function setPopUpContent(fp) {
     }
 
     PopupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
-    "<br><a href='#sidebar' " + "<span onClick='openSidebar()'><b>Further details...</b></span></a><br>"
+    "<br><a href='#' " + "<span onClick='openSidebar()'><b>Further details...</b></span></a><br>"
     
     return PopupString
 }
