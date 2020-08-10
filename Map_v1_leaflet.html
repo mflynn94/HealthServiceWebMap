@@ -161,17 +161,18 @@
             }
 
         dl {
-            width: 100%;
+            width: 80%;
             overflow: hidden;
             background:#fff;
-            padding-left: 65px;
-            margin: 0
+            padding-left: 25px;
+            margin: 0;
+            font-size: 0.95em;
         }
 
         dt {
             
             float:left;
-            width: 30%;
+            width: 40%;
             left: 0;
             padding-left: 0;
             margin: 0
@@ -179,7 +180,7 @@
         dd {
             position:relative;
             float: right;
-            width: 70%;
+            width: 60%;
             padding: 0;
             margin: 0
         }
@@ -199,6 +200,12 @@
             width:60%;
             padding-left: 40px;
             margin: 0
+        }
+
+        .lunchtext {
+            display: block;
+            padding-left:25px;
+            padding-bottom: 5px;
         }
 
         .line{
@@ -248,6 +255,7 @@
     <script src="Data/2020_07_07_Processed_Opticians.js"></script>
     <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
     <script src="Plugins/Leaflet.Control.Custom.js"></script>
+    <script src="SidebarContent.js"></script>
     
     <!–– Script for map containing javascript code begins -->
 
@@ -477,38 +485,7 @@
         });
     };
 
-    var DentistString;
-    var GpString;
-
-    function createSidebarContent(fp) {
-        
-        GpString = "<div class = 'box top'></div><h2>" + 
-                        fp.Name + 
-                        "</h2><div class ='line'></div><div class='test'><i class='fa fa-map-marker fa-3x' aria-hidden='true'></i> <div class = sidetext><span style=''><b><br>Address<br></b>" + 
-                        fp.Address1 + 
-                        "<br>" + 
-                        fp.Postcode + 
-                        "</div></span></div><br><div class ='line'></div><br>" 
-                        + "<div class='test'><i class='fa fa-phone fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a></div><span></div><br>" +
-                        "<div class ='line'></div><br><b>Opening Times</b>"+
-                        "<br><br><dl><dt>Monday:</dt> <dd>" + fp.Monday + "</dd>" +
-                        "<dt>Tuesday:</dt> <dd>" + fp.Tuesday + "</dd>" +
-                        "<dt>Wednesday:</dt> <dd>" + fp.Wednesday + "</dd>" + 
-                        "<dt>Thursday:</dt> <dd>" + fp.Thursday + "</dd>" +
-                        "<dt>Friday:</dt> <dd>" + fp.Friday + "</dd>" +
-                        "<dt>Saturday:</dt> <dd>" + fp.Saturday + "</dd></dl>" +
-                        "<br>" +
-                        "<div class ='line'></div><br>"+
-                        "<div class='test'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></span></div></div>"  + 
-                        "<br><div class ='line'></div><br>"+
-                        "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Directions</b><br><a href=https://www.google.com/maps/dir//" + ((fp.Postcode).replace(/\s+/g, '')) + " target=_blank>Get Directions</a><span></div></div>" +
-                        "<br><div class ='line'></div>" +
-                        "<br><div class='test'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
-                        "<br><div class ='line'></div>"
-
-    };
-
-
+ 
     function updateSidebar(fp) {
 
         if (sidebar.isVisible() == true) {
@@ -517,14 +494,10 @@
             sidebar.show();
         }
         createSidebarContent(fp);
-        sidebar.setContent(GpString);
+        sidebar.setContent(Sidebar_String);
     };
 
-    function setPopUpContent(fp) {
-        var PopupString = "<h4>"+ fp.Name + "</h4>" + fp.Address1 + "<br>" + fp.Postcode + "<br><a href=tel:"
-            + fp.Telephone+ ">" + fp.Telephone + "</a><br><br>Click for more info"
-        return PopupString
-    }
+
 
 
     // add the GP data and set the sidebar and popup content 
@@ -783,58 +756,6 @@
             Control.addTo(map); 
         };
      };
-
-    L.Control.Custom({
-        position: 'topright',
-        content : '<button type="button" class="btn btn-default">'+
-                '    <i class="fa fa-crosshairs"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-info">'+
-                '    <i class="fa fa-compass"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-primary">'+
-                '    <i class="fa fa-spinner fa-pulse fa-fw"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-danger">'+
-                '    <i class="fa fa-times"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-success">'+
-                '    <i class="fa fa-check"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-warning">'+
-                '    <i class="fa fa-exclamation-triangle"></i>'+
-                '</button>',
-        classes : 'btn-group-vertical btn-group-sm',
-        style   :
-        {
-            margin: '10px',
-            padding: '0px 0 0 0',
-            cursor: 'pointer',
-        },
-        datas   :
-        {
-            'foo': 'bar',
-        },
-        events:
-        {
-            click: function(data)
-            {
-                console.log('wrapper div element clicked');
-                console.log(data);
-            },
-            dblclick: function(data)
-            {
-                console.log('wrapper div element dblclicked');
-                console.log(data);
-            },
-            contextmenu: function(data)
-            {
-                console.log('wrapper div element contextmenu');
-                console.log(data);
-            },
-        }
-    })
-    .addTo(map);
      
 
     </script>
