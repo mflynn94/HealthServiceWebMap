@@ -28,14 +28,19 @@
         .custom .leaflet-popup-tip,
         .custom .leaflet-popup-content-wrapper {
             background: #ffffff;
+            border-width: 10px;
+            border-radius: 5px;
+            border-color: #09325C;
             opacity: 1;
             color: #09325C;
         }
 
+        
         .box{
             width:100%;
             background:#09325C;
             opacity: 1;
+            height: 5px;
         }
         .top {
             position:relative;
@@ -488,29 +493,30 @@
  
     function updateSidebar(fp) {
 
-        if (sidebar.isVisible() == true) {
-            $("#sidebar").hide().fadeIn('slow');
-        } else {
-            sidebar.show();
-        }
         createSidebarContent(fp);
         sidebar.setContent(Sidebar_String);
+
+        if (sidebar.isVisible() == true) {
+                $("#sidebar").hide().fadeIn('slow');
     };
+    }
 
-
-
+    function openSidebar() {
+        if (sidebar.isVisible() !== true) {
+                sidebar.toggle();
+            }
+        }
 
     // add the GP data and set the sidebar and popup content 
     L.geoJSON(GPs, {
         
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
-            
-            layer.on('click', function (e) {updateSidebar(fp); });
+        
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { 
-                this.openPopup()
-            });
+
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
+            
             },
 
             pointToLayer: function (feature, latlng) {
@@ -525,9 +531,9 @@
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
 
-            layer.on('click', function (e) {updateSidebar(fp); });
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { this.openPopup()});
+
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday);
         },
@@ -543,9 +549,9 @@
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
 
-            layer.on('click', function (e) {updateSidebar(fp); });
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { this.openPopup()});
+
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);
         },
@@ -560,9 +566,9 @@
         onEachFeature: function(feature, layer) {
             
             var fp = feature.properties;
-            layer.on('click', function (e) {updateSidebar(fp); });
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { this.openPopup()});
+
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
             
             if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
             var serv = fp.Services;
@@ -589,9 +595,9 @@
         onEachFeature: function(feature, layer) {
 
             var fp = feature.properties;
-            layer.on('click', function (e) {updateSidebar(fp); });
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { this.openPopup()})
+
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
 
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(Hospitals_AandE);
@@ -609,10 +615,9 @@
         onEachFeature: function(feature, layer) {
 
             var fp = feature.properties;
-            layer.on('click', function (e) {updateSidebar(fp); });
             layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('mouseover', function () { this.openPopup()})
 
+            layer.on('click', function (e) { updateSidebar(fp), this.openPopup()});
             var serv = fp.Services
 
             if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
@@ -641,15 +646,7 @@
     }).addTo(SHClinics_layer);
 
     
-    /*
-    // run the add Points function for each service
-    addPoints(Opticians, Opticians_layer, 'MapFigures/Opticians.png', ['Name', 'Address1', 'Monday', 'Tuesday'])
-    addPoints(Dentists, Dentists_layer, 'MapFigures/Dentists.png')
-    addPoints(GPs, GPs_layer, 'MapFigures/GPs.png')
-    addPoints(Hospitals, Hospitals_layer, 'MapFigures/Hospitals.png')
-    addPoints(Pharmacies, Pharmacies_layer, 'MapFigures/Pharmacies.png')
-    addPoints(SHClinics, SHClinics_layer, 'MapFigures/SHClinics.png')
-    */
+ 
 
 
     // store layers in overlay group

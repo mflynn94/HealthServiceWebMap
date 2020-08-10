@@ -125,11 +125,11 @@ function setPopUpContent(fp) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<h4>" + fp.NHSInformName + "</h4>"
+        var Name = "<h3>" + fp.NHSInformName + "</h3>"
     } else if (fp.Name == fp.Name) {
-        Name = "<h4>" + fp.Name + "</h4><div class ='line'></div>"
+        Name = "<h3>" + fp.Name + "</h3><div class ='line'></div>"
     } else {
-        Name = "<h4>" + fp.DispenserName + "</h4><div class ='line'></div>"
+        Name = "<h3>" + fp.DispenserName + "</h3><div class ='line'></div>"
     }
 
     if (fp.Telephone == fp.Telephone) {
@@ -138,8 +138,8 @@ function setPopUpContent(fp) {
         Telephone = ''
     }
 
-    PopupString = Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
-    "<a href='#sidebar' " + "<span onClick='createSidebarContent('fp')'>Click here for more info</span></a><br>"
+    PopupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
+    "<br><a href='#sidebar' " + "<span onClick='openSidebar()'><b>Further details...</b></span></a><br>"
     
     return PopupString
 }
