@@ -420,7 +420,7 @@
         <h1>Find your local Health Services \
         </h1><div class ='line'></div>\
         <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
-        <p> Please choose the service you are looking for today. You can then hover to view the name and telephone number of each location, or click to see extra details. </p>\
+        <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
         <br><br>\
         <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
         <br><br>\
@@ -502,8 +502,6 @@
             }
    
     
-    
-
 
     function saveAsPDF(Name) {
         var opt = {
@@ -515,7 +513,7 @@
             };
 
         var element = document.getElementById('sidebar');
-        console.log(element);
+        
         var elementHTML = element.outerHTML;
         var element2 = elementHTML.replace("Save as PDF", '');
         
@@ -601,7 +599,17 @@
 
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
+
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/Dentists.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/Dentists.png'));//marker object is overwritten in the for loop each time                
+                });
+
             if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday);
+        
         },
         
         pointToLayer: function (feature, latlng) {
@@ -619,6 +627,13 @@
 
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/Opticians.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/Opticians.png'));//marker object is overwritten in the for loop each time                
+                });
             if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);
         },
         
@@ -636,9 +651,17 @@
 
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
             
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/Pharmacies.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/Pharmacies.png'));//marker object is overwritten in the for loop each time                
+                });
+
             if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
             var serv = fp.Services;
-            console.log(typeof serv);
+            
             if (serv == serv && serv.includes('Emergency Contraception')) layer.addTo(Pharmacies_EC);
             if (serv == serv && serv.includes('Free Condoms')) layer.addTo(Pharmacies_FC);
             if (serv == serv && serv.includes('Minor Ailments Scheme')) layer.addTo(Pharmacies_MAS);
@@ -664,7 +687,13 @@
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/Hospitals.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/Hospitals.png'));//marker object is overwritten in the for loop each time                
+                });
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(Hospitals_AandE);
         },
@@ -684,6 +713,14 @@
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
             layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
+            
+            layer.on('mouseover', function(e) {
+                e.target.setIcon(bigIcon('MapFigures/SHClinics.png'));//marker object is overwritten in the for loop each time                
+            });
+        
+            layer.on('mouseout', function(e) {
+                    e.target.setIcon(addIcon('MapFigures/SHClinics.png'));//marker object is overwritten in the for loop each time                
+                });
             var serv = fp.Services
 
             if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
