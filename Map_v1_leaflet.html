@@ -272,81 +272,116 @@
             .show {display: block;}
 
 
-       
-
-        .marker-cluster-small-gp {
-            background-color:#2f5597ff;
-            opacity: 0.8;  
-        }
-
-        .marker-cluster-small-gp span {
-            line-height:24px;
-        } 
-
-        .marker-cluster-small-gp div  {
-            background-color: #fff;
-            opacity: 0.95;
+        .marker-cluster-small div {
             width: 24px;
             height: 24px;
             margin-left: 4px;
             margin-top: 4px;
+          
+        }
+
+        .marker-cluster-small div span {
             line-height: 24px;
-            }
+        }
 
+        .marker-cluster-medium div {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 5px;
             
-        .marker-cluster-medium-gp {
-            background-color:#2f5597ff;
-            opacity: 0.8;
         }
 
-        .marker-cluster-medium-gp div  {
-            background-color: #fff;
-            opacity: 0.95;
-            }
-
-        
-        .marker-cluster-large-gp {
-            background-color:#2f5597ff;
-            opacity: 0.8;
+        .marker-cluster-medium div span {
+            line-height: 30px;
         }
 
-        .marker-cluster-large-gp div  {
-            background-color: #fff;
-            opacity: 0.95;
+        .marker-cluster-large div {
             width: 35px;
             height: 35px;
             margin-left: 5px;
             margin-top: 5px;
-            line-height: 30px;
-            }
-        
-        .marker-cluster-large-gp span {
-            line-height:35px;
-        } 
-
-        .marker-cluster-large {
-            background-color: rgba(253, 156, 115, 0.6);
-            }
-        .marker-cluster-large div {
-            background-color: rgba(241, 128, 23, 0.6);
-            }
-        
-        .marker-cluster-small-dentist {
-            background-color:#2596a0ff;
         }
 
-        .marker-cluster-small-dentist div  {
+        .marker-cluster-large div span {
+            line-height: 35px;
+        }
+
+        .gp {
+            background-color:#2f5597ff;
+            opacity: 0.8;  
+        }
+
+        .gp div {
             background-color: #fff;
+            opacity: 0.95;
+            color: navy;
+            font-size: 1.1em;
             }
 
-       
 
-        .marker-cluster-large {
-            background-color: rgba(253, 156, 115, 0.6);
+        .dentist {
+            background-color:#2596a0ff;
+            opacity: 0.8;  
+        }
+
+        .dentist div {
+            background-color: #fff;
+            opacity: 0.95;
+            color: teal;
+            font-size: 1.1em;
             }
-        .marker-cluster-large div {
-            background-color: rgba(241, 128, 23, 0.6);
+        
+
+        .optician {
+            background-color:#0297deff;
+            opacity: 0.8;  
+        }
+
+        .optician div {
+            background-color: #fff;
+            opacity: 0.95;
+            color: #0297deff;
+            font-size: 1.1em;
             }
+
+        .pharmacy {
+            background-color:#00b050ff;
+            opacity: 0.8;  
+        }
+
+        .pharmacy div {
+            background-color: #fff;
+            opacity: 0.95;
+            color: green;
+            font-size: 1.1em;
+            }
+
+        .hospital {
+            background-color:#ff0000ff;
+            opacity: 0.8;  
+        }
+
+        .hospital div {
+            background-color: #fff;
+            opacity: 0.95;
+            color: red;
+            font-size: 1.1em;
+            }
+
+        .shclinic {
+            background-color:#7030a0ff;
+            opacity: 0.8;  
+        }
+
+        .shclinic div {
+            background-color: #fff;
+            opacity: 0.95;
+            color: purple;
+            font-size: 1.1em;
+            }
+            
+        
 
     </style>
 </head>
@@ -427,98 +462,105 @@
     };
 
     // Create layer groups that will be  filled by each service and also by each sub category for each service
+    
+    function changeClusterIcon(cluster, service_string) {
+        var childCount = cluster.getChildCount()
+        var icon_size;
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+            c += 'small ' + service_string;
+            icon_size = new L.Point(32,32)
+        } 
+        else if (childCount < 100) {
+            c += 'medium ' + service_string;
+            icon_size = new L.Point(40,40)
+        } 
+        else {
+            c += 'large ' + service_string;
+            icon_size = new L.Point(45,45)
+        }
+        return L.divIcon({ html: '<div><b><span>' + childCount + '</span></div>', 
+        className: 'marker-cluster' + c, iconSize: icon_size });
+    }
 
-    var Opticians_layer = L.layerGroup(),
-        
-        GPs_layer = L.markerClusterGroup({
+
+    var GPs_layer = L.markerClusterGroup({
             spiderfyOnMaxZoom: true, 
             showCoverageOnHover: false,
-            iconCreateFunction: function (cluster) {
-                var clusterstyle = document.querySelectorAll("marker-cluster div");
-                var childCount = cluster.getChildCount();
-                var icon_size;
-                var c = ' marker-cluster-';
-                if (childCount < 10) {
-                    c += 'small-gp';
-                    icon_size = new L.Point(32,32)
-                } 
-                else if (childCount < 100) {
-                    c += 'medium-gp';
-                    icon_size = new L.Point(40,40)
-                } 
-                else {
-                c += 'large-gp';
-                    icon_size = new L.Point(45,45)
-                }
+            iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'gp')}    
+        })
 
-                return new L.DivIcon({ html: '<div><b><span style="color:navy; font-size:1.2em">' + childCount + '</span></div>', 
-                className: 'marker-cluster' + c, iconSize: icon_size });
- }
-        }),
-   
+        
+        Opticians_layer = L.markerClusterGroup({
+                spiderfyOnMaxZoom: true, 
+                showCoverageOnHover: false,
+                iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'optician')}
+            }),
+        
         Dentists_layer = L.markerClusterGroup({
             spiderfyOnMaxZoom: true, 
             showCoverageOnHover: false,
-            iconCreateFunction: function (cluster) {
-                var childCount = cluster.getChildCount();
-                var c = ' marker-cluster-';
-                if (childCount < 10) {
-                c += 'small-dentist';
-                } 
-                else if (childCount < 100) {
-                c += 'medium';
-                } 
-                else {
-                c += 'large';
-                }
-
-                return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', 
-                className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
-            }
+            iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'dentist')}
         }),
       
-        Dentists_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,}),
-
-        Opticians_layer = L.layerGroup(),
-        Opticians_Saturday = L.layerGroup(),
+        Dentists_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'dentist')}}),
+        Opticians_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'optician')}}),
     
-        SHClinics_layer = L.markerClusterGroup({showCoverageOnHover: false, spiderfyOnMaxZoom: true}),
-        SHClinics_Cont = L.layerGroup(), 
-        SHClinics_CSS = L.layerGroup(),
-        SHClinics_Drop = L.layerGroup(),
-        SHClinics_EC = L.layerGroup(),
-        SHClinics_FP = L.layerGroup(),
-        SHClinics_FC = L.layerGroup(),
-        SHClinics_GI = L.layerGroup(),
-        SHClinics_GUM = L.layerGroup(),
-        SHClinics_Hep = L.layerGroup(),
-        SHClinics_HV = L.layerGroup(),
-        SHClinics_MM = L.layerGroup(),
-        SHClinics_PT = L.layerGroup(),
-        SHClinics_PS = L.layerGroup(),
-        SHClinics_SR = L.layerGroup(),
-        SHClinics_TOPAR = L.layerGroup(),
-        SHClinics_THV = L.layerGroup(),
-        SHClinics_TSTI = L.layerGroup(),
-        SHClinics_YP = L.layerGroup(),
+        
+        SHClinics_layer = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true, 
+            showCoverageOnHover: false,
+            iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}
+        }),
 
-        Pharmacies_layer = L.layerGroup(),
-        Pharmacies_Saturday = L.layerGroup(),
 
-        Pharmacies_EC = L.layerGroup(),
-        Pharmacies_FC = L.layerGroup(),
-        Pharmacies_MAS = L.layerGroup(),
-        Pharmacies_NE = L.layerGroup(),
-        Pharmacies_NRT = L.layerGroup(),
-        Pharmacies_PCN = L.layerGroup(),
-        Pharmacies_PTC = L.layerGroup(),
-        Pharmacies_SBS = L.layerGroup(),
-        Pharmacies_SMS = L.layerGroup(),
-        Pharmacies_TfI = L.layerGroup(),
-        Pharmacies_TUTI = L.layerGroup(),
+        SHClinics_Cont = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_CSS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_Drop = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_EC = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_FP = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_FC = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_GI = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_GUM = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_Hep = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_HV = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_MM = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_PT = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_PS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_SR = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_TOPAR = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_THV = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_TSTI = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
+        SHClinics_YP = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
 
-        Hospitals_layer = L.layerGroup(),
-        Hospitals_AandE = L.layerGroup();
+
+        Pharmacies_layer = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true, 
+            showCoverageOnHover: false,
+            iconCreateFunction: function (cluster) {
+                return changeClusterIcon(cluster, 'pharmacy')
+            }
+        }),
+
+        Pharmacies_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_EC = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_FC = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_MAS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_NE = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_NRT = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_PCN = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_PTC = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_SBS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_SMS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_TfI = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+        Pharmacies_TUTI = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'pharmacy')}}),
+
+        Hospitals_layer = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true, 
+            showCoverageOnHover: false,
+            iconCreateFunction: function (cluster) { return changeClusterIcon(cluster, 'hospital')}
+        }),
+        Hospitals_AandE = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,iconCreateFunction: function (cluster) { return changeClusterIcon(cluster, 'hospital')}});
 
 
     var sidebar_default_content = "<div class = 'box top'></div> \
@@ -712,6 +754,8 @@
     }).addTo(GPs_layer);
 
 
+    
+   
 
     // add the Dentists data and set the sidebar and popup content
     L.geoJSON(Dentists, {
@@ -831,7 +875,7 @@
     L.geoJSON(SHClinics, {
 
         onEachFeature: function(feature, layer) {
-
+           
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , customOptions);
 
@@ -844,6 +888,7 @@
             layer.on('mouseout', function(e) {
                     e.target.setIcon(addIcon('MapFigures/SHClinics.png'));//marker object is overwritten in the for loop each time                
                 });
+
             var serv = fp.Services
 
             if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
@@ -865,7 +910,7 @@
             if (serv == serv && serv.includes('Testing for Sexually Transmitted Infections')) layer.addTo(SHClinics_TSTI);
             if (serv == serv && serv.includes('Young People')) layer.addTo(SHClinics_YP);
         },
-        
+
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: addIcon('MapFigures/SHClinics.png')});
         }
