@@ -271,37 +271,64 @@
 
             .show {display: block;}
 
-        marker-cluster {
-            background-clip: padding-box;
-            padding: 0;
-            border-radius: 20px;
-           
-            }
 
-        .marker-cluster div {
-           
-            width: 24px;
-            height: 24px;
-            padding: 0;
-            margin-left: 4px;
-            margin-top: 4px;
-           
-            
-            text-align: center;
-            border-radius: 15px;
-        }
-
-        .marker-cluster span {
-            line-height: 24px;
-            
-            }
+       
 
         .marker-cluster-small-gp {
             background-color:#2f5597ff;
+            opacity: 0.8;  
         }
+
+        .marker-cluster-small-gp span {
+            line-height:24px;
+        } 
 
         .marker-cluster-small-gp div  {
             background-color: #fff;
+            opacity: 0.95;
+            width: 24px;
+            height: 24px;
+            margin-left: 4px;
+            margin-top: 4px;
+            line-height: 24px;
+            }
+
+            
+        .marker-cluster-medium-gp {
+            background-color:#2f5597ff;
+            opacity: 0.8;
+        }
+
+        .marker-cluster-medium-gp div  {
+            background-color: #fff;
+            opacity: 0.95;
+            }
+
+        
+        .marker-cluster-large-gp {
+            background-color:#2f5597ff;
+            opacity: 0.8;
+        }
+
+        .marker-cluster-large-gp div  {
+            background-color: #fff;
+            opacity: 0.95;
+            width: 35px;
+            height: 35px;
+            margin-left: 5px;
+            margin-top: 5px;
+            line-height: 30px;
+            }
+        
+        .marker-cluster-large-gp span {
+            line-height:35px;
+        } 
+
+        .marker-cluster-large {
+            background-color: rgba(253, 156, 115, 0.6);
+            }
+        .marker-cluster-large div {
+            background-color: rgba(241, 128, 23, 0.6);
             }
         
         .marker-cluster-small-dentist {
@@ -312,12 +339,7 @@
             background-color: #fff;
             }
 
-        .marker-cluster-medium {
-            background-color: rgba(241, 211, 87, 0.6);
-            }
-        .marker-cluster-medium div {
-            background-color: rgba(240, 194, 12, 0.6);
-            }
+       
 
         .marker-cluster-large {
             background-color: rgba(253, 156, 115, 0.6);
@@ -412,20 +434,25 @@
             spiderfyOnMaxZoom: true, 
             showCoverageOnHover: false,
             iconCreateFunction: function (cluster) {
+                var clusterstyle = document.querySelectorAll("marker-cluster div");
                 var childCount = cluster.getChildCount();
+                var icon_size;
                 var c = ' marker-cluster-';
                 if (childCount < 10) {
-                c += 'small-gp';
+                    c += 'small-gp';
+                    icon_size = new L.Point(32,32)
                 } 
                 else if (childCount < 100) {
-                c += 'small-gp';
+                    c += 'medium-gp';
+                    icon_size = new L.Point(40,40)
                 } 
                 else {
-                c += 'small-gp';
+                c += 'large-gp';
+                    icon_size = new L.Point(45,45)
                 }
 
                 return new L.DivIcon({ html: '<div><b><span style="color:navy; font-size:1.2em">' + childCount + '</span></div>', 
-                className: 'marker-cluster' + c, iconSize: new L.Point(32, 32) });
+                className: 'marker-cluster' + c, iconSize: icon_size });
  }
         }),
    
