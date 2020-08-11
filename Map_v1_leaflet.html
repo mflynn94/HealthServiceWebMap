@@ -399,7 +399,26 @@
         Hospitals_AandE = L.layerGroup();
 
 
-    
+    var sidebar_default_content = "<div class = 'box top'></div> \
+                            <h1>Find your local Health Services \
+                            </h1><div class ='line'></div>\
+                            <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
+                            <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'>Dentists</button>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</button>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</button>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</button>\
+                            <br><br>\
+                            <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'>Sexual Health Clinics</button>\
+                            <br><br>\
+                            </div>"
+
     // initialise map with max and min zoom, max bounds and the default basemap layer
     var map = L.map('map', {
     minZoom: 7,
