@@ -271,7 +271,12 @@
 
             .show {display: block;}
 
-
+        .marker-cluster-small:hover {
+            width: 30px;
+            height: 30px;
+            margin-left: 4px;
+            margin-top: 4px;
+        }
         .marker-cluster-small div {
             width: 24px;
             height: 24px;
@@ -279,6 +284,8 @@
             margin-top: 4px;
           
         }
+
+
 
         .marker-cluster-small div span {
             line-height: 24px;
@@ -514,6 +521,7 @@
         }),
 
 
+        
         SHClinics_Cont = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
         SHClinics_CSS = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
         SHClinics_Drop = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'shclinic')}}),
@@ -660,6 +668,8 @@
     }).addTo(map);*/
 
     // create custom options for pop up information
+
+
     var customOptions =
             {
             'maxWidth': '200',
@@ -733,200 +743,68 @@
                 }
 
     // add the GP data and set the sidebar and popup content 
-    var testGPs = L.geoJSON(GPs, {
-        
-        onEachFeature: function(feature, layer) {
-            var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-            
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/GPs.png'));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/GPs.png'));//marker object is overwritten in the for loop each time                
-                });
-            },
-            pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/GPs.png')});
-        }
-    }).addTo(GPs_layer);
-
-
     
-   
-
-    // add the Dentists data and set the sidebar and popup content
-    L.geoJSON(Dentists, {
-        onEachFeature: function(feature, layer) {
-            var fp = feature.properties;
-
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
+    function add_geoJSONData (service, figure, filter_function, layer_group) {
+        L.geoJSON(service, {
             
-
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/Dentists.png'));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/Dentists.png'));//marker object is overwritten in the for loop each time                
+            onEachFeature: function(feature, layer) {
+                var fp = feature.properties;
+                layer.bindPopup(setPopUpContent(fp) , customOptions);
+                layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
+                
+                layer.on('mouseover', function(e) {
+                    e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                
                 });
+            
+                layer.on('mouseout', function(e) {
+                        e.target.setIcon(addIcon(figure));//marker object is overwritten in the for loop each time                
+                    });
+                
+                return filter_data(service, fp, layer)
+            },
+                pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {icon: addIcon(figure)});
+            }
+        }).addTo(layer_group);
 
-            if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday);
-        
-        },
-        
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/Dentists.png')});
+    }
+    
+    var Pharmacy_Service_list = ['Emergency Contraception','Free Condoms','Minor Ailments Scheme','Needle Exchange','Nicotine Replacement Therapy','Palliative Care Network','Supervised Buprenorphine Service','Supervised Methadone Supply','Treatment For Impetigo','Treatment for Urinary Tract Infection']
+    var Pharmacy_Service_layers = [Pharmacies_EC,Pharmacies_FC,Pharmacies_MAS,Pharmacies_NE,Pharmacies_NRT,Pharmacies_PCN,Pharmacies_SBS,Pharmacies_SMS,Pharmacies_TfI,Pharmacies_TUTI]
+    var SH_Service_list = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
+    var SH_Service_layers = [SHClinics_Cont, SHClinics_CSS, SHClinics_Drop, SHClinics_EC, SHClinics_FP, SHClinics_FC, SHClinics_GI, SHClinics_GUM, SHClinics_Hep, SHClinics_HV, SHClinics_MM,SHClinics_PT,SHClinics_PS, SHClinics_SR, SHClinics_TOPAR, SHClinics_THV, SHClinics_TSTI, SHClinics_YP]
+    
+   function filter_data (service, fp, layer) {
+        if (service == Dentists) {
+            if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday)
         }
-    }).addTo(Dentists_layer);
 
-
-
-    L.geoJSON(Opticians, {
-        onEachFeature: function(feature, layer) {
-            var fp = feature.properties;
-
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-            
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/Opticians.png'));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/Opticians.png'));//marker object is overwritten in the for loop each time                
-                });
-            if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);
-        },
-        
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/Opticians.png')});
-        }
-    }).addTo(Opticians_layer);
-
-
-    L.geoJSON(Pharmacies, {
-        onEachFeature: function(feature, layer) {
-            
-            var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-            
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/Pharmacies.png'));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/Pharmacies.png'));//marker object is overwritten in the for loop each time                
-                });
-
+        else if (service == Pharmacies) {
             if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
-            var serv = fp.Services;
-            
-            if (serv == serv && serv.includes('Emergency Contraception')) layer.addTo(Pharmacies_EC);
-            if (serv == serv && serv.includes('Free Condoms')) layer.addTo(Pharmacies_FC);
-            if (serv == serv && serv.includes('Minor Ailments Scheme')) layer.addTo(Pharmacies_MAS);
-            if (serv == serv && serv.includes('Needle Exchange')) layer.addTo(Pharmacies_NE);
-            if (serv == serv && serv.includes('Nicotine Replacement Therapy')) layer.addTo(Pharmacies_NRT);
-            if (serv == serv && serv.includes('Palliative Care Network')) layer.addTo(Pharmacies_PCN);
-            if (serv == serv && serv.includes('Supervised Buprenorphine Service')) layer.addTo(Pharmacies_SBS);
-            if (serv == serv && serv.includes('Supervised Methadone Supply')) layer.addTo(Pharmacies_SMS);
-            if (serv == serv && serv.includes('Treatment For Impetigo')) layer.addTo(Pharmacies_TfI);
-            if (serv == serv && serv.includes('Treatment for Urinary Tract Infection')) layer.addTo(Pharmacies_TUTI);
-        },
-        
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/Pharmacies.png')});
+            for (i in Pharmacy_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(Pharmacy_Service_list[i])) layer.addTo(Pharmacy_Service_layers[i]);}
         }
-    }).addTo(Pharmacies_layer);
-
-
-    L.geoJSON(Hospitals, {
-        onEachFeature: function(feature, layer) {
-
-            var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/Hospitals.png'));//marker object is overwritten in the for loop each time                
-            });
         
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/Hospitals.png'));//marker object is overwritten in the for loop each time                
-                });
+        else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);}
+
+        else if (service == Hospitals) {
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(Hospitals_AandE);
-        },
-        
-    
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/Hospitals.png')});
         }
-    }).addTo(Hospitals_layer);
 
+        else if (service == SHClinics) {
+            for (i in SH_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(SH_Service_list[i])) layer.addTo(SH_Service_layers[i]);}
+        }    
+   };
 
-    L.geoJSON(SHClinics, {
-
-        onEachFeature: function(feature, layer) {
-           
-            var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , customOptions);
-
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-            
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon('MapFigures/SHClinics.png'));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon('MapFigures/SHClinics.png'));//marker object is overwritten in the for loop each time                
-                });
-
-            var serv = fp.Services
-
-            if (serv == serv && serv.includes('Contraception')) layer.addTo(SHClinics_Cont);
-            if (serv == serv && serv.includes('Counselling and Support Services')) layer.addTo(SHClinics_CSS);
-            if (serv == serv && serv.includes('Drop-in')) layer.addTo(SHClinics_Drop);
-            if (serv == serv && serv.includes('Emergency Contraception')) layer.addTo(SHClinics_EC);
-            if (serv == serv && serv.includes('Family Planning')) layer.addTo(SHClinics_FP);
-            if (serv == serv && serv.includes('Free Condoms')) layer.addTo(SHClinics_FC);
-            if (serv == serv && serv.includes('Gender Identity')) layer.addTo(SHClinics_GI);
-            if (serv == serv && serv.includes('GUM Clinic')) layer.addTo(SHClinics_GUM);
-            if (serv == serv && serv.includes('Hepatitis')) layer.addTo(SHClinics_Hep);
-            if (serv == serv && serv.includes('HIV Counselling')) layer.addTo(SHClinics_HV);
-            if (serv == serv && serv.includes('Men Who Have Sex With Men')) layer.addTo(SHClinics_MM);
-            if (serv == serv && serv.includes('Pregnancy Testing')) layer.addTo(SHClinics_PT);
-            if (serv == serv && serv.includes('Psychosexual Service')) layer.addTo(SHClinics_PS);
-            if (serv == serv && serv.includes('Sexual Assault or Rape')) layer.addTo(SHClinics_SR);
-            if (serv == serv && serv.includes('Termination of Pregnancy and Referral')) layer.addTo(SHClinics_TOPAR);
-            if (serv == serv && serv.includes('Testing for HIV')) layer.addTo(SHClinics_THV);
-            if (serv == serv && serv.includes('Testing for Sexually Transmitted Infections')) layer.addTo(SHClinics_TSTI);
-            if (serv == serv && serv.includes('Young People')) layer.addTo(SHClinics_YP);
-        },
-
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon('MapFigures/SHClinics.png')});
-        }
-    }).addTo(SHClinics_layer);
-
+    add_geoJSONData (GPs, 'MapFigures/GPs.png', filter_data, GPs_layer)
+    add_geoJSONData (Dentists, 'MapFigures/Dentists2.png', filter_data, Dentists_layer)
+    add_geoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', filter_data, Pharmacies_layer)
+    add_geoJSONData (Opticians, 'MapFigures/Opticians2.png', filter_data, Opticians_layer)
+    add_geoJSONData (Hospitals, 'MapFigures/Hospitals.png', filter_data, Hospitals_layer)
+    add_geoJSONData (SHClinics, 'MapFigures/SHClinics.png', filter_data, SHClinics_layer)
+    // add the Dentists data and set the sidebar and popup content
     
 
-    // store layers in overlay group
-    var overlayMaps = {
-        "GPs": GPs_layer,
-        "Dentists" : Dentists_layer,
-        "Pharmacies": Pharmacies_layer,
-        "Opticians": Opticians_layer,
-        "Hospitals": Hospitals_layer,
-        "Sexual Health Clinics": SHClinics_layer
-    };
 
 
     var DentistfilterLayers = {
