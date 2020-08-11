@@ -1,13 +1,34 @@
 
    
 
+var sidebar_default_content = "<div class = 'box top'></div> \
+                                <h1>Find your local Health Services \
+                                </h1><div class ='line'></div>\
+                                <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
+                                <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'>Dentists</button>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</button>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</button>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</button>\
+                                <br><br>\
+                                <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'>Sexual Health Clinics</button>\
+                                <br><br>\
+                                </div>"
+
+
 var Sidebar_String;
 var Popup_string;
+
 
 function createSidebarContent(fp) {
     
     // define all variables to be used in the sidebar content. This will vary from service to service, so many coniderations to be given
-    
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
@@ -48,8 +69,10 @@ function createSidebarContent(fp) {
         Telephone = ''
     }
 
-     // Define services offered
+    // Define services offered
     // Check if the services property exists and that it is not equal to NaN
+    // replace the python new line values (\n) values with an html line break (<br>)
+
     var Services;
     if (fp.Services && fp.Services == fp.Services) {
         fp.Services = fp.Services.replace(/\n/g,"<br>");
@@ -120,6 +143,8 @@ function createSidebarContent(fp) {
 
 };
 
+
+// Create a similar function for defining the pop up content
 
 function setPopUpContent(fp) {
 

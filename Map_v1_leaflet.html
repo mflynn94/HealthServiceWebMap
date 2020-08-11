@@ -18,8 +18,9 @@
     
     <link rel="stylesheet" href="Plugins/leaflet-sidebar/src/L.Control.Sidebar.css" />
     <!--<link rel="stylesheet" href="Plugins/Leaflet.EasyButton/src/easy-button.js" />-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
     <style>
         body { margin:10; padding:10; }
         
@@ -293,6 +294,7 @@
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>    
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
@@ -350,15 +352,15 @@
 
     var Opticians_layer = L.layerGroup(),
         
-        GPs_layer = L.layerGroup(),
+        GPs_layer = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false}),
    
-        Dentists_layer = L.layerGroup(),
-        Dentists_Saturday = L.layerGroup(),
+        Dentists_layer = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,}),
+        Dentists_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,}),
 
         Opticians_layer = L.layerGroup(),
         Opticians_Saturday = L.layerGroup(),
     
-        SHClinics_layer = L.layerGroup(),
+        SHClinics_layer = L.markerClusterGroup({showCoverageOnHover: false, spiderfyOnMaxZoom: true}),
         SHClinics_Cont = L.layerGroup(), 
         SHClinics_CSS = L.layerGroup(),
         SHClinics_Drop = L.layerGroup(),
@@ -396,6 +398,8 @@
         Hospitals_layer = L.layerGroup(),
         Hospitals_AandE = L.layerGroup();
 
+
+    
     // initialise map with max and min zoom, max bounds and the default basemap layer
     var map = L.map('map', {
     minZoom: 7,
@@ -415,28 +419,6 @@
 
     // add sidebar to the map. Ensure it has a close button, appears on the left hand side, and 
     // is shown on map start up.
-    
-    var sidebar_default_content = "<div class = 'box top'></div> \
-        <h1>Find your local Health Services \
-        </h1><div class ='line'></div>\
-        <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
-        <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'>Dentists</button>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</button>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</button>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</button>\
-        <br><br>\
-        <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'>Sexual Health Clinics</button>\
-        <br><br>\
-        </div>"
-
-   
 
     var sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
@@ -568,7 +550,7 @@
                 }
 
     // add the GP data and set the sidebar and popup content 
-    L.geoJSON(GPs, {
+    var testGPs = L.geoJSON(GPs, {
         
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
@@ -749,8 +731,6 @@
     }).addTo(SHClinics_layer);
 
     
- 
-
 
     // store layers in overlay group
     var overlayMaps = {
@@ -816,12 +796,14 @@
     }
 
     // add a legend control for the overlay maps to allow users to swap between services 
-
-    function Dentistfilters() {
-        if (map.hasLayer(Dentists_layer) == true) {
-            L.control.layers(DentistfilterLayers).addTo(map);
+    function test (layer) {
+        GPs_layer.eachLayer(function(layer){
+            if(layer.feature.properties.Website){
+                GPs_layer.removeLayer(layer)
+                GPs_layer.refreshClusters()
         }
-    }
+    })
+}
 
     L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
 
@@ -888,7 +870,7 @@
         div.innerHTML = "<div class='dropdown'>" +
             "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
             "<div id='myDropdown' class='dropdown-content'>" +
-            "<a href='#' onClick='addLayer(GPs_layer)'>GPs</a>" +
+            "<a href='#' onClick='test()'>GPs</a>" +
             "<a href='#' onClick='addLayer(Dentists_layer, DentistControl)'>Dentists</a>" +
             "<a href='#' onClick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</a>" +
             "<a href='#' onClick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</a>" +
