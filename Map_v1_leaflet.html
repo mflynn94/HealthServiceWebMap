@@ -54,6 +54,7 @@
     <script src="Plugins/Leaflet.Control.Custom.js"></script>
     <script src="SidebarContent.js"></script>
     <script src="Functions.js"></script>
+    <script src="Data/mappolygon.js"></script>
 
 
     <script>
@@ -101,222 +102,15 @@
 
             Hospitals_layer = define_clusterGroups(Hospitals_layer,'hospital'),Hospitals_AandE = define_clusterGroups(Hospitals_AandE,'hospital');
 
-        
-
-        // Initialise map with max and min zoom, max bounds and the default basemap layer
-        var map = L.map('map', {
-            minZoom: 7,
-            maxZoom: 20,
-            maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]],
-            layers: [outdoor_basemap]
-        });
-
-        
-        map.setView([ 55.8652, -4.45 ], 11);  // set the initial view of the map to Glasgow area
-        map.zoomControl.setPosition('bottomright'); // add zoom control to the map
-        map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018'); // add attribution to the map
-
-
-        // Add sidebar to the map. Ensure it has a close button, and appears on the left hand side
-        // Set a timeout on the sidebar so that it appears on start up
-        // Set its content as the default content stored in variable in SidebarContent.js
-
-        var sidebar = L.control.sidebar('sidebar', {
-            closeButton: true,
-            position: 'left',
-            autopan: false,
-            }).addTo(map);
-        
-            setTimeout(function () {
-                sidebar.show();
-                sidebar.setContent(sidebar_default_content)
-                }, 500)     
-
-
-        // Add a button control for toggling the sidebar on and off, and returning to the default content
-
-        L.easyButton('fa fa-home', function(btn, map){
-            return button_toggleSidebar();
-        }).addTo(map);
-
-        // Add a search bar to the map
-        L.Control.geocoder({
-            position: 'topleft'
-        }).addTo(map);
-
-
-        // add user location control to the map
-        var lc = L.control.locate({
-            options: {
-                circleStyle: {
-                    fillOpacity: 1
-                },
-            }
-        }).addTo(map);
-
-        // ask user location on map load
-        // lc.start();
-
-        // store user coordinates
-        function onLocationfound(e) {
-            var user_location = e.latlng;
-            console.log(user_location);
-        }
-
-        map.on('locationfound', onLocationfound);
-
-        // load polygon on the map and grey out areas around Greater Glasgow and Clyde
-        /*var map_poly = L.geoJSON(mappolygons, {
-            style: {
-                "color": "#808080",
-                "weight": 0,
-                "fill": true
-            }
-        }).addTo(map);*/
-
-        // create custom options for pop up information
-
-
-        var customOptions =
-                {
-                'maxWidth': '200',
-                'className' : 'custom'
-                }
-    
-        
-
-        function saveAsPDF(Name) {
-            var opt = {
-                margin:       1,
-                filename:     Name + '.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-                };
-
-            var element = document.getElementById('sidebar');
-            
-            var elementHTML = element.outerHTML;
-            var element2 = elementHTML.replace("Save as PDF", '');
-            
-            html2pdf().set(opt).from(element2).save()
-        }
-
-
-
-        // create a function for styling points and adding them to the map
-        function addIcon(figureURL) {
-            // add icons for the services and style them appropriately
-            return L.icon({
-                iconUrl: figureURL,
-                iconSize: [30, 30],
-                iconAnchor: [15,15],
-                popupAnchor: [0, -15]
-            });
-        };
-
-        function bigIcon(figureURL) {
-            // add icons for the services and style them appropriately
-            return L.icon({
-                iconUrl: figureURL,
-                iconSize: [40, 40],
-                iconAnchor: [20,20],
-                popupAnchor: [0, -15]
-            });
-        };
-    
-        function updateSidebar(fp) {
-
-            createSidebarContent(fp);
-            sidebar.setContent(Sidebar_String);
-
-            if (sidebar.isVisible() == true) {
-                    $("#sidebar").hide().fadeIn('slow');
-        };
-        }
-
-        function openSidebar() {
-            if (sidebar.isVisible() !== true) {
-                    sidebar.toggle();
-                }
-            }
-
-            function setmapview(e) {
-                        if (map.getZoom() < 13) {
-                            map.setView(e.latlng,13)
-                        } else {
-                            map.setView(e.latlng, map.getZoom())
-                        }
-                    }
-
-        // add the GP data and set the sidebar and popup content 
-        
-        function add_geoJSONData (service, figure, filter_function, layer_group) {
-            L.geoJSON(service, {
-                
-                onEachFeature: function(feature, layer) {
-                    var fp = feature.properties;
-                    layer.bindPopup(setPopUpContent(fp) , customOptions);
-                    layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
-                    
-                    layer.on('mouseover', function(e) {
-                        e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                
-                    });
-                
-                    layer.on('mouseout', function(e) {
-                            e.target.setIcon(addIcon(figure));//marker object is overwritten in the for loop each time                
-                        });
-                    
-                    return filter_data(service, fp, layer)
-                },
-                    pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng, {icon: addIcon(figure)});
-                }
-            }).addTo(layer_group);
-
-        }
-        
         var Pharmacy_Service_list = ['Emergency Contraception','Free Condoms','Minor Ailments Scheme','Needle Exchange','Nicotine Replacement Therapy','Palliative Care Network','Supervised Buprenorphine Service','Supervised Methadone Supply','Treatment For Impetigo','Treatment for Urinary Tract Infection']
         var Pharmacy_Service_layers = [Pharmacies_EC,Pharmacies_FC,Pharmacies_MAS,Pharmacies_NE,Pharmacies_NRT,Pharmacies_PCN,Pharmacies_SBS,Pharmacies_SMS,Pharmacies_TfI,Pharmacies_TUTI]
         var SH_Service_list = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
         var SH_Service_layers = [SHClinics_Cont, SHClinics_CSS, SHClinics_Drop, SHClinics_EC, SHClinics_FP, SHClinics_FC, SHClinics_GI, SHClinics_GUM, SHClinics_Hep, SHClinics_HV, SHClinics_MM,SHClinics_PT,SHClinics_PS, SHClinics_SR, SHClinics_TOPAR, SHClinics_THV, SHClinics_TSTI, SHClinics_YP]
-        
-    function filter_data (service, fp, layer) {
-            if (service == Dentists) {
-                if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday)
-            }
 
-            else if (service == Pharmacies) {
-                if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
-                for (i in Pharmacy_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(Pharmacy_Service_list[i])) layer.addTo(Pharmacy_Service_layers[i]);}
-            }
-            
-            else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);}
-
-            else if (service == Hospitals) {
-                AE = fp['A&E'];
-                if (AE == AE) layer.addTo(Hospitals_AandE);
-            }
-
-            else if (service == SHClinics) {
-                for (i in SH_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(SH_Service_list[i])) layer.addTo(SH_Service_layers[i]);}
-            }    
-    };
-
-        add_geoJSONData (GPs, 'MapFigures/GPs.png', filter_data, GPs_layer)
-        add_geoJSONData (Dentists, 'MapFigures/Dentists2.png', filter_data, Dentists_layer)
-        add_geoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', filter_data, Pharmacies_layer)
-        add_geoJSONData (Opticians, 'MapFigures/Opticians2.png', filter_data, Opticians_layer)
-        add_geoJSONData (Hospitals, 'MapFigures/Hospitals.png', filter_data, Hospitals_layer)
-        add_geoJSONData (SHClinics, 'MapFigures/SHClinics.png', filter_data, SHClinics_layer)
-        // add the Dentists data and set the sidebar and popup content
-        
-
-
-
+    
         var DentistfilterLayers = {
-            "<b>All</b>": Dentists_layer,
-            "<i>Open Saturdays</i>": Dentists_Saturday
+        "<b>All</b>": Dentists_layer,
+        "<i>Open Saturdays</i>": Dentists_Saturday
         }
 
         var OpticiansfilterLayers = {
@@ -366,19 +160,94 @@
             "Young People": SHClinics_YP
         }
 
-        // add a legend control for the overlay maps to allow users to swap between services 
+        // Initialise map with max and min zoom, max bounds and the default basemap layer
+        var map = L.map('map', {
+            minZoom: 7,
+            maxZoom: 20,
+            maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]],
+            layers: [outdoor_basemap]
+        });
+
+        
+        map.setView([ 55.8652, -4.45 ], 11);  // set the initial view of the map to Glasgow area
+        map.zoomControl.setPosition('bottomright'); // add zoom control to the map
+        map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018'); // add attribution to the map
+
+
+        // Add sidebar to the map. Ensure it has a close button, and appears on the left hand side
+        // Set a timeout on the sidebar so that it appears on start up
+        // Set its content as the default content stored in variable in SidebarContent.js
+        var sidebar = L.control.sidebar('sidebar', {
+            closeButton: true,
+            position: 'left',
+            autopan: false,
+            }).addTo(map);
+        
+            setTimeout(function () {
+                sidebar.show();
+                sidebar.setContent(sidebar_default_content)
+                }, 500)     
+
+
+        // Add a button control for toggling the sidebar on and off, and returning to the default content
+        L.easyButton('fa fa-home', function(btn, map){
+            return button_toggleSidebar();
+        }).addTo(map);
+
+
+        // Add a search bar to the map
+        L.Control.geocoder({
+            position: 'topleft'
+        }).addTo(map);
+
+
+        // Add user location control to the map
+        var lc = L.control.locate({
+            options: {circleStyle: {fillOpacity: 1}}
+        }).addTo(map);
+
+        map.on('locationfound', onLocationfound);
+
+
+        // Load polygon on the map and grey out areas around Greater Glasgow and Clyde
+        var map_poly = L.geoJSON(mappolygons, {
+            style: {
+                "color": "#808080",
+                "weight": 0,
+                "fill": true
+            }
+        }).addTo(map);
+
+        
+
+        // add the GP data and set the sidebar and popup content 
+        
+        
+        
+        
+        add_geoJSONData (GPs, 'MapFigures/GPs.png', GPs_layer)
+        add_geoJSONData (Dentists, 'MapFigures/Dentists2.png', Dentists_layer)
+        add_geoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', Pharmacies_layer)
+        add_geoJSONData (Opticians, 'MapFigures/Opticians2.png', Opticians_layer)
+        add_geoJSONData (Hospitals, 'MapFigures/Hospitals.png', Hospitals_layer)
+        add_geoJSONData (SHClinics, 'MapFigures/SHClinics.png', SHClinics_layer)
+        
+    
+
+        
         function test (layer) {
             GPs_layer.eachLayer(function(layer){
                 if(layer.feature.properties.Website){
                     GPs_layer.removeLayer(layer)
                     GPs_layer.refreshClusters()
-            }
-        })
-    }
+                }
+            })
+        }
+
+
 
         L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
 
-        
         var DentistControl = L.control.layers(DentistfilterLayers, null, {collapsed: false});
         var OpticiansControl = L.control.layers(OpticiansfilterLayers, null, {collapsed: false});
         var PharmaciesControl = L.control.layers(PharmaciesfilterLayers, null, {collapsed: true});
@@ -386,73 +255,9 @@
         var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: true});
 
 
-        function addLayer(servicelayer, Control) {
-        
-            sidebar.hide();
-            
-            var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
-            
-            map.eachLayer(function (layer) {
-                if ((layer !== lc._layer) && (layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== road_basemap)) {
-                map.removeLayer(layer)
-                }
-            })
-        
-            var control;
-            for (control in layer_control_list) {
-                map.removeControl(layer_control_list[control]);
-            }
-
-            map.addLayer(servicelayer);
-    
-            if (Control) {
-                Control.addTo(map); 
-            }
-            console.log(map.getCenter());
-            
-                    
-        };
-        
-
-            /* When the user clicks on the button, 
-            toggle between hiding and showing the dropdown content */
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-            }
-
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                }
-                }
-            }
-        }
-        
-
-        var legend = L.control({position: 'topright'});
-        legend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = "<div class='dropdown'>" +
-                "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
-                "<div id='myDropdown' class='dropdown-content'>" +
-                "<a href='#' onClick='test()'>GPs</a>" +
-                "<a href='#' onClick='addLayer(Dentists_layer, DentistControl)'>Dentists</a>" +
-                "<a href='#' onClick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</a>" +
-                "<a href='#' onClick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</a>" +
-                "<a href='#' onClick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</a>" +
-                "<a href='#' onClick='addLayer(SHClinics_layer, SHClinicsControl)'>SH Clinics</a></div></div></div>" 
-            
-                div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-            
-                return div;
-        };
-        legend.addTo(map);
+        var service_dropdown = L.control({position: 'topright'});
+        service_dropdown.onAdd = function (map) {return addServiceDropdown()}
+        service_dropdown.addTo(map);
 
 </script>
     </body>

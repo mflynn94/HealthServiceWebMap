@@ -176,3 +176,20 @@ function setPopUpContent(fp) {
     
     return PopupString
 }
+
+
+function updateSidebar(fp) {
+
+    createSidebarContent(fp);
+    sidebar.setContent(Sidebar_String);
+
+    if (sidebar.isVisible() == true) {
+            $("#sidebar").hide().fadeIn('slow');
+};
+}
+
+function openSidebar() {
+    if (sidebar.isVisible() !== true) {
+            sidebar.toggle();
+        }
+    }
