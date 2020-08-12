@@ -39,11 +39,29 @@ function changeClusterIcon(cluster, service_string) {
 // Function which defines the cluster groups. 
 // As above, this changes per service
 
-function define_clusterGroups (group_name, service) {
-    return group_name = L.markerClusterGroup({
+function define_clusterGroups (layer, service) {
+        var layer = L.markerClusterGroup({
         spiderfyOnMaxZoom: true, 
         showCoverageOnHover: false, 
         iconCreateFunction: function (cluster) {
             return changeClusterIcon(cluster, service)}
         })
+        return layer;
 };
+
+
+function button_toggleSidebar() {
+    if (sidebar.isVisible() == true) {
+        $("#sidebar").hide().fadeIn('slow');
+    } else {
+        sidebar.show();
+    }
+    sidebar.setContent(sidebar_default_content)
+    };
+
+
+// store user coordinates
+function onLocationfound(e) {
+    var user_location = e.latlng;
+    console.log(user_location);
+}
