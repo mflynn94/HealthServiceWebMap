@@ -172,8 +172,10 @@ function add_geoJSONData (service, figure, layer_group) {
 
 }
 
-// create a function that is performed when one of the service buttons is clicked, in the side bar or in the legend control
-// this initially will ensure the map is not blurred out (as it is in the beginning)
+
+/* Create a function that is performed when one of the service buttons is clicked, in the side bar or in the legend control
+   this initially will ensure the map is not blurred out (as it is in the beginning)
+   */
 
 function addLayer(servicelayer, Control) {
             
@@ -205,9 +207,19 @@ function addLayer(servicelayer, Control) {
 };
 
 
+// test 
+function test (layer) {
+    GPs_layer.eachLayer(function(layer){
+        if(layer.feature.properties.Website){
+            GPs_layer.removeLayer(layer)
+            GPs_layer.refreshClusters()
+        }
+    })
+}
 
 // Create functions for the drop down service button
 // Content inspired by W3 tutorial on dropdown boxes.
+// On click of each services, run the same function that is used for the service buttons on the sidebar
 
 function addServiceDropdown() {
     var div = L.DomUtil.create('div', 'info legend');
@@ -223,14 +235,14 @@ function addServiceDropdown() {
         return div;
 }
 
-/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 
+/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
     }
 
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
@@ -242,3 +254,5 @@ function myFunction() {
         }
     }
 }
+
+

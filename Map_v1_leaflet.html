@@ -219,32 +219,14 @@
         }).addTo(map);
 
         
-
-        // add the GP data and set the sidebar and popup content 
-        
-        
-        
-        
+        // add all the datasets using the defined add_geoJSONData function created in Functions.js
         add_geoJSONData (GPs, 'MapFigures/GPs.png', GPs_layer)
         add_geoJSONData (Dentists, 'MapFigures/Dentists2.png', Dentists_layer)
         add_geoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', Pharmacies_layer)
         add_geoJSONData (Opticians, 'MapFigures/Opticians2.png', Opticians_layer)
         add_geoJSONData (Hospitals, 'MapFigures/Hospitals.png', Hospitals_layer)
         add_geoJSONData (SHClinics, 'MapFigures/SHClinics.png', SHClinics_layer)
-        
     
-
-        
-        function test (layer) {
-            GPs_layer.eachLayer(function(layer){
-                if(layer.feature.properties.Website){
-                    GPs_layer.removeLayer(layer)
-                    GPs_layer.refreshClusters()
-                }
-            })
-        }
-
-
 
         L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
 

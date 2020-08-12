@@ -19,48 +19,40 @@
 
         .leaflet-map-pane {
             filter: blur(8px);
-           
+            -webkit-filter: blur(8px);
         }
 
-        .leaflet-sidebar {
-            filter: blur(0px);
-        }
         
-        .box{
+        
+        .box {
             width:100%;
             background:#09325C;
             opacity: 1;
             height: 5px;
         }
-        .top {
-            position:relative;
-            top: 0.2%;
-            height:1px;
-        }
-        .bottom{
-            position: absolute;
-            bottom: 0;
-            left: 5%;
-            right: 5%;
-            height: 1%;
-            width: 90%;
+        
+        .Allbuttons {
+            
+            margin: auto;
+            margin-left:auto;
+            margin-right:auto;
+            
         }
 
         .btn {
             position: relative;
             background-color: #fff;
             border-style: solid;
-            border-width: 1px;
-            border-color: #09325C;
+            border-width: 2px;
+            border-color: #0b3d6e;
             border-radius: 5px;
             color: #09325C;
             padding: 5px 20px;
             cursor: pointer;
-            width: 80%;
-            left: 10%;
-            right: 10%;
+            width: 180px;
+            text-align: left;
+            margin: 7px;
             height: 55px;
-            margin-bottom:px;
             opacity: 0.8;
             vertical-align: middle;
             font-weight: bold;
@@ -69,9 +61,18 @@
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
             }
 
+    
+       
         .btn:hover {
             background-color: #f4f4f4;
         }
+
+        .img {
+            vertical-align:middle;
+            width:'30';
+            height:'30';
+        }
+
 
         .leaflet-touch .leaflet-bar a {
             width: 35px;
@@ -252,9 +253,9 @@
             display: inline-block;
         }
 
-            .dropdown a:hover {background-color: #ddd;}
+        .dropdown a:hover {background-color: #ddd;}
 
-            .show {display: block;}
+        .show {display: block;}
 
         .marker-cluster-small:hover {
             width: 30px;
@@ -269,8 +270,6 @@
             margin-top: 4px;
           
         }
-
-
 
         .marker-cluster-small div span {
             line-height: 24px;

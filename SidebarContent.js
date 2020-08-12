@@ -15,20 +15,20 @@ var sidebar_default_content = "<div class = 'box top'></div> \
                             </h1><div class ='line'></div>\
                             <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
                             <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(GPs_layer)'>GPs</button>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'>Dentists</button>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</button>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</button>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</button>\
-                            <br><br>\
-                            <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'>Sexual Health Clinics</button>\
-                            <br><br>\
-                            </div>"
+                            <p><hr>\
+                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(GPs_layer)'><img src='MapFigures/GPs.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
+                            \
+                            <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'><img src='MapFigures/Dentists2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
+                            \
+                            <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'><img src='MapFigures/Opticians2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
+                            \
+                            <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'><img src='MapFigures/Pharmacies.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
+                            \
+                            <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'><img src='MapFigures/Hospitals.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
+                            \
+                            <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 14px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <p></div><hr>"
+                            
 
 function createSidebarContent(fp) {
     
