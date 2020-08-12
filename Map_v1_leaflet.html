@@ -428,7 +428,7 @@
     <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
     <script src="Plugins/Leaflet.Control.Custom.js"></script>
     <script src="SidebarContent.js"></script>
-    
+    <script src="Functions.js"></script>
     <!–– Script for map containing javascript code begins -->
 
     <script>
@@ -437,81 +437,36 @@
 
 
     // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
-
+    
     var basemapLayers = L.layerGroup();
-
-    var light_basemap = L.mapboxGL({
-    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json',
-    accessToken: 'no-token'
-    });
-
-    var night_basemap = L.mapboxGL({
-    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-night/style.json',
-    accessToken: 'no-token'
-    })
-
-    var outdoor_basemap = L.mapboxGL({
-    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-outdoor/style.json',
-    accessToken: 'no-token'
-    })
-
-    var roads_basemap = L.mapboxGL({
-    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-road/style.json',
-    accessToken: 'no-token'
-    })
+        
+    var light_basemap = define_basemaps(light_basemap, 'light', baseMaps);
+    var night_basemap = define_basemaps(night_basemap, 'night');
+    var outdoor_basemap = define_basemaps(outdoor_basemap, 'outdoor');
+    var road_basemap = define_basemaps(road_basemap, 'road');
 
     // store base maps in group
     var baseMaps = {
         "Light": light_basemap,
         "Night": night_basemap,
         "Outdoors": outdoor_basemap,
-        "Road" : roads_basemap
+        "Road" : road_basemap
     };
+
+
+
 
     // Create layer groups that will be  filled by each service and also by each sub category for each service
     
-    function changeClusterIcon(cluster, service_string) {
-        var childCount = cluster.getChildCount()
-        var icon_size;
-        var c = ' marker-cluster-';
-        if (childCount < 10) {
-            c += 'small ' + service_string;
-            icon_size = new L.Point(32,32)
-        } 
-        else if (childCount < 100) {
-            c += 'medium ' + service_string;
-            icon_size = new L.Point(40,40)
-        } 
-        else {
-            c += 'large ' + service_string;
-            icon_size = new L.Point(45,45)
-        }
-        return L.divIcon({ html: '<div><b><span>' + childCount + '</span></div>', 
-        className: 'marker-cluster' + c, iconSize: icon_size });
-    }
+    
 
+    var GPs_layer = define_clusterGroups(GPs_layer, 'gp'),
 
-    var GPs_layer = L.markerClusterGroup({
-            spiderfyOnMaxZoom: true, 
-            showCoverageOnHover: false,
-            iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'gp')}    
-        })
-
+        Opticians_layer = define_clusterGroups(GPs_layer, 'optician'),
         
-        Opticians_layer = L.markerClusterGroup({
-                spiderfyOnMaxZoom: true, 
-                showCoverageOnHover: false,
-                iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'optician')}
-            }),
-        
-        Dentists_layer = L.markerClusterGroup({
-            spiderfyOnMaxZoom: true, 
-            showCoverageOnHover: false,
-            iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'dentist')}
-        }),
-      
-        Dentists_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false, iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'dentist')}}),
-        Opticians_Saturday = L.markerClusterGroup({spiderfyOnMaxZoom: true, showCoverageOnHover: false,iconCreateFunction: function (cluster) {return changeClusterIcon(cluster, 'optician')}}),
+        Dentists_layer = define_clusterGroups(GPs_layer, 'dentist'),
+        Dentists_Saturday = define_clusterGroups(GPs_layer, 'dentist'),
+        Opticians_Saturday = define_clusterGroups(GPs_layer, 'optician'),
     
         
         SHClinics_layer = L.markerClusterGroup({
@@ -886,7 +841,7 @@
         var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
         
         map.eachLayer(function (layer) {
-            if ((layer !== lc._layer) && (layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== roads_basemap)) {
+            if ((layer !== lc._layer) && (layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== road_basemap)) {
             map.removeLayer(layer)
             }
         })

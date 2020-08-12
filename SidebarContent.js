@@ -1,8 +1,11 @@
 
    
-
-
-
+/*
+ THIS SCRIPT CONTAINS THE FUNCTIONS USED FOR CREATING THE SIDEBAR AND POP UP CONTENT. 
+ As the data varies between the different services, for example, the content within the sidebar and pop ups can vary a large amount.
+ Therefore, many if statements had to be used for each possible attribute a service could have. 
+ Generally, if it does not exist or is empty (NaN), the corresponding variable for that attribute will be filled with an empty string.
+*/
 
 var Sidebar_String;
 var Popup_string;
@@ -115,7 +118,7 @@ function createSidebarContent(fp) {
     var Directions = "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a><span></div></div>" +
                     "<br><div class ='line'></div><br>"
 
-    // Define the pdf download link which will open in a new window.
+    // Define the pdf download link which will open in a new window
     var pdfDownload = "<div class='test'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
                         "<br><div class ='line'></div><br>"
 
@@ -126,11 +129,13 @@ function createSidebarContent(fp) {
 };
 
 
+
 // Create a similar function for defining the pop up content
 
 function setPopUpContent(fp) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
+    // For pharmacies, some have no name in the name column and so for those, use Dispenser name.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
         var Name = "<h3>" + fp.NHSInformName + "</h3>"
     } else if (fp.Name == fp.Name) {
