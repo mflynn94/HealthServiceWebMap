@@ -51,7 +51,7 @@
             color: #09325C;
             padding: 5px 20px;
             cursor: pointer;
-            width: 180px;
+            width: 175px;
             text-align: left;
             margin: 7px;
             height: 55px;
@@ -80,6 +80,8 @@
             width: 35px;
             height: 35px;
             line-height: 35px;
+            vertical-align: middle;
+            margin: auto;
             background-color: white;
             font-size: 1.7em
             }
@@ -91,7 +93,8 @@
             width: 35px;
             height: 35px;
             line-height: 35px;
-            font-size: 1.7em
+            font-size: 1.7em;
+            vertical-align: middle;
             }
         
         .leaflet-bar button:hover {
