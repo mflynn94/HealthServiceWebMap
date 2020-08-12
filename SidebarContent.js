@@ -30,17 +30,17 @@ var sidebar_default_content = "<div class = 'box top'></div> \
                             <p></div><hr>"
                             
 
-function createSidebarContent(fp) {
+function createSidebarContent(fp, figure) {
     
     // define all variables to be used in the sidebar content. This will vary from service to service, so many coniderations to be given
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<div class = 'box top'></div><h2>" + fp.NHSInformName + "</h2><div class ='line'></div>"
+        var Name = "<div class = 'box top'></div><h2>" + fp.NHSInformName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     } else if (fp.Name == fp.Name) {
-        Name = "<div class = 'box top'></div><h2>" + fp.Name + "</h2><div class ='line'></div>"
+        Name = "<div class = 'box top'></div><h2>" + fp.Name + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     } else {
-        Name = "<div class = 'box top'></div><h2>" + fp.DispenserName + "</h2><div class ='line'></div>"
+        Name = "<div class = 'box top'></div><h2>" + fp.DispenserName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     }
 
 
@@ -178,9 +178,9 @@ function setPopUpContent(fp) {
 }
 
 
-function updateSidebar(fp) {
+function updateSidebar(fp,figure) {
 
-    createSidebarContent(fp);
+    createSidebarContent(fp,figure);
     sidebar.setContent(Sidebar_String);
 
     if (sidebar.isVisible() == true) {

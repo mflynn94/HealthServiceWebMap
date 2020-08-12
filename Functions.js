@@ -153,7 +153,7 @@ function add_geoJSONData (service, figure, layer_group) {
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , popUp_customOptions);
-            layer.on('click', function (e) { updateSidebar(fp), this.openPopup(), setmapview(e)});
+            layer.on('click', function (e) { updateSidebar(fp,figure), this.openPopup(), setmapview(e)});
             
             layer.on('mouseover', function(e) {
                 e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                

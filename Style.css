@@ -22,7 +22,9 @@
             -webkit-filter: blur(8px);
         }
 
-        
+        .hr {
+            color:navy;
+        }
         
         .box {
             width:100%;
