@@ -188,25 +188,15 @@
                 sidebar.setContent(sidebar_default_content)
                 }, 500)     
 
-
-        // Add a button control for toggling the sidebar on and off, and returning to the default content
-        L.easyButton('fa fa-home', function(btn, map){
-            return button_toggleSidebar();
-        }).addTo(map);
-
-
-        // Add a search bar to the map
-        L.Control.geocoder({
-            position: 'topleft'
-        }).addTo(map);
+        
+        
+            
+        
 
 
-        // Add user location control to the map
-        var lc = L.control.locate({
-            options: {circleStyle: {fillOpacity: 1}}
-        }).addTo(map);
+       
 
-        map.on('locationfound', onLocationfound);
+       
 
 
         // Load polygon on the map and grey out areas around Greater Glasgow and Clyde
@@ -236,11 +226,29 @@
         var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: true});
         var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: true});
 
-
         var service_dropdown = L.control({position: 'topright'});
         service_dropdown.onAdd = function (map) {return addServiceDropdown()}
         service_dropdown.addTo(map);
 
+
+        // Add a button control for toggling the sidebar on and off, and returning to the default content
+        L.easyButton('fa fa-home', function(btn, map){
+            return button_toggleSidebar();
+        }).addTo(map);
+
+         // Add user location control to the map
+         var lc = L.control.locate({position:'bottomright',
+            options: {circleStyle: {fillOpacity: 1}}
+        }).addTo(map);
+
+        map.on('locationfound', onLocationfound);
+
+         // Add a search bar to the map
+         L.Control.geocoder({
+            position: 'topleft'
+        }).addTo(map);
+
+        
 </script>
     </body>
 </html>
