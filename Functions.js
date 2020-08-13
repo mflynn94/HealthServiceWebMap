@@ -155,7 +155,11 @@ function addGeoJSONData (service, figure, layerGroup) {
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
             layer.bindPopup(setPopUpContent(fp) , popUpCustomOptions);
-            layer.on('click', function (e) { updateSidebar(fp,figure), this.openPopup(), setMapView(e)});
+            layer.on('click', function (e) { updateSidebar(fp,figure);
+                if (sidebar.isVisible() == false) {
+                    this.openPopup();
+                } else { this.closePopup()};
+                setMapView(e)});
             
             layer.on('mouseover', function(e) {
                 e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                
@@ -307,20 +311,15 @@ function addGeocodeMarker(e) {
 
 
 
-
+// SET DESIGN OF THE INFO BUTTON CONTROL 
 function designInfoButtonControl() {
     
-
-
     var filter = document.getElementsByClassName("leaflet-bottom")[0];
     var filterLayer = filter.getElementsByClassName("easy-button-container")[0];
     var filterLayer2 = filter.getElementsByClassName("easy-button-button")[0];
     
-   
-    //filterLayer.style.borderRadius = "100px";
     filterLayer.style.paddingLeft = "5px"; 
     filterLayer.style.paddingBottom = "5px"; 
-    filterLayer.style.position = 'relative';
     filterLayer.style.border = "none";
 
     filterLayer2.style.borderRadius = "20px";
@@ -328,5 +327,5 @@ function designInfoButtonControl() {
     filterLayer2.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
     filterLayer2.style.paddingLeft = "5px";
     filterLayer2.style.paddingBottom = "5px";
-    //filterLayer2.style.position = 'relative';
+    
 }
