@@ -33,7 +33,10 @@
             border: 1.5px solid rgba(0,0,0,0.2);
             box-shadow: 1px;
         }
-       
+
+       .leaflet-touch .leaflet-control-layers {
+            border: 1px solid rgba(0,0,0,0.2);
+       }
         
         .leaflet-touch .leaflet-bar a {
             width: 35px;
@@ -74,6 +77,7 @@
 
         /*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
         .leaflet-control-layers {
+            border:1px solid rgba(0,0,0,0.2);
             box-shadow: 0 1px 3px rgba(0,0,0,0.4);
             bottom: 10px;
             background: #fff;
@@ -81,6 +85,7 @@
             background-image: none;
             }
         .leaflet-control-layers-toggle {
+            border:1px solid rgba(0,0,0,0.2)
             background-image: none;
             width: 36px;
             height: 36px;

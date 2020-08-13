@@ -324,7 +324,7 @@ function designInfoButtonControl() {
     filterLayer.style.border = "none";
 
     filterLayer2.style.borderRadius = "20px";
-    filterLayer2.style.border = "2px solid rgba(0,0,0,0.2)";
+    filterLayer2.style.border = "1px solid rgba(0,0,0,0.2)";
     filterLayer2.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
     filterLayer2.style.paddingLeft = "5px";
     filterLayer2.style.paddingBottom = "5px";
