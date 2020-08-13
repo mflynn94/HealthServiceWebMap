@@ -60,12 +60,12 @@
 
     // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
     
-        var basemapLayers = L.layerGroup();
+       
             
-        var lightBasemap = define_basemaps(lightBasemap, 'light', baseMaps);
-        var nightBasemap = define_basemaps(nightBasemap, 'night');
-        var outdoorBasemap = define_basemaps(outdoorBasemap, 'outdoor');
-        var roadBasemap = define_basemaps(roadBasemap, 'road');
+        var lightBasemap = defineBasemaps('light');
+        var nightBasemap = defineBasemaps('night');
+        var outdoorBasemap = defineBasemaps('outdoor');
+        var roadBasemap = defineBasemaps('road');
 
         // store base maps in group
         var baseMaps = {
@@ -197,6 +197,8 @@
             }
         }).addTo(map);
 
+
+        // ADD ALL DATA TO THE MAP
         
         // add all the datasets using the defined add_geoJSONData function created in Functions.js
         addGeoJSONData (GPs, 'MapFigures/GPs.png', gpsLayer)
@@ -205,7 +207,6 @@
         addGeoJSONData (Opticians, 'MapFigures/Opticians2.png', opticiansLayer)
         addGeoJSONData (Hospitals, 'MapFigures/Hospitals.png', hospitalsLayer)
         addGeoJSONData (SHClinics, 'MapFigures/SHClinics.png', shClinicsLayer)
-    
 
 
         // ADD ALL CONTROLS TO THE MAP
@@ -231,36 +232,36 @@
             return buttonToggleSidebar();
         }).addTo(map);
 
+        L.easyButton('fa fa-info fa-sm', function(btn, map){
+            return buttonToggleSidebarInfo();
+        }, {position: 'bottomleft'}).addTo(map);
+
+
          // ADD USER LOCATION CONTROL TO THE MAP
          var lc = L.control.locate({position:'bottomright',
             options: {circleStyle: {fillOpacity: 1}}
         }).addTo(map);
+        
 
+        // ADD A SEARCH BAR TO THE MAP
         var geocoderMarker;
-         // ADD A SEARCH BAR TO THE MAP
-         var geocoder = L.Control.geocoder({
+        var geocoder = L.Control.geocoder({
             position: 'topleft',
             defaultMarkGeocode: false,
             placeholder: 'Search location or postcode...'
         }).addTo(map);
         
+        // Add marker and zoom to location when search bar is used
         geocoder.on('markgeocode', function(e) {
-            if (geocoderMarker) {
-                map.removeLayer(geocoderMarker);
-            }
-            console.log(e.geocode.center);
-            searchLatlng = e.geocode.center
-            geocoderMarker = L.marker(searchLatlng).addTo(map);
-            map.setView(e.geocode.center, 15);
+            addGeocodeMarker(e);
         })
     
-map.on('dblclick', function(e){
-    map.removeLayer(geocoderMarker);
-});
+        // Remove any search markers when map is double clicked
+        map.on('dblclick', function(e){
+            removeGeocodeMarker();
+        });
         
-
-        
-
+        designInfoButtonControl();
        
 </script>
     </body>

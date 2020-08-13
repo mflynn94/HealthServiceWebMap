@@ -6812,7 +6812,7 @@ var Dentists = {
         "Address1": "47 Neilston Road",
         "Address2": "Paisley",
         "Postcode": "PA2 6LY",
-        "Telephone": "0141 889 2012 ",
+        "Telephone": "0141 889 2012",
         "Website": "https://www.brite-dental.co.uk/",
         "Sunday": NaN,
         "Monday": "08:30 - 19:00",

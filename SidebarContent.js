@@ -127,14 +127,32 @@ function createSidebarContent(fp, figure) {
     //If it doesn't exist or is NaN, leave as an empty string.
     var Website;
     if (fp.Website && fp.Website == fp.Website) {
-        Website = "<div class='test'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></span></div></div>"  + 
+        Website = "<div class='test'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidetext><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></div></div>"  + 
         "<br><div class ='line'></div><br>"
     } else {
         Website = ''
     }
 
+    // Define email, check if it exists and is not NaN
+    var Email;
+    if (fp.Email && fp.Email == fp.Email) {
+        Email = "<div class='test'><i class='fa fa-envelope fa-lg' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Email</b><br>" + fp.Email + "</span></div></div>"  + 
+        "<br><div class ='line'></div><br>"
+    } else {
+        Email = ''
+    }
+
+    // Define WA, check if it exists and is not NaN
+    var WA;
+    if (fp.WA && fp.WA == fp.WA) {
+        WA = "<div class='test'><i class='fa fa-wheelchair fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Wheelchair Accessible</b></span></div></div>"  + 
+        "<br><div class ='line'></div><br>"
+    } else {
+        WA = ''
+    }
+
     // Define the directions variable with a link to the Google Directions property
-    var Directions = "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a><span></div></div>" +
+    var Directions = "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a></div></div>" +
                     "<br><div class ='line'></div><br>"
 
     // Define the pdf download link which will open in a new window
@@ -143,7 +161,7 @@ function createSidebarContent(fp, figure) {
 
     
     // Create the full string for adding to the sidebar on click
-    sidebarString = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Directions + pdfDownload
+    sidebarString = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Email + Directions + WA + pdfDownload
 
 };
 

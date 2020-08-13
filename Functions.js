@@ -3,12 +3,13 @@
 // Script contains most functions used within the project for adding controls, layers, or providing additional functionality to the map.
 
 
-// Add base maps
-function define_basemaps(basemap_name, basemap_style_string, ) {
-    return basemap_name = L.mapboxGL({
-    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-'+ basemap_style_string + '/style.json',
+// FUNCTION TO ADD BASEMAPS 
+function defineBasemaps(basemapStyleString) {
+    var basemap = L.mapboxGL({
+    style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-'+ basemapStyleString + '/style.json',
     accessToken: 'no-token'
     });
+    return basemap;
 }
 
 
@@ -16,24 +17,24 @@ function define_basemaps(basemap_name, basemap_style_string, ) {
 // Create different size of icons depending on the number of features within the cluster
 // New tags are created and are designed within the CSS file
 
-function changeClusterIcon(cluster, service_string) {
-    var childCount = cluster.getChildCount()
-    var icon_size;
-    var c = ' marker-cluster-';
-    if (childCount < 10) {
-        c += 'small ' + service_string;
-        icon_size = new L.Point(32,32)
+function changeClusterIcon(cluster, serviceString) {
+    var clusterAmount = cluster.getChildCount()
+    var iconSize;
+    var cssClass = ' marker-cluster-';
+    if (clusterAmount < 10) {
+        cssClass += 'small ' + serviceString;
+        iconSize = new L.Point(32,32)
     } 
-    else if (childCount < 100) {
-        c += 'medium ' + service_string;
-        icon_size = new L.Point(40,40)
+    else if (clusterAmount < 100) {
+        cssClass += 'medium ' + serviceString;
+        iconSize = new L.Point(40,40)
     } 
     else {
-        c += 'large ' + service_string;
-        icon_size = new L.Point(45,45)
+        cssClass += 'large ' + serviceString;
+        iconSize = new L.Point(45,45)
     }
-    return L.divIcon({ html: '<div><b><span>' + childCount + '</span></div>', 
-    className: 'marker-cluster' + c, iconSize: icon_size });
+    return L.divIcon({ html: '<div><b><span>' + clusterAmount + '</span></div>', 
+    className: 'marker-cluster' + cssClass, iconSize: iconSize });
 }
 
 // Function which defines the cluster groups. 
@@ -59,6 +60,14 @@ function buttonToggleSidebar() {
     sidebar.setContent(sidebarDefaultContent)
     };
 
+function buttonToggleSidebarInfo() {
+    if (sidebar.isVisible() == true) {
+        $("#sidebar").hide().fadeIn('slow');
+    } else {
+        sidebar.show();
+    }
+    sidebar.setContent("Information and Sources will be listed here")
+    };
 
 // store user coordinates
 function onLocationfound(e) {
@@ -85,32 +94,21 @@ function saveAsPDF(Name) {
     html2pdf().set(opt).from(element2).save()
 }
 
-// create custom options for pop up information
-var popUpCustomOptions =
-    {
-    'maxWidth': '200',
-    'className' : 'custom'
-    }
-
 
   
 function filterData (service, fp, layer) {
         if (service == Dentists) {
             if (fp.Saturday == fp.Saturday) layer.addTo(dentistsSaturday)
         }
-
         else if (service == Pharmacies) {
             if (fp.Saturday == fp.Saturday) layer.addTo(pharmaciesSaturday);
             for (i in pharmacyServiceList) {if (fp.Services == fp.Services && fp.Services.includes(pharmacyServiceList[i])) layer.addTo(pharmacyServiceLayers[i]);}
         }
-        
         else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(opticiansSaturday);}
-
         else if (service == Hospitals) {
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(hospitalsAandE);
         }
-
         else if (service == SHClinics) {
             for (i in shServiceList) {if (fp.Services == fp.Services && fp.Services.includes(shServiceList[i])) layer.addTo(shServiceLayers[i]);}
         }    
@@ -137,7 +135,6 @@ function bigIcon(figureURL) {
     });
 };
 
-
 // Create a function to set map view based on a specific feature
 function setMapView(e) {
     if (map.getZoom() < 13) {
@@ -147,6 +144,11 @@ function setMapView(e) {
     }
 }
 
+// create custom options for pop up information
+var popUpCustomOptions ={'maxWidth': '200','className' : 'custom'}
+
+
+// FUNCTION FOR ADDING ALL THE DATASETS ****
 function addGeoJSONData (service, figure, layerGroup) {
     L.geoJSON(service, {
         
@@ -173,12 +175,11 @@ function addGeoJSONData (service, figure, layerGroup) {
 }
 
 
-
 // FUNCTION WHICH CHANGES THE DEFAULT DESIGN ON THE BASEMAP CONTROL
 
 function designBasemapControl() {
     var customControl = document.getElementsByClassName("leaflet-control-layers-toggle")[0];
-    customControl.innerHTML = "<div class=control-content><i class='fa fa-map fa-lg' aria-hidden='true'></i></div>";
+    customControl.innerHTML = "<div class=control-content><i class='fa fa-map fa-1x' aria-hidden='true'></i></div>";
     document.getElementsByClassName("leaflet-control-layers-list")[0].style.textAlign = "left";
     
     radioInputs = document.getElementsByTagName("input")
@@ -201,7 +202,6 @@ function designServiceFilter() {
     filterLayer.style.fontSize = "1.1em";
     filterLayer.style.color= "navy";
 };
-
 
 
 /* Create a function that is performed when one of the service buttons is clicked, in the side bar or in the legend control
@@ -236,8 +236,6 @@ function addLayer(serviceLayer, serviceControl) {
         designServiceFilter()
     }
 
-    
-    console.log(map.getCenter());   
 };
 
 
@@ -254,7 +252,7 @@ function test (layer) {
 
 
 
-// Create functions for the drop down service button
+// CREATE FUNCTIONS FOR THE DROP DOWN SERVICE BUTTON
 // Content inspired by W3 tutorial on dropdown boxes.
 // On click of each services, run the same function that is used for the service buttons on the sidebar
 
@@ -292,3 +290,43 @@ window.onclick = function(event) {
 }
 
 
+// FUNCTIONS TO REMOVE AND ADD THE GEOCODE MARKERS WHEN MAKING A SEARCH
+function removeGeocodeMarker() {
+    map.removeLayer(geocoderMarker);
+}
+
+function addGeocodeMarker(e) {
+    if (geocoderMarker) {removeGeocodeMarker()};
+
+    console.log(e.geocode);
+    searchLatlng = e.geocode.center
+    geocoderMarker = L.marker(searchLatlng).addTo(map);
+    geocoderMarker.bindTooltip(e.geocode.html).openTooltip();
+    map.setView(e.geocode.center, 15);
+}
+
+
+
+
+function designInfoButtonControl() {
+    
+
+
+    var filter = document.getElementsByClassName("leaflet-bottom")[0];
+    var filterLayer = filter.getElementsByClassName("easy-button-container")[0];
+    var filterLayer2 = filter.getElementsByClassName("easy-button-button")[0];
+    
+   
+    //filterLayer.style.borderRadius = "100px";
+    filterLayer.style.paddingLeft = "5px"; 
+    filterLayer.style.paddingBottom = "5px"; 
+    filterLayer.style.position = 'relative';
+    filterLayer.style.border = "none";
+
+    filterLayer2.style.borderRadius = "20px";
+    filterLayer2.style.border = "2px solid rgba(0,0,0,0.2)";
+    filterLayer2.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
+    filterLayer2.style.paddingLeft = "5px";
+    filterLayer2.style.paddingBottom = "5px";
+    //filterLayer2.style.position = 'relative';
+}

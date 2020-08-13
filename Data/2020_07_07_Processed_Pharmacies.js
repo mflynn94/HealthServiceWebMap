@@ -4036,7 +4036,7 @@ var Pharmacies = {
     {
       "type": "Feature",
       "properties": {
-        "Name": "Catterson Pharmacy\n",
+        "Name": "Catterson Pharmacy",
         "DispenserName": "New Castle Healthcare Ltd",
         "Address1": "7-9 Mcarthur Street",
         "Address2": "Glasgow",
