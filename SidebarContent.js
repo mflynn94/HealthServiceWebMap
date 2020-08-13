@@ -7,26 +7,26 @@
  Generally, if it does not exist or is empty (NaN), the corresponding variable for that attribute will be filled with an empty string.
 */
 
-var Sidebar_String;
-var Popup_string;
+var sidebarString;
+var popupString;
 
-var sidebar_default_content = "<div class = 'box top'></div> \
+var sidebarDefaultContent = "<div class = 'box top'></div> \
                             <h1>Find your local Health Services \
                             </h1><div class ='line'></div>\
                             <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
                             <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
                             <p><hr>\
-                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(GPs_layer)'><img src='MapFigures/GPs.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
+                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer,null)'><img src='MapFigures/GPs.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(Dentists_layer, DentistControl)'><img src='MapFigures/Dentists2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
+                            <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl)'><img src='MapFigures/Dentists2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(Opticians_layer, OpticiansControl)'><img src='MapFigures/Opticians2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
+                            <button type='button' class=btn onclick='addLayer(opticiansLayer, opticiansControl)'><img src='MapFigures/Opticians2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(Pharmacies_layer, PharmaciesControl)'><img src='MapFigures/Pharmacies.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
+                            <button type='button' class=btn onclick='addLayer(pharmaciesLayer, pharmaciesControl)'><img src='MapFigures/Pharmacies.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(Hospitals_layer, HospitalsControl)'><img src='MapFigures/Hospitals.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
+                            <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl)'><img src='MapFigures/Hospitals.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(SHClinics_layer, SHClinicsControl)'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 14px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl)'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 14px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
                             <p></div><hr>"
                             
 
@@ -143,7 +143,7 @@ function createSidebarContent(fp, figure) {
 
     
     // Create the full string for adding to the sidebar on click
-    Sidebar_String = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Directions + pdfDownload
+    sidebarString = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Directions + pdfDownload
 
 };
 
@@ -171,17 +171,17 @@ function setPopUpContent(fp) {
         Telephone = ''
     }
 
-    PopupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
+    popupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
     "<br><a href='#' " + "<span onClick='openSidebar()'><b>More details...</b></span></a><br><br><div class=box></div>"
     
-    return PopupString
+    return popupString
 }
 
 
 function updateSidebar(fp,figure) {
 
     createSidebarContent(fp,figure);
-    sidebar.setContent(Sidebar_String);
+    sidebar.setContent(sidebarString);
 
     if (sidebar.isVisible() == true) {
             $("#sidebar").hide().fadeIn('slow');

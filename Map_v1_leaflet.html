@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
     <link rel="stylesheet" href="Style.css" />
 </head>
 
@@ -36,12 +37,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>    
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
 
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
 
@@ -58,23 +59,24 @@
 
 
     <script>
-
+    
+       
 
     // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
     
         var basemapLayers = L.layerGroup();
             
-        var light_basemap = define_basemaps(light_basemap, 'light', baseMaps);
-        var night_basemap = define_basemaps(night_basemap, 'night');
-        var outdoor_basemap = define_basemaps(outdoor_basemap, 'outdoor');
-        var road_basemap = define_basemaps(road_basemap, 'road');
+        var lightBasemap = define_basemaps(lightBasemap, 'light', baseMaps);
+        var nightBasemap = define_basemaps(nightBasemap, 'night');
+        var outdoorBasemap = define_basemaps(outdoorBasemap, 'outdoor');
+        var roadBasemap = define_basemaps(roadBasemap, 'road');
 
         // store base maps in group
         var baseMaps = {
-            "Light": light_basemap,
-            "Night": night_basemap,
-            "Outdoors": outdoor_basemap,
-            "Road" : road_basemap
+            "Light": lightBasemap,
+            "Night": nightBasemap,
+            "Outdoors": outdoorBasemap,
+            "Road" : roadBasemap
         };
 
 
@@ -82,82 +84,83 @@
         // Create layer groups that will be  filled by each service and also by each sub category for each service
         // Uses the define_clusterGroup function from Functions.js
         
-        var GPs_layer = define_clusterGroups(GPs_layer,'gp'),
+        var gpsLayer = defineClusterGroups(gpsLayer,'gp'),
             
-            Dentists_layer = define_clusterGroups(Dentists_layer,'dentist'), Dentists_Saturday = define_clusterGroups(Dentists_Saturday,'dentist'),
+            dentistsLayer = defineClusterGroups(dentistsLayer,'dentist'), dentistsSaturday = defineClusterGroups(dentistsSaturday,'dentist'),
             
-            Opticians_layer = define_clusterGroups(Opticians_layer,'optician'), Opticians_Saturday = define_clusterGroups(Opticians_Saturday,'optician'),
+            opticiansLayer = defineClusterGroups(opticiansLayer,'optician'), opticiansSaturday = defineClusterGroups(opticiansSaturday,'optician'),
 
-            Pharmacies_layer = define_clusterGroups(Pharmacies_layer,'pharmacy'),
-            Pharmacies_Saturday = define_clusterGroups(Pharmacies_Saturday,'pharmacy'),Pharmacies_EC = define_clusterGroups(Pharmacies_EC,'pharmacy'),Pharmacies_FC = define_clusterGroups(Pharmacies_FC,'pharmacy'),Pharmacies_MAS = define_clusterGroups(Pharmacies_MAS,'pharmacy'),
-            Pharmacies_NE = define_clusterGroups(Pharmacies_NE,'pharmacy'),Pharmacies_NRT = define_clusterGroups(Pharmacies_NRT,'pharmacy'),Pharmacies_PCN = define_clusterGroups(Pharmacies_PCN,'pharmacy'),Pharmacies_PTC = define_clusterGroups(Pharmacies_PTC,'pharmacy'),
-            Pharmacies_SBS = define_clusterGroups(Pharmacies_SBS,'pharmacy'),Pharmacies_SMS = define_clusterGroups(Pharmacies_SMS,'pharmacy'),Pharmacies_TfI = define_clusterGroups(Pharmacies_TfI,'pharmacy'),Pharmacies_TUTI = define_clusterGroups(Pharmacies_TUTI,'pharmacy'),
+            pharmaciesLayer = defineClusterGroups(pharmaciesLayer,'pharmacy'),
+            pharmaciesSaturday = defineClusterGroups(pharmaciesSaturday,'pharmacy'),pharmaciesEC = defineClusterGroups(pharmaciesEC,'pharmacy'),pharmaciesFC = defineClusterGroups(pharmaciesFC,'pharmacy'),pharmaciesMAS = defineClusterGroups(pharmaciesMAS,'pharmacy'),
+            pharmaciesNE = defineClusterGroups(pharmaciesNE,'pharmacy'),pharmaciesNRT = defineClusterGroups(pharmaciesNRT,'pharmacy'),pharmaciesPCN = defineClusterGroups(pharmaciesPCN,'pharmacy'),
+            pharmaciesSBS = defineClusterGroups(pharmaciesSBS,'pharmacy'),pharmaciesSMS = defineClusterGroups(pharmaciesSMS,'pharmacy'),pharmaciesTfI = defineClusterGroups(pharmaciesTfI,'pharmacy'),pharmaciesTUTI = defineClusterGroups(pharmaciesTUTI,'pharmacy'),
 
-            SHClinics_layer = define_clusterGroups(SHClinics_layer,'shclinic'),
-            SHClinics_Cont = define_clusterGroups(SHClinics_Cont,'shclinic'),SHClinics_CSS = define_clusterGroups(SHClinics_CSS,'shclinic'),SHClinics_Drop = define_clusterGroups(SHClinics_Drop,'shclinic'),SHClinics_EC = define_clusterGroups(SHClinics_EC,'shclinic'),
-            SHClinics_FP = define_clusterGroups(SHClinics_FP,'shclinic'),SHClinics_FC = define_clusterGroups(SHClinics_FC,'shclinic'),SHClinics_GI = define_clusterGroups(SHClinics_GI,'shclinic'),SHClinics_GUM = define_clusterGroups(SHClinics_GUM,'shclinic'),
-            SHClinics_Hep = define_clusterGroups(SHClinics_Hep,'shclinic'),SHClinics_HV = define_clusterGroups(SHClinics_HV,'shclinic'),SHClinics_MM = define_clusterGroups(SHClinics_MM,'shclinic'),SHClinics_PT = define_clusterGroups(SHClinics_PT,'shclinic'),
-            SHClinics_PS = define_clusterGroups(SHClinics_PS,'shclinic'),SHClinics_SR = define_clusterGroups(SHClinics_SR,'shclinic'),SHClinics_TOPAR = define_clusterGroups(SHClinics_TOPAR,'shclinic'),SHClinics_THV = define_clusterGroups(SHClinics_THV,'shclinic'),
-            SHClinics_TSTI = define_clusterGroups(SHClinics_TSTI,'shclinic'),SHClinics_YP = define_clusterGroups(SHClinics_YP,'shclinic'),
+            shClinicsLayer = defineClusterGroups(shClinicsLayer,'shclinic'),
+            shClinicsCont = defineClusterGroups(shClinicsCont,'shclinic'),shClinicsCSS = defineClusterGroups(shClinicsCSS,'shclinic'),shClinicsDrop = defineClusterGroups(shClinicsDrop,'shclinic'),shClinicsEC = defineClusterGroups(shClinicsEC,'shclinic'),
+            shClinicsFP = defineClusterGroups(shClinicsFP,'shclinic'),shClinicsFC = defineClusterGroups(shClinicsFC,'shclinic'),shClinicsGI = defineClusterGroups(shClinicsGI,'shclinic'),shClinicsGUM = defineClusterGroups(shClinicsGUM,'shclinic'),
+            shClinicsHep = defineClusterGroups(shClinicsHep,'shclinic'),shClinicsHV = defineClusterGroups(shClinicsHV,'shclinic'),shClinicsMM = defineClusterGroups(shClinicsMM,'shclinic'),shClinicsPT = defineClusterGroups(shClinicsPT,'shclinic'),
+            shClinicsPS = defineClusterGroups(shClinicsPS,'shclinic'),shClinicsSR = defineClusterGroups(shClinicsSR,'shclinic'),shClinicsTOPAR = defineClusterGroups(shClinicsTOPAR,'shclinic'),shClinicsTHV = defineClusterGroups(shClinicsTHV,'shclinic'),
+            shClinicsTSTI = defineClusterGroups(shClinicsTSTI,'shclinic'),shClinicsYP = defineClusterGroups(shClinicsYP,'shclinic'),
 
-            Hospitals_layer = define_clusterGroups(Hospitals_layer,'hospital'),Hospitals_AandE = define_clusterGroups(Hospitals_AandE,'hospital');
+            hospitalsLayer = defineClusterGroups(hospitalsLayer,'hospital'),hospitalsAandE = defineClusterGroups(hospitalsAandE,'hospital');
 
-        var Pharmacy_Service_list = ['Emergency Contraception','Free Condoms','Minor Ailments Scheme','Needle Exchange','Nicotine Replacement Therapy','Palliative Care Network','Supervised Buprenorphine Service','Supervised Methadone Supply','Treatment For Impetigo','Treatment for Urinary Tract Infection']
-        var Pharmacy_Service_layers = [Pharmacies_EC,Pharmacies_FC,Pharmacies_MAS,Pharmacies_NE,Pharmacies_NRT,Pharmacies_PCN,Pharmacies_SBS,Pharmacies_SMS,Pharmacies_TfI,Pharmacies_TUTI]
-        var SH_Service_list = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
-        var SH_Service_layers = [SHClinics_Cont, SHClinics_CSS, SHClinics_Drop, SHClinics_EC, SHClinics_FP, SHClinics_FC, SHClinics_GI, SHClinics_GUM, SHClinics_Hep, SHClinics_HV, SHClinics_MM,SHClinics_PT,SHClinics_PS, SHClinics_SR, SHClinics_TOPAR, SHClinics_THV, SHClinics_TSTI, SHClinics_YP]
+        var pharmacyServiceList = ['Emergency Contraception','Free Condoms','Minor Ailments Scheme','Needle Exchange','Nicotine Replacement Therapy','Palliative Care Network','Supervised Buprenorphine Service','Supervised Methadone Supply','Treatment For Impetigo','Treatment for Urinary Tract Infection']
+        var pharmacyServiceLayers = [pharmaciesEC,pharmaciesFC,pharmaciesMAS,pharmaciesNE,pharmaciesNRT,pharmaciesPCN,pharmaciesSBS,pharmaciesSMS,pharmaciesTfI,pharmaciesTUTI]
+        var shServiceList = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
+        var shServiceLayers = [shClinicsCont, shClinicsCSS, shClinicsDrop, shClinicsEC, shClinicsFP, shClinicsFC, shClinicsGI, shClinicsGUM, shClinicsHep, shClinicsHV, shClinicsMM,shClinicsPT,shClinicsPS, shClinicsSR, shClinicsTOPAR, shClinicsTHV, shClinicsTSTI, shClinicsYP]
 
+        
     
-        var DentistfilterLayers = {
-        "<b>All</b>": Dentists_layer,
-        "<i>Open Saturdays</i>": Dentists_Saturday
+        var dentistFilterLayers = {
+        "<b>All</b>": dentistsLayer,
+        "<i>Open Saturdays</i>": dentistsSaturday
         }
 
-        var OpticiansfilterLayers = {
-            "All": Opticians_layer,
-            "Open Saturdays": Opticians_Saturday
+        var opticianFilterLayers = {
+            "All": opticiansLayer,
+            "Open Saturdays": opticiansSaturday
         }
 
-        var PharmaciesfilterLayers = {
-            "<b>All</b>": Pharmacies_layer, 
-            "<i>Open Saturdays</i>": Pharmacies_Saturday,
-            "Emergency Contraception": Pharmacies_EC,
-            "Free Condoms": Pharmacies_FC,
-            "Minor Ailments Scheme": Pharmacies_MAS,
-            "Needle Exchange": Pharmacies_NE,
-            "Nicotine Replacement Therapy": Pharmacies_NRT,
-            "Palliative Care Network": Pharmacies_PCN,
-            'Supervised Buprenorphine Service': Pharmacies_SBS,
-            "Supervised Methadone Supply": Pharmacies_SMS,
-            "Treatment for Impetigo": Pharmacies_TfI,
-            "Treatment for Urinary Tract Infection":Pharmacies_TUTI
+        var pharmaciesFilterLayers = {
+            "<b>All</b>": pharmaciesLayer, 
+            "<i>Open Saturdays</i>": pharmaciesSaturday,
+            "Emergency Contraception": pharmaciesEC,
+            "Free Condoms": pharmaciesFC,
+            "Minor Ailments Scheme": pharmaciesMAS,
+            "Needle Exchange": pharmaciesNE,
+            "Nicotine Replacement Therapy": pharmaciesNRT,
+            "Palliative Care Network": pharmaciesPCN,
+            'Supervised Buprenorphine Service': pharmaciesSBS,
+            "Supervised Methadone Supply": pharmaciesSMS,
+            "Treatment for Impetigo": pharmaciesTfI,
+            "Treatment for Urinary Tract Infection":pharmaciesTUTI
         }
 
-        var HospitalsfilterLayers = {
-            "<b>All</b>": Hospitals_layer,
-            "Accidents & Emergency and Minor Injuries Units" : Hospitals_AandE
+        var hospitalsFilterLayers = {
+            "<b>All</b>": hospitalsLayer,
+            "Accidents & Emergency and Minor Injuries Units" : hospitalsAandE
         }
 
-        var SHClinicsfilterLayers = {
-            "<b>All</b>": SHClinics_layer,
-            "Contraception": SHClinics_Cont,
-            "Counselling and Support Services": SHClinics_CSS,
-            "Drop-in": SHClinics_Drop,
-            "Emergency Contraception": SHClinics_EC,
-            "Family Planning": SHClinics_FP,
-            "Free Condoms": SHClinics_FC,
-            "Gender Identity": SHClinics_GI,
-            "GUM Clinic": SHClinics_GUM,
-            "Hepatitis": SHClinics_Hep,
-            "HIV Counselling": SHClinics_HV,
-            "Men Who Have Sex With Men": SHClinics_MM,
-            "Pregnancy Testing": SHClinics_PT,
-            "Psychosexual Service": SHClinics_PS,
-            "Sexual Assault or Rape" : SHClinics_SR,
-            "Termination of Pregnancy and Referral": SHClinics_TOPAR,
-            "Testing for HIV": SHClinics_THV,
-            "Testing for STIs": SHClinics_TSTI,
-            "Young People": SHClinics_YP
+        var shClinicsFilterLayers = {
+            "<b>All</b>": shClinicsLayer,
+            "Contraception": shClinicsCont,
+            "Counselling and Support Services": shClinicsCSS,
+            "Drop-in": shClinicsDrop,
+            "Emergency Contraception": shClinicsEC,
+            "Family Planning": shClinicsFP,
+            "Free Condoms": shClinicsFC,
+            "Gender Identity": shClinicsGI,
+            "GUM Clinic": shClinicsGUM,
+            "Hepatitis": shClinicsHep,
+            "HIV Counselling": shClinicsHV,
+            "Men Who Have Sex With Men": shClinicsMM,
+            "Pregnancy Testing": shClinicsPT,
+            "Psychosexual Service": shClinicsPS,
+            "Sexual Assault or Rape" : shClinicsSR,
+            "Termination of Pregnancy and Referral": shClinicsTOPAR,
+            "Testing for HIV": shClinicsTHV,
+            "Testing for STIs": shClinicsTSTI,
+            "Young People": shClinicsYP
         }
 
         // Initialise map with max and min zoom, max bounds and the default basemap layer
@@ -165,7 +168,7 @@
             minZoom: 7,
             maxZoom: 20,
             maxBounds: [[ 49.84 , -8.74 ], [ 60.9, 1.96 ]],
-            layers: [outdoor_basemap]
+            layers: [outdoorBasemap]
         });
 
         
@@ -185,7 +188,7 @@
         
             setTimeout(function () {
                 sidebar.show();
-                sidebar.setContent(sidebar_default_content)
+                sidebar.setContent(sidebarDefaultContent)
                 }, 500)     
 
         
@@ -199,8 +202,8 @@
        
 
 
-        // Load polygon on the map and grey out areas around Greater Glasgow and Clyde
-        var map_poly = L.geoJSON(mappolygons, {
+        // LOAD POLYGON ON THE MAP AND GREY OUT AREAS AROUND GREATER GLASGOW AND CLYDE
+        var mapPolygon = L.geoJSON(mappolygons, {
             style: {
                 "color": "#808080",
                 "weight": 0,
@@ -210,45 +213,50 @@
 
         
         // add all the datasets using the defined add_geoJSONData function created in Functions.js
-        add_geoJSONData (GPs, 'MapFigures/GPs.png', GPs_layer)
-        add_geoJSONData (Dentists, 'MapFigures/Dentists2.png', Dentists_layer)
-        add_geoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', Pharmacies_layer)
-        add_geoJSONData (Opticians, 'MapFigures/Opticians2.png', Opticians_layer)
-        add_geoJSONData (Hospitals, 'MapFigures/Hospitals.png', Hospitals_layer)
-        add_geoJSONData (SHClinics, 'MapFigures/SHClinics.png', SHClinics_layer)
+        addGeoJSONData (GPs, 'MapFigures/GPs.png', gpsLayer)
+        addGeoJSONData (Dentists, 'MapFigures/Dentists2.png', dentistsLayer)
+        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', pharmaciesLayer)
+        addGeoJSONData (Opticians, 'MapFigures/Opticians2.png', opticiansLayer)
+        addGeoJSONData (Hospitals, 'MapFigures/Hospitals.png', hospitalsLayer)
+        addGeoJSONData (SHClinics, 'MapFigures/SHClinics.png', shClinicsLayer)
     
 
+
+        // ADD ALL CONTROLS TO THE MAP
+
+        // add control for basemaps to the map and customise this design
         L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
+        designBasemapControl();
 
-        var DentistControl = L.control.layers(DentistfilterLayers, null, {collapsed: false});
-        var OpticiansControl = L.control.layers(OpticiansfilterLayers, null, {collapsed: false});
-        var PharmaciesControl = L.control.layers(PharmaciesfilterLayers, null, {collapsed: true});
-        var HospitalsControl = L.control.layers(HospitalsfilterLayers, null, {collapsed: true});
-        var SHClinicsControl = L.control.layers(SHClinicsfilterLayers, null, {collapsed: true});
+        // Add layer controls for the other services
+        var dentistControl = L.control.layers(dentistFilterLayers, null, {collapsed: true});
+        var opticiansControl = L.control.layers(opticianFilterLayers, null, {collapsed: true});
+        var pharmaciesControl = L.control.layers(pharmaciesFilterLayers, null, {collapsed: true});
+        var hospitalsControl = L.control.layers(hospitalsFilterLayers, null, {collapsed: true});
+        var shClinicsControl = L.control.layers(shClinicsFilterLayers, null, {collapsed: true});
 
-        var service_dropdown = L.control({position: 'topright'});
-        service_dropdown.onAdd = function (map) {return addServiceDropdown()}
-        service_dropdown.addTo(map);
+        var serviceDropdown = L.control({position: 'topright'});
+        serviceDropdown.onAdd = function (map) {return addServiceDropdown()}
+        serviceDropdown.addTo(map);
 
 
-        // Add a button control for toggling the sidebar on and off, and returning to the default content
+        // ADD A BUTTON CONTROL FOR TOGGLING THE SIDEBAR ON AND OFF, AND RETURNING TO THE DEFAULT CONTENT
         L.easyButton('fa fa-home', function(btn, map){
-            return button_toggleSidebar();
+            return buttonToggleSidebar();
         }).addTo(map);
 
-         // Add user location control to the map
+         // ADD USER LOCATION CONTROL TO THE MAP
          var lc = L.control.locate({position:'bottomright',
             options: {circleStyle: {fillOpacity: 1}}
         }).addTo(map);
 
-        map.on('locationfound', onLocationfound);
 
-         // Add a search bar to the map
+         // ADD A SEARCH BAR TO THE MAP
          L.Control.geocoder({
             position: 'topleft'
         }).addTo(map);
 
-        
+       
 </script>
     </body>
 </html>

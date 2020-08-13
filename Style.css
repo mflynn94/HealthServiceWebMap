@@ -5,7 +5,9 @@
         
         
         #map { position:absolute; top:0; bottom:0; left:0; width: 100%}
-        .custom .leaflet-popup-tip,
+        
+
+        /*CUSTOMISE DEFAULT LEAFLET POP UP BOX*/
         .custom .leaflet-popup-content-wrapper {
             background: #ffffff;
             border-width: 10px;
@@ -17,15 +19,98 @@
             font-size: 1.1em;
         }
 
+        /*CUSTOMISE DEFAULT LEAFLET MAP PAN SO THAT IT IS BLURRED ON MAP START UP*/
         .leaflet-map-pane {
             filter: blur(8px);
             -webkit-filter: blur(8px);
         }
+        
+        
 
-        .hr {
-            color:navy;
+        /*CUSTOMISE DEFAULT LEAFLET BUTTON CONTROLS*/
+        .leaflet-touch .leaflet-bar a {
+            width: 35px;
+            height: 35px;
+            color: #09325C;
+            line-height: 35px;
+            vertical-align: middle;
+            margin: auto;
+            background-color: white;
+            font-size: 1.7em
+            }
+
+        .leaflet-bar a:hover {
+            background-color: #f4f4f4;
+        }
+        .leaflet-touch .leaflet-bar button {
+            width: 35px;
+            height: 35px;
+            color: #09325C;
+            line-height: 35px;
+            font-size: 1.7em;
+            vertical-align: middle;
+            }
+        
+        .leaflet-bar button:hover {
+            background-color: #f4f4f4;
+        }
+
+
+
+        /*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
+        .leaflet-control-layers {
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            bottom: 10px;
+            background: #fff;
+            border-radius: 5px;
+            }
+        .leaflet-control-layers-toggle {
+            background-image: none;
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: center;
+            margin: auto;
+            color:red;
+            }
+        .leaflet-control-layers-expanded .leaflet-control-layers-list {
+            text-align: right;
+            }
+        .leaflet-control-layers-expanded {
+            color: #333;
+            background: #fff;
+            font-family: Helvetica;
+            font-size: 1.2em;
+            }
+        input[type="radio"] {
+            float: right;
+            text-align:right;
+        }
+
+        /*STYLE CUSTOM CONTENT FOR LAYER CONTROLS*/
+        .control-content {
+            color: rgb(180, 180, 180);
+            position: relative;
+            margin: auto;
+            padding-top: 6px;
+            text-decoration: none;
+        }
+        .control-content-filter {
+            color: #09325C;
+            position: relative;
+            margin: auto;
+            padding-top: 6px;
+            text-decoration: none;
+            font-size:1.1em;
         }
         
+
+
+        /* STYLE CONTENT WITHIN SIDEBAR */
+
+        /*STYLE BOX USED WITHIN SIDEBAR CONTENT*/
         .box {
             width:100%;
             background:#09325C;
@@ -33,14 +118,15 @@
             height: 5px;
         }
         
+        /*STYLING FOR SIDEBAR BUTTONS*/
         .Allbuttons {
-            
             margin: auto;
             margin-left:auto;
             margin-right:auto;
             text-align:center;
         }
 
+        /*STYLING FOR SIDEBAR BUTTONS - INDIVIDUAL*/
         .btn {
             position: relative;
             background-color: #fff;
@@ -63,101 +149,10 @@
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
             }
 
-    
-       
+        /*Style buttons on hover*/
         .btn:hover {
             background-color: #f4f4f4;
         }
-
-        .img {
-            vertical-align:middle;
-            width:'30';
-            height:'30';
-        }
-
-
-        .leaflet-touch .leaflet-bar a {
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            vertical-align: middle;
-            margin: auto;
-            background-color: white;
-            font-size: 1.7em
-            }
-
-        .leaflet-bar a:hover {
-            background-color: #f4f4f4;
-        }
-        .leaflet-touch .leaflet-bar button {
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            font-size: 1.7em;
-            vertical-align: middle;
-            }
-        
-        .leaflet-bar button:hover {
-            background-color: #f4f4f4;
-        }
-
-        .leaflet-control-layers {
-            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-            bottom: 10px;
-            background: #fff;
-            border-radius: 5px;
-            }
-        .leaflet-control-layers-toggle {
-            width: 36px;
-            height: 36px;
-            }
-        .leaflet-retina .leaflet-control-layers-toggle {
-            background-size: 26px 26px;
-            }
-        .leaflet-touch .leaflet-control-layers-toggle {
-            width: 44px;
-            height: 44px;
-            }
-        .leaflet-control-layers .leaflet-control-layers-list,
-        .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-            display: none;
-            }
-        .leaflet-control-layers-expanded .leaflet-control-layers-list {
-            display: block;
-            position: relative;
-            text-align: right;
-            }
-        .leaflet-control-layers-expanded {
-            padding: 6px 10px 6px 6px;
-            color: #333;
-            background: #fff;
-            font-family: Helvetica;
-            font-size: 1.2em;
-            }
-
-        input[type="radio"] {
-            background-color: #333;
-            float: right;
-            
-        }
-        .leaflet-control-layers-scrollbar {
-            overflow-y: scroll;
-            overflow-x: hidden;
-            padding-right: 5px;
-            }
-        .leaflet-control-layers-selector {
-            margin-top: 2px;
-            position: relative;
-            top: 1px;
-            }
-        .leaflet-control-layers label {
-            display: block;
-            }
-        .leaflet-control-layers-separator {
-            height: 0;
-            border-top: 1px solid #ddd;
-            margin: 5px -10px 5px -6px;
-            }
 
         /* dl, dt, and dd are tags for the opening times section within the sidebar*/
         dl {
@@ -168,9 +163,7 @@
             margin: 0;
             font-size: 0.95em;
         }
-
         dt {
-            
             float:left;
             width: 40%;
             left: 0;
@@ -185,14 +178,6 @@
             margin: 0
         }
 
-        /*icon design*/
-        .i {
-            vertical-align:middle;
-            right:20px;
-            padding: 20;
-            margin:10px
-        }
-
         /*text to the right of the icon in the sidebar*/
         .sidetext {
             display: inline-block;
@@ -205,7 +190,9 @@
         .lunchtext {
             display: block;
             padding-left:25px;
+            padding-right:40px;
             padding-bottom: 5px;
+            padding-top: 10px;
         }
 
         /*thin line used for breaks in content in the sidebar*/
@@ -224,15 +211,20 @@
             align-items:center;
         }
 
-        /*All styling for the dropdown option to change services*/
+
+
+        /*STYLING FOR DROPDOWN OPTION TO CHANGE BETWEEN SERVICES*/
+
+        /*all*/
         .dropdown {
             position: relative;
         }
 
+        /*main button*/
         .dropbtn {
             background-color: #09325C;
             color: white;
-            width: 150px;
+            width: 146px;
             padding: 16px;
             font-size: 16px;
             border: none;
@@ -244,6 +236,7 @@
             background-color: #09325C;
         }
 
+        /*listed options*/
         .dropdown-content {
             display: none;
             text-align: center;
@@ -255,18 +248,20 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 800;
         }
-
         .dropdown-content a {
             color: #09325C;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
         }
-
         .dropdown a:hover {background-color: #ddd;}
 
+        /*used to show the dropdown content onclick of main button*/
         .show {display: block;}
 
+
+        /*CUSTOMING DEFAULT STYLE OF MARKER CLUSTERS
+        Matching the colours to the icons and changing size depedning on class name*/
         .marker-cluster-small:hover {
             width: 30px;
             height: 30px;
@@ -278,7 +273,6 @@
             height: 24px;
             margin-left: 4px;
             margin-top: 4px;
-          
         }
 
         .marker-cluster-small div span {
@@ -290,91 +284,73 @@
             height: 30px;
             margin-left: 5px;
             margin-top: 5px;
-            
         }
-
         .marker-cluster-medium div span {
             line-height: 30px;
         }
-
         .marker-cluster-large div {
             width: 35px;
             height: 35px;
             margin-left: 5px;
             margin-top: 5px;
         }
-
         .marker-cluster-large div span {
             line-height: 35px;
         }
-
         .gp {
             background-color:#2f5597ff;
             opacity: 0.8;  
         }
-
         .gp div {
             background-color: #fff;
             opacity: 0.95;
             color: navy;
             font-size: 1.1em;
             }
-
-
         .dentist {
             background-color:#2596a0ff;
             opacity: 0.8;  
         }
-
         .dentist div {
             background-color: #fff;
             opacity: 0.95;
             color: teal;
             font-size: 1.1em;
             }
-        
-
         .optician {
             background-color:#0297deff;
             opacity: 0.8;  
         }
-
         .optician div {
             background-color: #fff;
             opacity: 0.95;
             color: #0297deff;
             font-size: 1.1em;
             }
-
         .pharmacy {
             background-color:#00b050ff;
             opacity: 0.8;  
         }
-
         .pharmacy div {
             background-color: #fff;
             opacity: 0.95;
             color: green;
             font-size: 1.1em;
             }
-
         .hospital {
             background-color:#ff0000ff;
             opacity: 0.8;  
         }
-
         .hospital div {
             background-color: #fff;
             opacity: 0.95;
             color: red;
             font-size: 1.1em;
             }
-
         .shclinic {
             background-color:#7030a0ff;
             opacity: 0.8;  
         }
-
         .shclinic div {
             background-color: #fff;
             opacity: 0.95;

@@ -39,7 +39,7 @@ function changeClusterIcon(cluster, service_string) {
 // Function which defines the cluster groups. 
 // As above, this changes per service
 
-function define_clusterGroups (layer, service) {
+function defineClusterGroups (layer, service) {
         var layer = L.markerClusterGroup({
         spiderfyOnMaxZoom: true, 
         showCoverageOnHover: false, 
@@ -50,20 +50,20 @@ function define_clusterGroups (layer, service) {
 };
 
 
-function button_toggleSidebar() {
+function buttonToggleSidebar() {
     if (sidebar.isVisible() == true) {
         $("#sidebar").hide().fadeIn('slow');
     } else {
         sidebar.show();
     }
-    sidebar.setContent(sidebar_default_content)
+    sidebar.setContent(sidebarDefaultContent)
     };
 
 
 // store user coordinates
 function onLocationfound(e) {
-    var user_location = e.latlng;
-    console.log(user_location);
+    var userLocation = e.latlng;
+    console.log(userLocation);
 }
 
 // Create a function for saving the sidebar content as a PDF
@@ -86,7 +86,7 @@ function saveAsPDF(Name) {
 }
 
 // create custom options for pop up information
-var popUp_customOptions =
+var popUpCustomOptions =
     {
     'maxWidth': '200',
     'className' : 'custom'
@@ -94,25 +94,25 @@ var popUp_customOptions =
 
 
   
-function filter_data (service, fp, layer) {
+function filterData (service, fp, layer) {
         if (service == Dentists) {
-            if (fp.Saturday == fp.Saturday) layer.addTo(Dentists_Saturday)
+            if (fp.Saturday == fp.Saturday) layer.addTo(dentistsSaturday)
         }
 
         else if (service == Pharmacies) {
-            if (fp.Saturday == fp.Saturday) layer.addTo(Pharmacies_Saturday);
-            for (i in Pharmacy_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(Pharmacy_Service_list[i])) layer.addTo(Pharmacy_Service_layers[i]);}
+            if (fp.Saturday == fp.Saturday) layer.addTo(pharmaciesSaturday);
+            for (i in pharmacyServiceList) {if (fp.Services == fp.Services && fp.Services.includes(pharmacyServiceList[i])) layer.addTo(pharmacyServiceLayers[i]);}
         }
         
-        else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(Opticians_Saturday);}
+        else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(opticiansSaturday);}
 
         else if (service == Hospitals) {
             AE = fp['A&E'];
-            if (AE == AE) layer.addTo(Hospitals_AandE);
+            if (AE == AE) layer.addTo(hospitalsAandE);
         }
 
         else if (service == SHClinics) {
-            for (i in SH_Service_list) {if (fp.Services == fp.Services && fp.Services.includes(SH_Service_list[i])) layer.addTo(SH_Service_layers[i]);}
+            for (i in shServiceList) {if (fp.Services == fp.Services && fp.Services.includes(shServiceList[i])) layer.addTo(shServiceLayers[i]);}
         }    
 };
 
@@ -139,7 +139,7 @@ function bigIcon(figureURL) {
 
 
 // Create a function to set map view based on a specific feature
-function setmapview(e) {
+function setMapView(e) {
     if (map.getZoom() < 13) {
         map.setView(e.latlng,13)
     } else {
@@ -147,13 +147,13 @@ function setmapview(e) {
     }
 }
 
-function add_geoJSONData (service, figure, layer_group) {
+function addGeoJSONData (service, figure, layerGroup) {
     L.geoJSON(service, {
         
         onEachFeature: function(feature, layer) {
             var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , popUp_customOptions);
-            layer.on('click', function (e) { updateSidebar(fp,figure), this.openPopup(), setmapview(e)});
+            layer.bindPopup(setPopUpContent(fp) , popUpCustomOptions);
+            layer.on('click', function (e) { updateSidebar(fp,figure), this.openPopup(), setMapView(e)});
             
             layer.on('mouseover', function(e) {
                 e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                
@@ -163,48 +163,83 @@ function add_geoJSONData (service, figure, layer_group) {
                     e.target.setIcon(addIcon(figure));//marker object is overwritten in the for loop each time                
                 });
             
-            return filter_data(service, fp, layer)
+            return filterData(service, fp, layer)
         },
             pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: addIcon(figure)});
         }
-    }).addTo(layer_group);
+    }).addTo(layerGroup);
 
 }
+
+
+
+// FUNCTION WHICH CHANGES THE DEFAULT DESIGN ON THE BASEMAP CONTROL
+
+function designBasemapControl() {
+    var customControl = document.getElementsByClassName("leaflet-control-layers-toggle")[0];
+    customControl.innerHTML = "<div class=control-content><i class='fa fa-map fa-lg' aria-hidden='true'></i></div>";
+    document.getElementsByClassName("leaflet-control-layers-list")[0].style.textAlign = "left";
+    
+    radioInputs = document.getElementsByTagName("input")
+    for (var i in radioInputs) {
+        if(radioInputs[i].type == 'radio') {
+            radioInputs[i].style.float = "left";
+        } else {}
+    }
+};
+
+
+// FUNCTION WHICH CHANGES THE DEFAULT DESIGN ON THE SERVICE LAYER CONTROLS
+
+function designServiceFilter() {
+    var filter = document.getElementsByClassName("leaflet-right")[0];
+    var filterLayer = filter.getElementsByClassName("leaflet-control-layers-toggle")[0]
+    filterLayer.innerHTML = "<div class = control-content-filter>Filter results</div>";
+    filterLayer.style.width = "142px";
+    filterLayer.style.height = "30px";
+    filterLayer.style.fontSize = "1.1em";
+    filterLayer.style.color= "navy";
+};
+
 
 
 /* Create a function that is performed when one of the service buttons is clicked, in the side bar or in the legend control
    this initially will ensure the map is not blurred out (as it is in the beginning)
    */
 
-function addLayer(servicelayer, Control) {
+function addLayer(serviceLayer, serviceControl) {
             
-    var map_pane = document.getElementsByClassName("leaflet-pane leaflet-map-pane");
-    map_pane[0].style.filter = 'blur(0px)';
-    map_pane[0].style.webkitfilter = 'blur(0px)';
+    var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane");
+    mapPane[0].style.filter = 'blur(0px)';
+    mapPane[0].style.webkitfilter = 'blur(0px)';
 
     sidebar.hide();
     
-    var layer_control_list = [DentistControl, OpticiansControl, PharmaciesControl, HospitalsControl, SHClinicsControl];
+    var layerControlList = [dentistControl, opticiansControl, pharmaciesControl, hospitalsControl, shClinicsControl];
     
     map.eachLayer(function (layer) {
-        if ((layer !== lc._layer) && (layer !== outdoor_basemap) && (layer !== night_basemap) && (layer !== light_basemap) && (layer !== road_basemap)) {
+        if ((layer !== lc._layer) && (layer !== outdoorBasemap) && (layer !== nightBasemap) && (layer !== lightBasemap) && (layer !== roadBasemap)) {
         map.removeLayer(layer)
         }
     })
 
     var control;
-    for (control in layer_control_list) {
-        map.removeControl(layer_control_list[control]);
+    for (control in layerControlList) {
+        map.removeControl(layerControlList[control]);
     }
 
-    map.addLayer(servicelayer);
+    map.addLayer(serviceLayer);
 
-    if (Control) {
-        Control.addTo(map); 
+    if (serviceControl) {
+        serviceControl.addTo(map);
+        designServiceFilter()
     }
+
+    
     console.log(map.getCenter());   
 };
+
 
 
 // test 
@@ -217,24 +252,25 @@ function test (layer) {
     })
 }
 
+
+
 // Create functions for the drop down service button
 // Content inspired by W3 tutorial on dropdown boxes.
 // On click of each services, run the same function that is used for the service buttons on the sidebar
 
 function addServiceDropdown() {
-    var div = L.DomUtil.create('div', 'info legend');
+    var div = L.DomUtil.create('div', 'Service Dropdown');
     div.innerHTML = "<div class='dropdown'>" +
         "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
         "<div id='myDropdown' class='dropdown-content'>" +
-        "<a href='#' onClick='test()'>GPs</a>" +
-        "<a href='#' onClick='addLayer(Dentists_layer, DentistControl)'>Dentists</a>" +
-        "<a href='#' onClick='addLayer(Opticians_layer, OpticiansControl)'>Opticians</a>" +
-        "<a href='#' onClick='addLayer(Pharmacies_layer, PharmaciesControl)'>Pharmacies</a>" +
-        "<a href='#' onClick='addLayer(Hospitals_layer, HospitalsControl)'>Hospitals</a>" +
-        "<a href='#' onClick='addLayer(SHClinics_layer, SHClinicsControl)'>SH Clinics</a></div></div></div>" 
+        "<a href='#' onClick='addLayer(gpsLayer)'>GPs</a>" +
+        "<a href='#' onClick='addLayer(dentistsLayer, dentistControl)'>Dentists</a>" +
+        "<a href='#' onClick='addLayer(opticiansLayer, opticiansControl)'>Opticians</a>" +
+        "<a href='#' onClick='addLayer(pharmaciesLayer, pharmaciesControl)'>Pharmacies</a>" +
+        "<a href='#' onClick='addLayer(hospitalsLayer, hospitalsControl)'>Hospitals</a>" +
+        "<a href='#' onClick='addLayer(shClinicsLayer, shClinicsControl)'>SH Clinics</a></div></div></div>" 
         return div;
 }
-
 
 /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 function myFunction() {
