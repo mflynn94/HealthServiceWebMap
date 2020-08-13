@@ -42,8 +42,6 @@
     <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
-    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
-
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
 
     <script src="Data/2020_07_07_Processed_Pharmacies.js"></script>
@@ -52,14 +50,12 @@
     <script src="Data/2020_07_07_Processed_Hospitals.js"></script>
     <script src="Data/2020_07_07_Processed_Opticians.js"></script>
     <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
-    <script src="Plugins/Leaflet.Control.Custom.js"></script>
     <script src="SidebarContent.js"></script>
     <script src="Functions.js"></script>
     <script src="Data/mappolygon.js"></script>
 
 
     <script>
-    
        
 
     // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
@@ -192,16 +188,6 @@
                 }, 500)     
 
         
-        
-            
-        
-
-
-       
-
-       
-
-
         // LOAD POLYGON ON THE MAP AND GREY OUT AREAS AROUND GREATER GLASGOW AND CLYDE
         var mapPolygon = L.geoJSON(mappolygons, {
             style: {
@@ -250,11 +236,30 @@
             options: {circleStyle: {fillOpacity: 1}}
         }).addTo(map);
 
-
+        var geocoderMarker;
          // ADD A SEARCH BAR TO THE MAP
-         L.Control.geocoder({
-            position: 'topleft'
+         var geocoder = L.Control.geocoder({
+            position: 'topleft',
+            defaultMarkGeocode: false,
+            placeholder: 'Search location or postcode...'
         }).addTo(map);
+        
+        geocoder.on('markgeocode', function(e) {
+            if (geocoderMarker) {
+                map.removeLayer(geocoderMarker);
+            }
+            console.log(e.geocode.center);
+            searchLatlng = e.geocode.center
+            geocoderMarker = L.marker(searchLatlng).addTo(map);
+            map.setView(e.geocode.center, 15);
+        })
+    
+map.on('dblclick', function(e){
+    map.removeLayer(geocoderMarker);
+});
+        
+
+        
 
        
 </script>
