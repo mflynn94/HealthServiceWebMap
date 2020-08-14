@@ -16,17 +16,17 @@ var sidebarDefaultContent =
                             <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
                             <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
                             <p><div class ='line'></div><p>\
-                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'><img src='MapFigures/GPs.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
+                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'><img src='MapFigures/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'><img src='MapFigures/Dentists2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
+                            <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'><img src='MapFigures/Dentists_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(opticiansLayer, opticiansControl, panelContentOpticians, " + '"opticiansPanel"' + ")'><img src='MapFigures/Opticians2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
+                            <button type='button' class=btn onclick='addLayer(opticiansLayer, opticiansControl, panelContentOpticians, " + '"opticiansPanel"' + ")'><img src='MapFigures/Opticians_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(pharmaciesLayer, pharmaciesControl, panelContentPharmacies, " + '"pharmaciesPanel"' + ")'><img src='MapFigures/Pharmacies.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
+                            <button type='button' class=btn onclick='addLayer(pharmaciesLayer, pharmaciesControl, panelContentPharmacies, " + '"pharmaciesPanel"' + ")'><img src='MapFigures/Pharmacies_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'><img src='MapFigures/Hospitals.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
+                            <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'><img src='MapFigures/Hospitals_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='test'><img src='MapFigures/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
                             <p></div><div class ='line'></div>"
                             
 

@@ -126,9 +126,9 @@ function addIcon(figureURL) {
 };
 
 // create a function for adding larger icons to the map
-function bigIcon(figureURL) {
+function bigIcon(figureURLBig) {
     return L.icon({
-        iconUrl: figureURL,
+        iconUrl: figureURLBig,
         iconSize: [40, 40],
         iconAnchor: [20,20],
         popupAnchor: [0, -15]
@@ -158,7 +158,7 @@ function addPanel(panelId, panelName){
 }
 
 // FUNCTION FOR ADDING ALL THE DATASETS ****
-function addGeoJSONData (service, figure, layerGroup, paneId, panelId, panelName) {
+function addGeoJSONData (service, figure, figureBig, layerGroup, paneId, panelId, panelName) {
     L.geoJSON(service, {
         
         onEachFeature: function(feature, layer) {
@@ -180,7 +180,7 @@ function addGeoJSONData (service, figure, layerGroup, paneId, panelId, panelName
                 setMapView(e)});
             
             layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon(figure));//marker object is overwritten in the for loop each time                
+                e.target.setIcon(bigIcon(figureBig));//marker object is overwritten in the for loop each time                
             });
         
             layer.on('mouseout', function(e) {

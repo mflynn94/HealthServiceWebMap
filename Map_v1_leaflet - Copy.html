@@ -238,7 +238,7 @@
               
                 var panelContentHospitals = {
                     id: 'hospitalsPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-h-square fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="fas fa-hospital fa-sm"></i>',  // content can be passed as HTML string,
                     pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Hospital',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -308,12 +308,12 @@
         // ADD ALL DATA TO THE MAP
         
         // add all the datasets using the defined add_geoJSONData function created in Functions.js
-        addGeoJSONData (GPs, 'MapFigures/GPs.png', gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
-        addGeoJSONData (Dentists, 'MapFigures/Dentists2.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
-        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
-        addGeoJSONData (Opticians, 'MapFigures/Opticians2.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
-        addGeoJSONData (Hospitals, 'MapFigures/Hospitals.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
-        addGeoJSONData (SHClinics, 'MapFigures/SHClinics.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
+        addGeoJSONData (GPs, 'MapFigures/GPs_FA_30.png', 'MapFigures/GPs_FA.png', gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
+        addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
+        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
+        addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
+        addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
+        addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
         
 
         // ADD ALL CONTROLS TO THE MAP
