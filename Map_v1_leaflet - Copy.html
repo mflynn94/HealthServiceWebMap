@@ -13,22 +13,23 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link href="FontAwesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     
-    <link rel="stylesheet" href="Plugins/leaflet-sidebar/src/L.Control.Sidebar.css" />
+    <link rel="stylesheet" href="Plugins/leaflet-sidebar-v2/leaflet-sidebar-v2.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
-    <link rel="stylesheet" href="Style.css" />
+    <link rel="stylesheet" href="Style - Copy.css" />
 </head>
 
 <body>
     
     <div id="map"></div>
 
-    <div id="sidebar"></div>
+   
 
 
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
@@ -39,7 +40,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>    
-    <script src="Plugins/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
+    <script src="Plugins/leaflet-sidebar-v2/leaflet-sidebar-v2.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
@@ -50,8 +51,8 @@
     <script src="Data/2020_07_07_Processed_Hospitals.js"></script>
     <script src="Data/2020_07_07_Processed_Opticians.js"></script>
     <script src="Data/2020_07_07_Processed_SHClinics.js"></script>
-    <script src="SidebarContent.js"></script>
-    <script src="Functions.js"></script>
+    <script src="SidebarContent - Copy.js"></script>
+    <script src="Functions - Copy.js"></script>
     <script src="Data/mappolygon.js"></script>
 
 
@@ -176,7 +177,7 @@
         // Add sidebar to the map. Ensure it has a close button, and appears on the left hand side
         // Set a timeout on the sidebar so that it appears on start up
         // Set its content as the default content stored in variable in SidebarContent.js
-        var sidebar = L.control.sidebar('sidebar', {
+        /*var sidebar = L.control.sidebar('sidebar', {
             closeButton: true,
             position: 'left',
             autopan: false,
@@ -185,8 +186,88 @@
             setTimeout(function () {
                 sidebar.show();
                 sidebar.setContent(sidebarDefaultContent)
-                }, 500)     
+                }, 500)  */
+                
+                var sidebar = L.control.sidebar({
+                    autopan: false,       // whether to maintain the centered map point when opening the sidebar
+                    closeButton: true,    // whether t add a close button to the panes
+                    container: 'sidebar', // the DOM container or #ID of a predefined sidebar container that should be used
+                    position: 'left',     // left or right
+                }).addTo(map);
 
+
+                var panelContent = {
+                    id: 'home',                     // UID, used to access the panel
+                    tab: '<i class="fa fa-home fa-lg"></i>',  // content can be passed as HTML string,
+                    pane: "<div id='homePanelContent'>" + sidebarDefaultContent + "</div>",        // DOM elements can be passed, too
+                    title: 'Your Profile',              // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+                sidebar.addPanel(panelContent);
+              
+                var panelContentGPs = {
+                    id: 'gpPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/GPsSidebar2.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='gpPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'General Practioner',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+
+                var panelContentDentists = {
+                    id: 'dentistPanel',                     // UID, used to access the panel
+                    tab: '<i class="fas fa-tooth"></i>',  // content can be passed as HTML string,
+                    pane: "<div id='dentistPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'Dentist',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+               
+                
+                var panelContentPharmacies = {
+                    id: 'pharmaciesPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/pharmacySidebar.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'Pharmacy',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+              
+
+                var panelContentOpticians = {
+                    id: 'opticiansPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/opticiansSidebar.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'Optician',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+              
+                var panelContentHospitals = {
+                    id: 'hospitalsPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/hospitalsSidebar.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'Hospital',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+
+                var panelContentSHClinic = {
+                    id: 'shClinicsPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/shClinicsSidebar.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='shClinicsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+                    title: 'Sexual Health Clinic',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+
+                var panelContentInfo = {
+                    id: 'shClinicsPanel',                     // UID, used to access the panel
+                    tab: "<img src='MapFigures/shClinicsSidebar.png' style='vertical-align:middle'>",  // content can be passed as HTML string,
+                    pane: "<div id='infoPanelContent'>Information and Sources will be listed here</div>",        // DOM elements can be passed, too
+                    title: 'Sexual Health Clinic',        // an optional pane header
+                    position: 'top'                  // optional vertical alignment, defaults to 'top'
+                };
+
+                function addSidebarContent(paneId) {
+                    var  test = document.getElementById(paneId);
+                    test.innerHTML = 'hello';
+                    return test;
+                }
         
         // LOAD POLYGON ON THE MAP AND GREY OUT AREAS AROUND GREATER GLASGOW AND CLYDE
         var mapPolygon = L.geoJSON(mappolygons, {
@@ -227,14 +308,7 @@
         serviceDropdown.addTo(map);
 
 
-        // ADD A BUTTON CONTROL FOR TOGGLING THE SIDEBAR ON AND OFF, AND RETURNING TO THE DEFAULT CONTENT
-        L.easyButton('fa fa-home', function(btn, map){
-            return buttonToggleSidebar();
-        }).addTo(map);
-
-        L.easyButton('fa fa-info fa-xs', function(btn, map){
-            return buttonToggleSidebarInfo();
-        }, {position: 'bottomleft'}).addTo(map);
+        
 
 
          // ADD USER LOCATION CONTROL TO THE MAP
@@ -261,7 +335,7 @@
             removeGeocodeMarker();
         });
         
-        designInfoButtonControl();
+        
        
 </script>
     </body>

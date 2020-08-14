@@ -76,6 +76,8 @@
 
 
         /*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
+        
+
         .leaflet-control-layers {
             border:1px solid rgba(0,0,0,0.2);
             box-shadow: 0 1px 3px rgba(0,0,0,0.4);
@@ -131,10 +133,26 @@
         }
         
 
+         /* STYLE CONTENT WITHIN SIDEBAR2 */
+         .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
+            color: #fff;
+            background-color: #09325C; }
+
+            .leaflet-sidebar-header {
+                margin: -10px -20px 0;
+                height: 40px;
+                padding: 0 20px;
+                line-height: 40px;
+                font-size: 14.4pt;
+                color: #fff;
+                background-color: #09325C; }
 
         /* STYLE CONTENT WITHIN SIDEBAR */
 
         /*STYLE BOX USED WITHIN SIDEBAR CONTENT*/
+
+        
+
         .box {
             width:100%;
             background:#09325C;
