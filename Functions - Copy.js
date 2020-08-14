@@ -295,12 +295,12 @@ function addServiceDropdown() {
     div.innerHTML = "<div class='dropdown'>" +
         "<button onclick='myFunction()' class='dropbtn'>Change Service</button>" +
         "<div id='myDropdown' class='dropdown-content'>" +
-        "<a href='#' onClick='addLayer(gpsLayer)'>GPs</a>" +
-        "<a href='#' onClick='addLayer(dentistsLayer, dentistControl)'>Dentists</a>" +
-        "<a href='#' onClick='addLayer(opticiansLayer, opticiansControl)'>Opticians</a>" +
-        "<a href='#' onClick='addLayer(pharmaciesLayer, pharmaciesControl)'>Pharmacies</a>" +
-        "<a href='#' onClick='addLayer(hospitalsLayer, hospitalsControl)'>Hospitals</a>" +
-        "<a href='#' onClick='addLayer(shClinicsLayer, shClinicsControl)'>SH Clinics</a></div></div></div>" 
+        "<a href='#' onClick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'>GPs</a>" +
+        "<a href='#' onClick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'>Dentists</a>" +
+        "<a href='#' onClick='addLayer(opticiansLayer, opticiansControl, panelContentOpticians, " + '"opticiansPanel"' + ")'>Opticians</a>" +
+        "<a href='#' onClick='addLayer(pharmaciesLayer, pharmaciesControl, panelContentPharmacies, " + '"pharmaciesPanel"' + ")'>Pharmacies</a>" +
+        "<a href='#' onClick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'>Hospitals</a>" +
+        "<a href='#' onClick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'>SH Clinics</a></div></div></div>" 
         return div;
 }
 
