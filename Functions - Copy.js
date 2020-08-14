@@ -147,18 +147,36 @@ function setMapView(e) {
 // create custom options for pop up information
 var popUpCustomOptions ={'maxWidth': '200','className' : 'custom'}
 
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+function addPanel(panelId, panelName){
+    if(document.getElementById(panelId) == null){
+        return sidebar.addPanel(panelName)
+    } else {};
+}
 
 // FUNCTION FOR ADDING ALL THE DATASETS ****
-function addGeoJSONData (service, figure, layerGroup) {
+function addGeoJSONData (service, figure, layerGroup, paneId, panelId, panelName) {
     L.geoJSON(service, {
         
         onEachFeature: function(feature, layer) {
+           
             var fp = feature.properties;
-            layer.bindPopup(setPopUpContent(fp) , popUpCustomOptions);
-            layer.on('click', function (e) { updateSidebar(fp,figure);
-                if (sidebar.isVisible() == false) {
-                    this.openPopup();
-                } else { this.closePopup()};
+            //layer.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions);
+            layer.on('click', function (e) { 
+                var sidebarDiv = document.getElementById('sidebar');
+                sidebar.enablePanel('click');
+                addPanel(panelId, panelName);
+                
+
+                if (hasClass(sidebarDiv,'collapsed')) {
+                    this.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions).openPopup();
+                } else {sidebar.open(panelId), $("#" + panelId).hide().fadeIn('slow')};
+                
+                updateSidebar(fp, figure, paneId);
+
                 setMapView(e)});
             
             layer.on('mouseover', function(e) {
@@ -217,8 +235,6 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
     var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane");
     mapPane[0].style.filter = 'blur(0px)';
     mapPane[0].style.webkitfilter = 'blur(0px)';
-
-    
     
     var layerControlList = [dentistControl, opticiansControl, pharmaciesControl, hospitalsControl, shClinicsControl];
     
@@ -241,16 +257,23 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
         designServiceFilter()
     }
 
-    if(document.getElementById(panelId) == null){
-        return sidebar.addPanel(panelName)
-    } else {}
-
     
-   
+   return;
 };
 
 
+function clearSidebar () {
+    panelIdList = ['gpPanel', 'dentistPanel', 'opticiansPanel', 'pharmaciesPanel', 'hospitalsPanel', 'shClinicsPanel']
+    
+    for (i in panelIdList) {
+        if(document.getElementById(panelIdList[i]) != null){
+            sidebar.removePanel(panelIdList[i]);
 
+        } else {}
+        }
+    if (hasClass(sidebarDiv,'collapsed')) {}
+    else { sidebar.open('home') };
+    }
 /*// test 
 function test (layer) {
     GPs_layer.eachLayer(function(layer){
@@ -303,7 +326,9 @@ window.onclick = function(event) {
 
 // FUNCTIONS TO REMOVE AND ADD THE GEOCODE MARKERS WHEN MAKING A SEARCH
 function removeGeocodeMarker() {
-    map.removeLayer(geocoderMarker);
+    if (geocoderMarker && map.hasLayer(geocoderMarker)) {
+        map.removeLayer(geocoderMarker);
+    }
 }
 
 function addGeocodeMarker(e) {

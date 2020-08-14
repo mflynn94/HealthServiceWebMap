@@ -10,12 +10,12 @@
 var sidebarString;
 var popupString;
 
-var sidebarDefaultContent = "<div class = 'box top'></div> \
-                            <h1>Find your local Health Services \
-                            </h1><div class ='line'></div>\
+var sidebarDefaultContent = 
+                            "<h2>Search for your local health services \
+                            </h2><div class ='line'></div>\
                             <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
                             <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
-                            <p><hr>\
+                            <p><div class ='line'></div><p>\
                             <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'><img src='MapFigures/GPs.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
                             \
                             <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'><img src='MapFigures/Dentists2.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
@@ -26,8 +26,8 @@ var sidebarDefaultContent = "<div class = 'box top'></div> \
                             \
                             <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'><img src='MapFigures/Hospitals.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 14px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
-                            <p></div><hr>"
+                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='test'><img src='MapFigures/SHClinics.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <p></div><div class ='line'></div>"
                             
 
 function createSidebarContent(fp, figure) {
@@ -36,11 +36,11 @@ function createSidebarContent(fp, figure) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<div class = 'box top'></div><h2>" + fp.NHSInformName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        var Name = "<h2>" + fp.NHSInformName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     } else if (fp.Name == fp.Name) {
-        Name = "<div class = 'box top'></div><h2>" + fp.Name + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        Name = "<h2>" + fp.Name + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     } else {
-        Name = "<div class = 'box top'></div><h2>" + fp.DispenserName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        Name = "<h2>" + fp.DispenserName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     }
 
 
@@ -169,7 +169,7 @@ function createSidebarContent(fp, figure) {
 
 // Create a similar function for defining the pop up content
 
-function setPopUpContent(fp) {
+function setPopUpContent(fp, panelId) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     // For pharmacies, some have no name in the name column and so for those, use Dispenser name.
@@ -189,25 +189,23 @@ function setPopUpContent(fp) {
         Telephone = ''
     }
 
-    popupString = "<div class=box></div>" + Name + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
-    "<br><a href='#' " + "<span onClick='openSidebar()'><b>More details...</b></span></a><br><br><div class=box></div>"
+    popupString = "<div class=box></div>" + Name + "<br>" + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
+    "<br><a href='#' " + "<span onClick='openSidebar("  + '"' + panelId + '"' +  ")'><b>More details...</b></span></a><br><br><div class=box></div>"
     
     return popupString
 }
 
 
-function updateSidebar(fp,figure) {
+function updateSidebar(fp,figure, paneId) {
 
     createSidebarContent(fp,figure);
-    sidebar.setContent(sidebarString);
+    var panelContent = document.getElementById(paneId);
+    panelContent.innerHTML = sidebarString
+   
+    
 
-    if (sidebar.isVisible() == true) {
-            $("#sidebar").hide().fadeIn('slow');
-};
 }
 
-function openSidebar() {
-    if (sidebar.isVisible() !== true) {
-            sidebar.toggle();
-        }
+function openSidebar(panelId) {
+    sidebar.open(panelId)
     }
