@@ -44,6 +44,7 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <script src="Plugins/html2pdf.js/html2pdf.bundle.min.js"></script>
+    <script src="Plugins/leaflet.geometryutil.js"></script>
 
     <script src="Data/2020_07_07_Processed_Pharmacies.js"></script>
     <script src="Data/2020_07_07_Processed_Dentists.js"></script>
@@ -204,7 +205,7 @@
               
                 var panelContentGPs = {
                     id: 'gpPanel',                     // UID, used to access the panel
-                    tab: '<i class="fa fa-user-md fa-sm"</i>',  // content can be passed as HTML string,
+                    tab: '<i class="fa fa-user-md fa-lg"</i>',  // content can be passed as HTML string,
                     pane: "<div id='gpPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'General Practioner',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -212,7 +213,7 @@
 
                 var panelContentDentists = {
                     id: 'dentistPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-tooth fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="fas fa-tooth fa-lg"></i>',  // content can be passed as HTML string,
                     pane: "<div id='dentistPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Dentist',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -221,7 +222,7 @@
                 
                 var panelContentPharmacies = {
                     id: 'pharmaciesPanel',                     // UID, used to access the panel
-                    tab: '<i class="far fa-plus-square fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="far fa-plus-square fa-lg"></i>',  // content can be passed as HTML string,
                     pane: "<div id='pharmaciesPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Pharmacy',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -230,7 +231,7 @@
 
                 var panelContentOpticians = {
                     id: 'opticiansPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-glasses fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="fas fa-glasses fa-lg"></i>',  // content can be passed as HTML string,
                     pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Optician',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -238,7 +239,7 @@
               
                 var panelContentHospitals = {
                     id: 'hospitalsPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-hospital fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="far fa-hospital fa-lg"></i>',  // content can be passed as HTML string,
                     pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Hospital',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -246,7 +247,7 @@
 
                 var panelContentSHClinic = {
                     id: 'shClinicsPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-venus-mars fa-sm"></i>',  // content can be passed as HTML string,
+                    tab: '<i class="fas fa-venus-mars fa-lg"></i>',  // content can be passed as HTML string,
                     pane: "<div id='shClinicsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
                     title: 'Sexual Health Clinic',        // an optional pane header
                     position: 'top'                  // optional vertical alignment, defaults to 'top'
@@ -308,12 +309,12 @@
         // ADD ALL DATA TO THE MAP
         
         // add all the datasets using the defined add_geoJSONData function created in Functions.js
-        addGeoJSONData (GPs, 'MapFigures/GPs_FA_30.png', 'MapFigures/GPs_FA.png', gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
-        addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
-        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
-        addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
-        addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
-        addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
+        var gpsGeojson = addGeoJSONData (GPs, 'MapFigures/GPs_FA_30.png', 'MapFigures/GPs_FA.png', 'MapFigures/GPs_FA_highlight.png',gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
+        addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', 'MapFigures/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
+        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', 'MapFigures/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
+        addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', 'MapFigures/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
+        addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', 'MapFigures/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
+        addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', 'MapFigures/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
         
 
         // ADD ALL CONTROLS TO THE MAP
@@ -335,8 +336,13 @@
 
         console.log(document.getElementById('sidebar'))
 
-
-
+        map.on('click', function(e){
+            gpsGeojson.eachLayer(function(layer){
+                layer.setIcon(addIcon('MapFigures/GPs_FA_30.png'));
+            })
+        })
+    
+        
 
          // ADD USER LOCATION CONTROL TO THE MAP
          var lc = L.control.locate({position:'bottomright',
@@ -362,7 +368,8 @@
             removeGeocodeMarker();
         });
         
-        console.log(sidebar)
+       
+       
        
 </script>
     </body>

@@ -69,11 +69,10 @@ function buttonToggleSidebarInfo() {
     sidebar.setContent("Information and Sources will be listed here")
     };
 
-// store user coordinates
-function onLocationfound(e) {
-    var userLocation = e.latlng;
-    console.log(userLocation);
-}
+    var userLocation;
+
+
+
 
 // Create a function for saving the sidebar content as a PDF
 // This is to enable users to save details of the services they may attend
@@ -135,6 +134,13 @@ function bigIcon(figureURLBig) {
     });
 };
 
+    var highlightedIcon = L.icon({
+        iconUrl: "MapFigures/GPs_FA_highlight.png",
+        iconSize: [40, 40],
+        iconAnchor: [20,20],
+        popupAnchor: [0, -15]
+    });
+
 // Create a function to set map view based on a specific feature
 function setMapView(e) {
     if (map.getZoom() < 13) {
@@ -145,7 +151,7 @@ function setMapView(e) {
 }
 
 // create custom options for pop up information
-var popUpCustomOptions ={'maxWidth': '200','className' : 'custom'}
+var popUpCustomOptions ={'minWidth': '200','className' : 'custom'}
 
 function hasClass(element, cls) {
     return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
@@ -154,46 +160,72 @@ function hasClass(element, cls) {
 function addPanel(panelId, panelName){
     if(document.getElementById(panelId) == null){
         return sidebar.addPanel(panelName)
-    } else {};
+    };
 }
 
+
 // FUNCTION FOR ADDING ALL THE DATASETS ****
-function addGeoJSONData (service, figure, figureBig, layerGroup, paneId, panelId, panelName) {
-    L.geoJSON(service, {
+function addGeoJSONData (service, figure, figureBig, figureHighlight, layerGroup, paneId, panelId, panelName) {
+        geojsonLayer = L.geoJSON(service, {
         
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: addIcon(figure)});
+        },
+
         onEachFeature: function(feature, layer) {
            
-            var fp = feature.properties;
-            //layer.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions);
+           var fp = feature.properties;
+            layer.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions);
+
+        
+            layer.on('mouseover', function(e) {
+                if ((e.target._icon.currentSrc).includes(figure)) {
+                    e.target.setIcon(bigIcon(figureBig));//marker object is overwritten in the for loop each time                
+                } else {}
+            }),
+        
+            layer.on('mouseout', function(e) {
+                //console.log(e.target._icon)
+                if ((e.target._icon.currentSrc).includes(figureBig)) {
+                    e.target.setIcon(addIcon(figure));//marker object is overwritten in the for loop each time                
+                } else {}
+            }),
+            
             layer.on('click', function (e) { 
-                var sidebarDiv = document.getElementById('sidebar');
-                sidebar.enablePanel('click');
-                addPanel(panelId, panelName);
+               
+                //gpsGeojson.resetStyle(layer);
+                //e.target.setIcon(addIcon(figure));
+                if ((e.target._icon.currentSrc).includes(figureHighlight)) {
+                    e.target.setIcon(bigIcon(figureBig))
+                    console.log(e.target._icon)
+                    //e.target.setIcon(addIcon(figure));
+                } else { 
+                    
+                    gpsGeojson.eachLayer(function(layer){
+                        gpsGeojson.resetStyle(layer);
+                        layer.setIcon(addIcon(figure))});
+                    e.target.setIcon(bigIcon(figureHighlight));};
                 
+                clearSidebar();
+                var sidebarDiv = document.getElementById("sidebar");
+                
+                addPanel(panelId, panelName);
+                sidebar.enablePanel('click');
 
                 if (hasClass(sidebarDiv,'collapsed')) {
-                    this.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions).openPopup();
-                } else {sidebar.open(panelId), $("#" + panelId).hide().fadeIn('slow')};
+                    this.openPopup();
+                } else {this.closePopup(),sidebar.open(panelId), $("#" + panelId).hide().fadeIn('slow')};
                 
                 updateSidebar(fp, figure, paneId);
 
                 setMapView(e)});
             
-            layer.on('mouseover', function(e) {
-                e.target.setIcon(bigIcon(figureBig));//marker object is overwritten in the for loop each time                
-            });
-        
-            layer.on('mouseout', function(e) {
-                    e.target.setIcon(addIcon(figure));//marker object is overwritten in the for loop each time                
-                });
-            
-            return filterData(service, fp, layer)
-        },
-            pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: addIcon(figure)});
+            filterData(service, fp, layer)
         }
+    
+            
     }).addTo(layerGroup);
-
+    return geojsonLayer
 }
 
 
@@ -263,26 +295,20 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
 
 
 function clearSidebar () {
-    panelIdList = ['gpPanel', 'dentistPanel', 'opticiansPanel', 'pharmaciesPanel', 'hospitalsPanel', 'shClinicsPanel']
-    
+    var panelIdList = ['gpPanel', 'dentistPanel', 'opticiansPanel', 'pharmaciesPanel', 'hospitalsPanel', 'shClinicsPanel']
+    var sidebarStatus = document.getElementById("sidebar");
+
     for (i in panelIdList) {
         if(document.getElementById(panelIdList[i]) != null){
             sidebar.removePanel(panelIdList[i]);
 
         } else {}
         }
-    if (hasClass(sidebarDiv,'collapsed')) {}
+    
+    if (hasClass(sidebarStatus,'collapsed')) {}
     else { sidebar.open('home') };
     }
-/*// test 
-function test (layer) {
-    GPs_layer.eachLayer(function(layer){
-        if(layer.feature.properties.Website){
-            GPs_layer.removeLayer(layer)
-            GPs_layer.refreshClusters()
-        }
-    })
-}*/
+
 
 
 
@@ -325,13 +351,16 @@ window.onclick = function(event) {
 
 
 // FUNCTIONS TO REMOVE AND ADD THE GEOCODE MARKERS WHEN MAKING A SEARCH
+
 function removeGeocodeMarker() {
-    if (geocoderMarker && map.hasLayer(geocoderMarker)) {
+    // if the layer exists and the map has it, remove it
+    if (geocoderMarker && map.hasLayer(geocoderMarker)) { 
         map.removeLayer(geocoderMarker);
     }
 }
 
 function addGeocodeMarker(e) {
+
     if (geocoderMarker) {removeGeocodeMarker()};
 
     console.log(e.geocode);
@@ -340,6 +369,9 @@ function addGeocodeMarker(e) {
     geocoderMarker.bindTooltip(e.geocode.html).openTooltip();
     map.setView(e.geocode.center, 15);
 }
+
+
+
 
 
 
@@ -364,3 +396,35 @@ function designInfoButtonControl() {
     
 }
 */
+
+/*
+    // store user coordinates
+function onLocationfound(e) {
+    layerList = [];
+
+    for (i in gpsLayer._featureGroup._layers) {
+        //console.log(gpsLayer._featureGroup._layers[i]);
+        layerList.push(gpsLayer._featureGroup._layers[i])
+    }
+    console.log(layerList);
+    userLocation = e.latlng;
+    console.log(userLocation);
+    
+    var closestPoints = L.GeometryUtil.nClosestLayers(map, layerList, userLocation, 3)
+    console.log(closestPoints);
+
+    for (i in closestPoints) {
+        console.log(closestPoints[i].e.Name)
+    }
+}*/
+
+
+/*// test 
+function test (layer) {
+    GPs_layer.eachLayer(function(layer){
+        if(layer.feature.properties.Website){
+            GPs_layer.removeLayer(layer)
+            GPs_layer.refreshClusters()
+        }
+    })
+}*/

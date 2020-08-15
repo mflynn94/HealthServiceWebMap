@@ -174,7 +174,7 @@ function setPopUpContent(fp, panelId) {
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     // For pharmacies, some have no name in the name column and so for those, use Dispenser name.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<h3>" + fp.NHSInformName + "</h3>"
+        var Name = "<h3>" + fp.NHSInformName + "</h3><div class ='line'></div>"
     } else if (fp.Name == fp.Name) {
         Name = "<h3>" + fp.Name + "</h3><div class ='line'></div>"
     } else {
@@ -184,13 +184,13 @@ function setPopUpContent(fp, panelId) {
     if (fp.Telephone == fp.Telephone) {
         
         fp.Telephone = fp.Telephone .replace(/-/g," ")
-        var Telephone = "<a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br>"
+        var Telephone = "<br><br><a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br>"
     } else {
         Telephone = ''
     }
 
-    popupString = "<div class=box></div>" + Name + "<br>" + fp.Address1 + "<br>" + fp.Postcode + "<br><br>" + Telephone + 
-    "<br><a href='#' " + "<span onClick='openSidebar("  + '"' + panelId + '"' +  ")'><b>More details...</b></span></a><br><br><div class=box></div>"
+    popupString = "<div class=box></div>" + Name + "<br>" + fp.Address1 + "<br>" + fp.Postcode + Telephone + 
+    "<br><a href='#' " + "<span onClick='openSidebar("  + '"' + panelId + '"' +  ")'><b>More details...</b></span></a><br><br><div class=line></div>"
     
     return popupString
 }
@@ -202,9 +202,7 @@ function updateSidebar(fp,figure, paneId) {
     var panelContent = document.getElementById(paneId);
     panelContent.innerHTML = sidebarString
    
-    
-
-}
+};
 
 function openSidebar(panelId) {
     sidebar.open(panelId)
