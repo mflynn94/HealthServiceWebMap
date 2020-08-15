@@ -36,8 +36,7 @@
 
        .leaflet-touch .leaflet-control-layers {
             border: 1px solid rgba(0,0,0,0.2);
-       }
-        
+        }    
         .leaflet-touch .leaflet-bar a {
             width: 35px;
             height: 35px;
@@ -47,7 +46,7 @@
             margin: auto;
             background-color: white;
             font-size: 1.7em
-            }
+        }
 
         .leaflet-bar a:hover {
             background-color: #f4f4f4;
@@ -59,12 +58,10 @@
             line-height: 35px;
             font-size: 1.7em;
             vertical-align: middle;
-            }
-        
+        }   
         .leaflet-bar button:hover {
             background-color: #f4f4f4;
         }
-
         .leaflet-bar i {
             vertical-align: middle;
         }
@@ -77,7 +74,6 @@
 
         /*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
         
-
         .leaflet-control-layers {
             border:1px solid rgba(0,0,0,0.2);
             box-shadow: 0 1px 3px rgba(0,0,0,0.4);
@@ -85,7 +81,7 @@
             background: #fff;
             border-radius: 5px;
             background-image: none;
-            }
+        }
         .leaflet-control-layers-toggle {
             border:1px solid rgba(0,0,0,0.2);
             background-image: none;
@@ -97,19 +93,19 @@
             vertical-align: center;
             margin: auto;
             color:red;
-            }
+        }
         .leaflet-retina .leaflet-control-layers-toggle {
             background-image: none;
         }
         .leaflet-control-layers-expanded .leaflet-control-layers-list {
             text-align: right;
-            }
+        }
         .leaflet-control-layers-expanded {
             color: #333;
             background: #fff;
             font-family: Helvetica;
             font-size: 1.2em;
-            }
+        }
         input[type="radio"] {
             float: right;
             text-align:right;
@@ -134,11 +130,10 @@
         
         
 
-         /* STYLE CONTENT WITHIN SIDEBAR2 */
+         /* CUSTOMISE DEFAULT STYLE FOR SIDEBAR V2 */
 
-         .leaflet-sidebar.collapsed {
+        .leaflet-sidebar.collapsed {
             width: 40px; }
-
         .leaflet-sidebar-tabs, .leaflet-sidebar-tabs > ul {
             position: absolute;
             width: 40px;
@@ -157,27 +152,23 @@
          .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
             color: #fff;
             background-color: #09325C; }
+        .leaflet-sidebar-header {
+            margin: -10px -20px 0;
+            height: 55px;
+            padding: 0 20px;
+            line-height: 50px;
+            font-size: 17pt;
+            color: #fff;
+            background-color: #09325C; }     
+        .leaflet-sidebar-content {
+            font-family: Helvetica;
+            color: #09325C;
+            font-size: 14px; }
 
-            .leaflet-sidebar-header {
-                margin: -10px -20px 0;
-                height: 55px;
-                padding: 0 20px;
-                line-height: 50px;
-                font-size: 17pt;
-                color: #fff;
-                background-color: #09325C; }
-            
-            .leaflet-sidebar-content {
-                font-family: Helvetica;
-                color: #09325C;
-                font-size: 14px; }
 
         /* STYLE CONTENT WITHIN SIDEBAR */
 
-        /*STYLE BOX USED WITHIN SIDEBAR CONTENT*/
-
-        
-
+        /*style box used within sidebar content*/
         .box {
             width:100%;
             background:#09325C;
@@ -185,7 +176,7 @@
             height: 5px;
         }
         
-        /*STYLING FOR SIDEBAR BUTTONS*/
+        /*styling for sidebar buttons*/
         .Allbuttons {
             margin: auto;
             margin-left:auto;
@@ -193,7 +184,7 @@
             text-align:center;
         }
 
-        /*STYLING FOR SIDEBAR BUTTONS - INDIVIDUAL*/
+        /*styling for sidebar buttons - individual*/
         .btn {
             position: relative;
             background-color: #fff;
@@ -246,24 +237,23 @@
         }
 
         /*text to the right of the icon in the sidebar*/
-        .sidetext {
+        .sidebar-text-right {
             display: inline-block;
             width:60%;
             padding-left: 40px;
             margin: 0
         }
-
         /*text that follows the opening times*/
-        .lunchtext {
+        .sidebar-text-lunch {
             display: block;
             padding-left:25px;
             padding-right:40px;
             padding-bottom: 5px;
             padding-top: 10px;
         }
-
         /*thin line used for breaks in content in the sidebar*/
         .line{
+            clear:both;
             width: 100%;
             height:1px;
             background:#09325C;
@@ -271,13 +261,24 @@
             position: relative;
             display:block;
         }
-
         /*wraps the sidebar sections*/
-        .test {
+        .sidebar-text-sections {
+            clear:both;
             display: flex;
             align-items:center;
         }
-
+        /*style title of sidebar*/
+        .Title {
+            float: left;
+            width: 80%;
+            
+        }
+        /*style icon at top of sidebar*/
+        .rightImage {
+            position: relative;
+            float: right;
+            width:20%;
+        }
 
 
         /*STYLING FOR DROPDOWN OPTION TO CHANGE BETWEEN SERVICES*/

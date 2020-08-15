@@ -29,9 +29,6 @@
     
     <div id="map"></div>
 
-   
-
-
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
     <script src="https://rawgit.com/mapbox/mapbox-gl-leaflet/master/leaflet-mapbox-gl.js"></script>
@@ -57,19 +54,18 @@
     <script src="Data/mappolygon.js"></script>
 
 
-    <script>
-       
 
-    // Establish base map using Ordnance Survey Zoomstack, and Mapbox-GL-Leaflet plugin
+    <script>
+
+    /*  ESTABLISH BASE MAPS USING defineBasemaps() FUNCTION DEFINED IN FUNCTIONS.JS.
+        Create basemaps for Ordnance Surveys Light, Night, Outdoor and Road Basemap. */
     
-       
-            
         var lightBasemap = defineBasemaps('light');
         var nightBasemap = defineBasemaps('night');
         var outdoorBasemap = defineBasemaps('outdoor');
         var roadBasemap = defineBasemaps('road');
 
-        // store base maps in group
+        // store base maps in group to be added as a Layer Control
         var baseMaps = {
             "Light": lightBasemap,
             "Night": nightBasemap,
@@ -78,18 +74,18 @@
         };
 
 
-
-        // Create layer groups that will be  filled by each service and also by each sub category for each service
-        // Uses the define_clusterGroup function from Functions.js
+        /*  CREATE LAYER GROUPS 
+            These will include each service and each sub category for services to enable filtering
+            Uses the define_clusterGroup function from Functions.js */
         
         var gpsLayer = defineClusterGroups(gpsLayer,'gp'),
             
             dentistsLayer = defineClusterGroups(dentistsLayer,'dentist'), dentistsSaturday = defineClusterGroups(dentistsSaturday,'dentist'),
             
-            opticiansLayer = defineClusterGroups(opticiansLayer,'optician'), opticiansSaturday = defineClusterGroups(opticiansSaturday,'optician'),
+            opticiansLayer = defineClusterGroups(opticiansLayer,'optician'), opticiansSaturday = defineClusterGroups(opticiansSaturday,'optician'), opticiansSunday = defineClusterGroups(opticiansSunday,'optician'),
 
             pharmaciesLayer = defineClusterGroups(pharmaciesLayer,'pharmacy'),
-            pharmaciesSaturday = defineClusterGroups(pharmaciesSaturday,'pharmacy'),pharmaciesEC = defineClusterGroups(pharmaciesEC,'pharmacy'),pharmaciesFC = defineClusterGroups(pharmaciesFC,'pharmacy'),pharmaciesMAS = defineClusterGroups(pharmaciesMAS,'pharmacy'),
+            pharmaciesSaturday = defineClusterGroups(pharmaciesSaturday,'pharmacy'), pharmaciesSunday = defineClusterGroups(pharmaciesSunday,'pharmacy'), pharmaciesEC = defineClusterGroups(pharmaciesEC,'pharmacy'),pharmaciesFC = defineClusterGroups(pharmaciesFC,'pharmacy'),pharmaciesMAS = defineClusterGroups(pharmaciesMAS,'pharmacy'),
             pharmaciesNE = defineClusterGroups(pharmaciesNE,'pharmacy'),pharmaciesNRT = defineClusterGroups(pharmaciesNRT,'pharmacy'),pharmaciesPCN = defineClusterGroups(pharmaciesPCN,'pharmacy'),
             pharmaciesSBS = defineClusterGroups(pharmaciesSBS,'pharmacy'),pharmaciesSMS = defineClusterGroups(pharmaciesSMS,'pharmacy'),pharmaciesTfI = defineClusterGroups(pharmaciesTfI,'pharmacy'),pharmaciesTUTI = defineClusterGroups(pharmaciesTUTI,'pharmacy'),
 
@@ -102,13 +98,13 @@
 
             hospitalsLayer = defineClusterGroups(hospitalsLayer,'hospital'),hospitalsAandE = defineClusterGroups(hospitalsAandE,'hospital');
 
+        // store pharmacies and shClinics in lists so that on data can be filtered appropriately on loading
         var pharmacyServiceList = ['Emergency Contraception','Free Condoms','Minor Ailments Scheme','Needle Exchange','Nicotine Replacement Therapy','Palliative Care Network','Supervised Buprenorphine Service','Supervised Methadone Supply','Treatment For Impetigo','Treatment for Urinary Tract Infection']
         var pharmacyServiceLayers = [pharmaciesEC,pharmaciesFC,pharmaciesMAS,pharmaciesNE,pharmaciesNRT,pharmaciesPCN,pharmaciesSBS,pharmaciesSMS,pharmaciesTfI,pharmaciesTUTI]
         var shServiceList = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
         var shServiceLayers = [shClinicsCont, shClinicsCSS, shClinicsDrop, shClinicsEC, shClinicsFP, shClinicsFC, shClinicsGI, shClinicsGUM, shClinicsHep, shClinicsHV, shClinicsMM,shClinicsPT,shClinicsPS, shClinicsSR, shClinicsTOPAR, shClinicsTHV, shClinicsTSTI, shClinicsYP]
 
-        
-    
+        // Store service layergroups in dictionaries to be added as Layer Controls
         var dentistFilterLayers = {
         "<b>All</b>": dentistsLayer,
         "<i>Open Saturdays</i>": dentistsSaturday
@@ -116,12 +112,14 @@
 
         var opticianFilterLayers = {
             "All": opticiansLayer,
-            "Open Saturdays": opticiansSaturday
+            "<i>Open Saturdays</i>": opticiansSaturday,
+            "<i>Open Sundays</i>": opticiansSunday
         }
 
         var pharmaciesFilterLayers = {
             "<b>All</b>": pharmaciesLayer, 
             "<i>Open Saturdays</i>": pharmaciesSaturday,
+            "<i>Open Sundays</i>": pharmaciesSunday,
             "Emergency Contraception": pharmaciesEC,
             "Free Condoms": pharmaciesFC,
             "Minor Ailments Scheme": pharmaciesMAS,
@@ -161,7 +159,20 @@
             "Young People": shClinicsYP
         }
 
-        // Initialise map with max and min zoom, max bounds and the default basemap layer
+        // Define variables for the default figure icons and create a list
+        var gpFigure = 'MapFigures/GPs_FA_30.png'
+        var dentistFigure = 'MapFigures/Dentists_FA_30.png'
+        var pharmaciesFigure = 'MapFigures/Pharmacies_FA_30.png'
+        var opticiansFigure = 'MapFigures/Opticians_FA_30.png'
+        var hospitalsFigure = 'MapFigures/Hospitals_FA_30.png'
+        var shClinicsFigure = 'MapFigures/SHClinics_FA_30.png'
+        var figureList = [gpFigure, dentistFigure, pharmaciesFigure, opticiansFigure, hospitalsFigure, shClinicsFigure]
+        
+
+
+        /*  INITIALISE MAP 
+            
+        Set max and min zoom, max bounds and the default basemap layer */
         var map = L.map('map', {
             minZoom: 7,
             maxZoom: 20,
@@ -169,158 +180,50 @@
             layers: [outdoorBasemap]
         });
 
-        // Set the initial view of the map, add a zoom control and an attribution
         map.setView([ 55.8652, -4.45 ], 11);  // set the initial view of the map to Glasgow area
         map.zoomControl.setPosition('bottomright'); // add zoom control to the map
         map.attributionControl.addAttribution('Contains OS data &copy; Crown copyright and database rights 2018'); // add attribution to the map
 
 
-        // Add sidebar to the map. Ensure it has a close button, and appears on the left hand side
-        // Set a timeout on the sidebar so that it appears on start up
-        // Set its content as the default content stored in variable in SidebarContent.js
-        /*var sidebar = L.control.sidebar('sidebar', {
-            closeButton: true,
-            position: 'left',
-            autopan: false,
-            }).addTo(map);
-        
-            */
-                
-                var sidebar = L.control.sidebar({
-                    autopan: false,       // whether to maintain the centered map point when opening the sidebar
-                    closeButton: true,    // whether t add a close button to the panes
-                    container: 'sidebar', // the DOM container or #ID of a predefined sidebar container that should be used
-                    position: 'left',     // left or right
-                }).addTo(map);
-
-
-                var panelContent = {
-                    id: 'home',                     // UID, used to access the panel
-                    tab: '<i class="fa fa-home fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='homePanelContent'>" + sidebarDefaultContent + "</div>",        // DOM elements can be passed, too
-                    title: 'Health Service Finder',              // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-                sidebar.addPanel(panelContent);
-              
-                var panelContentGPs = {
-                    id: 'gpPanel',                     // UID, used to access the panel
-                    tab: '<i class="fa fa-user-md fa-lg"</i>',  // content can be passed as HTML string,
-                    pane: "<div id='gpPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'General Practioner',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-
-                var panelContentDentists = {
-                    id: 'dentistPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-tooth fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='dentistPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'Dentist',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-               
-                
-                var panelContentPharmacies = {
-                    id: 'pharmaciesPanel',                     // UID, used to access the panel
-                    tab: '<i class="far fa-plus-square fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='pharmaciesPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'Pharmacy',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-              
-
-                var panelContentOpticians = {
-                    id: 'opticiansPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-glasses fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'Optician',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-              
-                var panelContentHospitals = {
-                    id: 'hospitalsPanel',                     // UID, used to access the panel
-                    tab: '<i class="far fa-hospital fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'Hospital',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-
-                var panelContentSHClinic = {
-                    id: 'shClinicsPanel',                     // UID, used to access the panel
-                    tab: '<i class="fas fa-venus-mars fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='shClinicsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
-                    title: 'Sexual Health Clinic',        // an optional pane header
-                    position: 'top'                  // optional vertical alignment, defaults to 'top'
-                };
-
-                var clearSidebarButton = {
-                    id: 'click',                     // UID, used to access the panel
-                    tab: '<i class="far fa-times-circle"></i>',  // content can be passed as HTML string,
-                    button: function (event) { clearSidebar() },        // an optional pane header
-                    title: 'Clear sidebar searches',
-                    position: 'bottom'                  // optional vertical alignment, defaults to 'top'
-                };
-                sidebar.addPanel(clearSidebarButton);
-                sidebar.disablePanel('click')
-
-
-                var panelContentInfo = {
-                    id: 'infoPanel',                     // UID, used to access the panel
-                    tab: '<i class="fa fa-info fa-lg"></i>',  // content can be passed as HTML string,
-                    pane: "<div id='infoPanelContent'>Information and Sources will be listed here</div>",        // DOM elements can be passed, too
-                    title: 'Information',        // an optional pane header
-                    position: 'bottom'                  // optional vertical alignment, defaults to 'top'
-                };
-                sidebar.addPanel(panelContentInfo);
-
-                
-                
-
-                function addSidebarContent(paneId) {
-                    var  test = document.getElementById(paneId);
-                    test.innerHTML = 'hello';
-                    return test;
-                }
-        
-                setTimeout(function () {
-                sidebar.open('home');
-                }, 500)  
-
-        
-               
-        
-                // LOAD POLYGON ON THE MAP AND GREY OUT AREAS AROUND GREATER GLASGOW AND CLYDE
-        var mapPolygon = L.geoJSON(mappolygons, {
-            style: {
-                "color": "#808080",
-                "weight": 0,
-                "fill": true
-            }
+        /*  ADD SIDEBAR TO THE MAP
+            Ensure it has a close button, and appears on the left hand side*/
+           
+        var sidebar = L.control.sidebar({
+            autopan: false,       
+            closeButton: true,    
+            container: 'sidebar', 
+            position: 'left',     
         }).addTo(map);
 
+        //  Add the home panel, the clear panel and the info panel. Disable the clear panel as there are no items to clear on map load.
+        sidebar.addPanel(panelContent);
+        sidebar.addPanel(clearSidebarButton);
+        sidebar.disablePanel('click')
+        sidebar.addPanel(panelContentInfo);
+
+        // Set a timeout on the sidebar so that it appears just after page load        
+        setTimeout(function () {
+            sidebar.open('home');
+        }, 500)  
 
         
-        // CODE TAKEN DIRECTLY FROM https://stackoverflow.com/questions/36860914/toggle-leaflet-sidebar-v2
-        
-        var gpFigure = 'MapFigures/GPs_FA_30.png'
-        var dentistFigure = 'MapFigures/Dentists_FA_30.png'
-        var pharmaciesFigure = 'MapFigures/Pharmacies_FA_30.png'
-        var opticiansFigure = 'MapFigures/Opticians_FA_30.png'
-        var hospitalsFigure = 'MapFigures/Hospitals_FA_30.png'
-        var shClinicsFigure = 'MapFigures/SHClinics_FA_30.png'
-    
         
         // ADD ALL DATA TO THE MAP
+        // Uses defined add_geoJSONData function created in Functions.js
+
+        var gpsGeojson = addGeoJSONData (GPs, gpFigure, 'MapFigures/GPs_FA.png', 'MapFigures/GPs_FA_highlight.png',gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
+        var dentistsGeojson = addGeoJSONData (Dentists, dentistFigure, 'MapFigures/Dentists_FA.png', 'MapFigures/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
+        var pharmaciesGeojson = addGeoJSONData (Pharmacies, pharmaciesFigure, 'MapFigures/Pharmacies_FA.png', 'MapFigures/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
+        var opticiansGeojson = addGeoJSONData (Opticians, opticiansFigure, 'MapFigures/Opticians_FA.png', 'MapFigures/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
+        var hospitalsGeojson = addGeoJSONData (Hospitals, hospitalsFigure, 'MapFigures/Hospitals_FA.png', 'MapFigures/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
+        var shClinicsGeojson = addGeoJSONData (SHClinics, shClinicsFigure, 'MapFigures/SHClinics_FA.png', 'MapFigures/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
         
-        // add all the datasets using the defined add_geoJSONData function created in Functions.js
-        var gpsGeojson = addGeoJSONData (GPs, 'MapFigures/GPs_FA_30.png', 'MapFigures/GPs_FA.png', 'MapFigures/GPs_FA_highlight.png',gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
-        var dentistsGeojson = addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', 'MapFigures/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
-        var pharmaciesGeojson = addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', 'MapFigures/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
-        var opticiansGeojson = addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', 'MapFigures/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
-        var hospitalsGeojson = addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', 'MapFigures/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
-        var shClinicsGeojson = addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', 'MapFigures/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
-        
+        // Create list of new geojson layers
         geojsonList = [gpsGeojson, dentistsGeojson, pharmaciesGeojson, opticiansGeojson, hospitalsGeojson, shClinicsGeojson]
+
+
+
+
 
         // ADD ALL CONTROLS TO THE MAP
 
@@ -328,21 +231,17 @@
         L.control.layers(baseMaps, null, {position: 'bottomleft'}).addTo(map);
         designBasemapControl();
 
-        // Add layer controls for the other services
+        // Add filters for the services that are added when the button is selected
         var dentistControl = L.control.layers(dentistFilterLayers, null, {collapsed: true});
         var opticiansControl = L.control.layers(opticianFilterLayers, null, {collapsed: true});
         var pharmaciesControl = L.control.layers(pharmaciesFilterLayers, null, {collapsed: true});
         var hospitalsControl = L.control.layers(hospitalsFilterLayers, null, {collapsed: true});
         var shClinicsControl = L.control.layers(shClinicsFilterLayers, null, {collapsed: true});
 
+        // add dropdown for users to change services
         var serviceDropdown = L.control({position: 'topright'});
         serviceDropdown.onAdd = function (map) {return addServiceDropdown()}
         serviceDropdown.addTo(map);
-
-        console.log(document.getElementById('sidebar'))
-
-        var figureList = [gpFigure, dentistFigure, pharmaciesFigure, opticiansFigure, hospitalsFigure, shClinicsFigure]
-
     
         
 
@@ -365,7 +264,8 @@
             addGeocodeMarker(e);
         })
     
-        // Remove any search markers and highlight when map is double clicked
+
+        // REMOVE ANY SEARCH MARKERS AND HIGHLIGHT WHEN MAP IS CLICKED
         map.on('click', function(e){
             resetLayerStyles();
             removeGeocodeMarker();

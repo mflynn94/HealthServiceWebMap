@@ -26,9 +26,85 @@ var sidebarDefaultContent =
                             \
                             <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'><img src='MapFigures/Hospitals_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='test'><img src='MapFigures/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='sidebar-text-sections'><img src='MapFigures/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
                             <p></div><div class ='line'></div>"
                             
+
+var panelContent = {
+    id: 'home',                     // UID, used to access the panel
+    tab: '<i class="fa fa-home fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='homePanelContent'>" + sidebarDefaultContent + "</div>",        // DOM elements can be passed, too
+    title: 'Health Service Finder',              // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+
+var panelContentGPs = {
+    id: 'gpPanel',                     // UID, used to access the panel
+    tab: '<i class="fa fa-user-md fa-lg"</i>',  // content can be passed as HTML string,
+    pane: "<div id='gpPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'General Practioner',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+var panelContentDentists = {
+    id: 'dentistPanel',                     // UID, used to access the panel
+    tab: '<i class="fas fa-tooth fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='dentistPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'Dentist',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+
+var panelContentPharmacies = {
+    id: 'pharmaciesPanel',                     // UID, used to access the panel
+    tab: '<i class="far fa-plus-square fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='pharmaciesPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'Pharmacy',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+
+var panelContentOpticians = {
+    id: 'opticiansPanel',                     // UID, used to access the panel
+    tab: '<i class="fas fa-glasses fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'Optician',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+var panelContentHospitals = {
+    id: 'hospitalsPanel',                     // UID, used to access the panel
+    tab: '<i class="far fa-hospital fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'Hospital',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+var panelContentSHClinic = {
+    id: 'shClinicsPanel',                     // UID, used to access the panel
+    tab: '<i class="fas fa-venus-mars fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='shClinicsPanelContent'>'Click on a location to view information here'</div>",        // DOM elements can be passed, too
+    title: 'Sexual Health Clinic',        // an optional pane header
+    position: 'top'                  // optional vertical alignment, defaults to 'top'
+};
+
+var clearSidebarButton = {
+    id: 'click',                     // UID, used to access the panel
+    tab: '<i class="far fa-times-circle"></i>',  // content can be passed as HTML string,
+    button: function (event) { clearSidebar() },        // an optional pane header
+    title: 'Clear sidebar searches',
+    position: 'bottom'                  // optional vertical alignment, defaults to 'top'
+};
+
+var panelContentInfo = {
+    id: 'infoPanel',                     // UID, used to access the panel
+    tab: '<i class="fa fa-info fa-lg"></i>',  // content can be passed as HTML string,
+    pane: "<div id='infoPanelContent'>Information and Sources will be listed here</div>",        // DOM elements can be passed, too
+    title: 'Information',        // an optional pane header
+    position: 'bottom'                  // optional vertical alignment, defaults to 'top'
+};
+
 
 function createSidebarContent(fp, figure) {
     
@@ -36,9 +112,9 @@ function createSidebarContent(fp, figure) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<h2>" + fp.NHSInformName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        var Name = "<h2><div class='Title'><div class='leftTitle'>" + fp.NHSInformName + "</div><div class = 'rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div></h2><div class ='line'></div></div>"
     } else if (fp.Name == fp.Name) {
-        Name = "<h2>" + fp.Name + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        Name = "<h2><div class='Title'>" + fp.Name + "</div><div class='rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div></h2><br><br><div class ='line'></div>"
     } else {
         Name = "<h2>" + fp.DispenserName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
     }
@@ -56,8 +132,8 @@ function createSidebarContent(fp, figure) {
     }
     
     // Define full address, using Address variable and the postcode property
-    var fullAddress =  "<div class='test'><i class='fa fa-map-marker fa-3x' aria-hidden='true'></i>" +
-                    "<div class = sidetext><span style=''><b><br>Address<br></b>" + 
+    var fullAddress =  "<div class='sidebar-text-sections'><i class='fa fa-map-marker fa-3x' aria-hidden='true'></i>" +
+                    "<div class = sidebar-text-right><span style=''><b><br>Address<br></b>" + 
                     Address + 
                     "<br>" +
                     fp.Postcode + 
@@ -67,7 +143,7 @@ function createSidebarContent(fp, figure) {
     // Define the Telephone variable. If the telephone property is non NaN, include this and a link to call. If not, leave the telephone variable empty.
     var Telephone;
     if (fp.Telephone == fp.Telephone) {
-        Telephone = "<div class='test'><i class='fa fa-phone fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a></div><span></div><br>" +
+        Telephone = "<div class='sidebar-text-sections'><i class='fa fa-phone fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a></div><span></div><br>" +
         "<div class ='line'></div><br>"
     } else {
         Telephone = ''
@@ -80,7 +156,7 @@ function createSidebarContent(fp, figure) {
     var Services;
     if (fp.Services && fp.Services == fp.Services) {
         fp.Services = fp.Services.replace(/\n/g,"<br>");
-        Services = "<div class=lunchtext><b>Services Offered</b></div><dl>" + fp.Services + "</dl><br><div class ='line'></div><br>"
+        Services = "<div class=sidebar-text-lunch><b>Services Offered</b></div><dl>" + fp.Services + "</dl><br><div class ='line'></div><br>"
     } else {
         Services = '';
     }
@@ -88,7 +164,7 @@ function createSidebarContent(fp, figure) {
 
     // Define the OpeningTimes variable. Create lists for the OpeningTimes properties, empty variables and for strings of the opening times days.
     
-    var OpeningTimes = "<div class=lunchtext><b>Opening Times</b></div><dl>";
+    var OpeningTimes = "<div class=sidebar-text-lunch><b>Opening Times</b></div><dl>";
     var Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
     var days = [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
     var daysOfWeek = [fp.Sunday, fp.Monday, fp.Tuesday, fp.Wednesday, fp.Thursday, fp.Friday, fp.Saturday];
@@ -114,7 +190,7 @@ function createSidebarContent(fp, figure) {
         if (fp.ExtraOTInfo.includes("-")) {
             fp.ExtraOTInfo = fp.ExtraOTInfo.replace("-"," - ");
         }
-        OpeningTimes = OpeningTimes + "</dl><div class=lunchtext><b>" + fp.ExtraOTInfo + "</div><br><div class ='line'></div><br>"
+        OpeningTimes = OpeningTimes + "</dl><div class=sidebar-text-lunch><b>" + fp.ExtraOTInfo + "</div><br><div class ='line'></div><br>"
     } else if (OpeningTimes.length > 60) {
         OpeningTimes = OpeningTimes + "</dl><br><div class ='line'></div><br>"
     } else {
@@ -127,7 +203,7 @@ function createSidebarContent(fp, figure) {
     //If it doesn't exist or is NaN, leave as an empty string.
     var Website;
     if (fp.Website && fp.Website == fp.Website) {
-        Website = "<div class='test'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidetext><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></div></div>"  + 
+        Website = "<div class='sidebar-text-sections'><i class='fa fa-globe fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><b>Website</b><br><a href=" + fp.Website + " target=_blank>Visit Website</a></div></div>"  + 
         "<br><div class ='line'></div><br>"
     } else {
         Website = ''
@@ -136,7 +212,7 @@ function createSidebarContent(fp, figure) {
     // Define email, check if it exists and is not NaN
     var Email;
     if (fp.Email && fp.Email == fp.Email) {
-        Email = "<div class='test'><i class='fa fa-envelope fa-lg' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Email</b><br>" + fp.Email + "</span></div></div>"  + 
+        Email = "<div class='sidebar-text-sections'><i class='fa fa-envelope fa-lg' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><b>Email</b><br>" + fp.Email + "</span></div></div>"  + 
         "<br><div class ='line'></div><br>"
     } else {
         Email = ''
@@ -145,18 +221,18 @@ function createSidebarContent(fp, figure) {
     // Define WA, check if it exists and is not NaN
     var WA;
     if (fp.WA && fp.WA == fp.WA) {
-        WA = "<div class='test'><i class='fa fa-wheelchair fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><b>Wheelchair Accessible</b></span></div></div>"  + 
+        WA = "<div class='sidebar-text-sections'><i class='fa fa-wheelchair fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><b>Wheelchair Accessible</b></span></div></div>"  + 
         "<br><div class ='line'></div><br>"
     } else {
         WA = ''
     }
 
     // Define the directions variable with a link to the Google Directions property
-    var Directions = "<div class='test'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidetext><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a></div></div>" +
+    var Directions = "<div class='sidebar-text-sections'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a></div></div>" +
                     "<br><div class ='line'></div><br>"
 
     // Define the pdf download link which will open in a new window
-    var pdfDownload = "<div class='test'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidetext><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
+    var pdfDownload = "<div class='sidebar-text-sections'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
                         "<br><div class ='line'></div><br>"
 
     
@@ -201,8 +277,8 @@ function updateSidebar(fp,figure, paneId) {
     createSidebarContent(fp,figure);
     var panelContent = document.getElementById(paneId);
     panelContent.innerHTML = sidebarString
-   
-};
+    }
+
 
 function openSidebar(panelId) {
     sidebar.open(panelId)

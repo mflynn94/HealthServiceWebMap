@@ -2,7 +2,6 @@
 
 // Script contains most functions used within the project for adding controls, layers, or providing additional functionality to the map.
 
-
 // FUNCTION TO ADD BASEMAPS 
 function defineBasemaps(basemapStyleString) {
     var basemap = L.mapboxGL({
@@ -101,9 +100,14 @@ function filterData (service, fp, layer) {
         }
         else if (service == Pharmacies) {
             if (fp.Saturday == fp.Saturday) layer.addTo(pharmaciesSaturday);
+            if (fp.Sunday == fp.Sunday) layer.addTo(pharmaciesSunday);
             for (i in pharmacyServiceList) {if (fp.Services == fp.Services && fp.Services.includes(pharmacyServiceList[i])) layer.addTo(pharmacyServiceLayers[i]);}
         }
-        else if (service == Opticians) {if (fp.Saturday == fp.Saturday) layer.addTo(opticiansSaturday);}
+        else if (service == Opticians) {
+            if (fp.Saturday == fp.Saturday) layer.addTo(opticiansSaturday);
+            if (fp.Sunday == fp.Sunday) layer.addTo(opticiansSunday);
+        }
+        
         else if (service == Hospitals) {
             AE = fp['A&E'];
             if (AE == AE) layer.addTo(hospitalsAandE);
@@ -153,9 +157,13 @@ function setMapView(e) {
 // create custom options for pop up information
 var popUpCustomOptions ={'minWidth': '200','className' : 'custom'}
 
+
+
+// CODE TAKEN DIRECTLY FROM https://stackoverflow.com/questions/36860914/toggle-leaflet-sidebar-v2
 function hasClass(element, cls) {
     return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
+
 
 function addPanel(panelId, panelName){
     if(document.getElementById(panelId) == null){
@@ -263,7 +271,7 @@ function designServiceFilter() {
 /* Create a function that is performed when one of the service buttons is clicked, in the side bar or in the legend control
    this initially will ensure the map is not blurred out (as it is in the beginning)
    */
-
+var mapPolygon;
 function addLayer(serviceLayer, serviceControl, panelName, panelId) {
             
     var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane");
@@ -276,7 +284,7 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
         if ((layer !== lc._layer) && (layer !== outdoorBasemap) && (layer !== nightBasemap) && (layer !== lightBasemap) && (layer !== roadBasemap)) {
         map.removeLayer(layer)
         }
-    })
+    });
 
     sidebar.close();
     var control;
@@ -376,36 +384,13 @@ function addGeocodeMarker(e) {
 
 function resetLayerStyles() {
     for (geojson in geojsonList) {
-        geojsonList[geojson].eachLayer(function(layer){
-            //geojsonList[geojson].resetStyle(layer);
+        geojsonList[geojson].eachLayer(function(layer){ 
             layer.setIcon(addIcon(figureList[geojson]))
         });
             }
 }
 
 
-// SET DESIGN OF THE INFO BUTTON CONTROL 
-
-/*
-    // store user coordinates
-function onLocationfound(e) {
-    layerList = [];
-
-    for (i in gpsLayer._featureGroup._layers) {
-        //console.log(gpsLayer._featureGroup._layers[i]);
-        layerList.push(gpsLayer._featureGroup._layers[i])
-    }
-    console.log(layerList);
-    userLocation = e.latlng;
-    console.log(userLocation);
-    
-    var closestPoints = L.GeometryUtil.nClosestLayers(map, layerList, userLocation, 3)
-    console.log(closestPoints);
-
-    for (i in closestPoints) {
-        console.log(closestPoints[i].e.Name)
-    }
-}*/
 
 
 /*// test 
