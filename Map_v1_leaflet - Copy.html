@@ -302,20 +302,25 @@
         
         // CODE TAKEN DIRECTLY FROM https://stackoverflow.com/questions/36860914/toggle-leaflet-sidebar-v2
         
+        var gpFigure = 'MapFigures/GPs_FA_30.png'
+        var dentistFigure = 'MapFigures/Dentists_FA_30.png'
+        var pharmaciesFigure = 'MapFigures/Pharmacies_FA_30.png'
+        var opticiansFigure = 'MapFigures/Opticians_FA_30.png'
+        var hospitalsFigure = 'MapFigures/Hospitals_FA_30.png'
+        var shClinicsFigure = 'MapFigures/SHClinics_FA_30.png'
+    
         
-
-
-
         // ADD ALL DATA TO THE MAP
         
         // add all the datasets using the defined add_geoJSONData function created in Functions.js
         var gpsGeojson = addGeoJSONData (GPs, 'MapFigures/GPs_FA_30.png', 'MapFigures/GPs_FA.png', 'MapFigures/GPs_FA_highlight.png',gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
-        addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', 'MapFigures/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
-        addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', 'MapFigures/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
-        addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', 'MapFigures/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
-        addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', 'MapFigures/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
-        addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', 'MapFigures/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
+        var dentistsGeojson = addGeoJSONData (Dentists, 'MapFigures/Dentists_FA_30.png', 'MapFigures/Dentists_FA.png', 'MapFigures/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
+        var pharmaciesGeojson = addGeoJSONData (Pharmacies, 'MapFigures/Pharmacies_FA_30.png', 'MapFigures/Pharmacies_FA.png', 'MapFigures/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
+        var opticiansGeojson = addGeoJSONData (Opticians, 'MapFigures/Opticians_FA_30.png', 'MapFigures/Opticians_FA.png', 'MapFigures/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
+        var hospitalsGeojson = addGeoJSONData (Hospitals, 'MapFigures/Hospitals_FA_30.png', 'MapFigures/Hospitals_FA.png', 'MapFigures/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
+        var shClinicsGeojson = addGeoJSONData (SHClinics, 'MapFigures/SHClinics_FA_30.png', 'MapFigures/SHClinics_FA.png', 'MapFigures/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
         
+        geojsonList = [gpsGeojson, dentistsGeojson, pharmaciesGeojson, opticiansGeojson, hospitalsGeojson, shClinicsGeojson]
 
         // ADD ALL CONTROLS TO THE MAP
 
@@ -336,11 +341,8 @@
 
         console.log(document.getElementById('sidebar'))
 
-        map.on('click', function(e){
-            gpsGeojson.eachLayer(function(layer){
-                layer.setIcon(addIcon('MapFigures/GPs_FA_30.png'));
-            })
-        })
+        var figureList = [gpFigure, dentistFigure, pharmaciesFigure, opticiansFigure, hospitalsFigure, shClinicsFigure]
+
     
         
 
@@ -363,11 +365,11 @@
             addGeocodeMarker(e);
         })
     
-        // Remove any search markers when map is double clicked
-        map.on('dblclick', function(e){
+        // Remove any search markers and highlight when map is double clicked
+        map.on('click', function(e){
+            resetLayerStyles();
             removeGeocodeMarker();
-        });
-        
+        })
        
        
        

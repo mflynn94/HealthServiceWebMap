@@ -163,7 +163,7 @@ function addPanel(panelId, panelName){
     };
 }
 
-
+var geojsonList;
 // FUNCTION FOR ADDING ALL THE DATASETS ****
 function addGeoJSONData (service, figure, figureBig, figureHighlight, layerGroup, paneId, panelId, panelName) {
         geojsonLayer = L.geoJSON(service, {
@@ -200,10 +200,12 @@ function addGeoJSONData (service, figure, figureBig, figureHighlight, layerGroup
                     console.log(e.target._icon)
                     //e.target.setIcon(addIcon(figure));
                 } else { 
-                    
-                    gpsGeojson.eachLayer(function(layer){
-                        gpsGeojson.resetStyle(layer);
-                        layer.setIcon(addIcon(figure))});
+                    resetLayerStyles();
+                    /*for (geojson in geojsonList) {
+                        geojsonList[geojson].eachLayer(function(layer){
+                            geojsonList[geojson].resetStyle(layer);
+                            layer.setIcon(addIcon(figure))});
+                    }*/
                     e.target.setIcon(bigIcon(figureHighlight));};
                 
                 clearSidebar();
@@ -372,30 +374,17 @@ function addGeocodeMarker(e) {
 
 
 
-
+function resetLayerStyles() {
+    for (geojson in geojsonList) {
+        geojsonList[geojson].eachLayer(function(layer){
+            //geojsonList[geojson].resetStyle(layer);
+            layer.setIcon(addIcon(figureList[geojson]))
+        });
+            }
+}
 
 
 // SET DESIGN OF THE INFO BUTTON CONTROL 
-
-/*
-function designInfoButtonControl() {
-    
-    var filter = document.getElementsByClassName("leaflet-bottom")[0];
-    var filterLayer = filter.getElementsByClassName("easy-button-container")[0];
-    var filterLayer2 = filter.getElementsByClassName("easy-button-button")[0];
-    
-    filterLayer.style.paddingLeft = "5px"; 
-    filterLayer.style.paddingBottom = "5px"; 
-    filterLayer.style.border = "none";
-
-    filterLayer2.style.borderRadius = "20px";
-    filterLayer2.style.border = "1px solid rgba(0,0,0,0.2)";
-    filterLayer2.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
-    filterLayer2.style.paddingLeft = "5px";
-    filterLayer2.style.paddingBottom = "5px";
-    
-}
-*/
 
 /*
     // store user coordinates
