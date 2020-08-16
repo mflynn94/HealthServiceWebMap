@@ -40,7 +40,7 @@
         .leaflet-touch .leaflet-bar a {
             width: 35px;
             height: 35px;
-            color: #09325C;
+            color: #5d5d5e;
             line-height: 35px;
             vertical-align: middle;
             margin: auto;
@@ -54,7 +54,7 @@
         .leaflet-touch .leaflet-bar button {
             width: 35px;
             height: 35px;
-            color: #09325C;
+            color: #5d5d5e;
             line-height: 35px;
             font-size: 1.7em;
             vertical-align: middle;
@@ -330,23 +330,16 @@
 
         /*CUSTOMING DEFAULT STYLE OF MARKER CLUSTERS
         Matching the colours to the icons and changing size depedning on class name*/
-        .marker-cluster-small:hover {
-            width: 30px;
-            height: 30px;
-            margin-left: 4px;
-            margin-top: 4px;
-        }
+        
         .marker-cluster-small div {
             width: 24px;
             height: 24px;
             margin-left: 4px;
             margin-top: 4px;
         }
-
         .marker-cluster-small div span {
             line-height: 24px;
         }
-
         .marker-cluster-medium div {
             width: 30px;
             height: 30px;
