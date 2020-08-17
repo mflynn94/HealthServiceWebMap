@@ -126,11 +126,11 @@ function createSidebarContent(fp, figure) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     if(fp.NHSInformName && fp.NHSInformName == fp.NHSInformName) {
-        var Name = "<h2><div class='Title'><div class='leftTitle'>" + fp.NHSInformName + "</div><div class = 'rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div></h2><div class ='line'></div></div>"
+        var Name = "<h2><div class='Title'>" + fp.NHSInformName + "</div><div class = 'rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div><br><br></h2><div class ='line'></div></div>"
     } else if (fp.Name == fp.Name) {
         Name = "<h2><div class='Title'>" + fp.Name + "</div><div class='rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div></h2><br><br><div class ='line'></div>"
     } else {
-        Name = "<h2>" + fp.DispenserName + "<img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></h2><div class ='line'></div>"
+        Name = "<h2><div class='Title'>" + fp.DispenserName + "</div><div class='rightImage'><img src=" +figure+ " style='vertical-align:middle; float:right' width='30' height ='30'></div></h2><br><br><div class ='line'></div>"
     }
 
 

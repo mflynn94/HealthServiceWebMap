@@ -6,9 +6,9 @@
 
 /** FUNCTIONS TO CREATE ALL THE REQUIRED LAYERS      **/
 
-    // FUNCTION TO RETRIEVE THE OS BASE MAPS
-
+// FUNCTION TO RETRIEVE THE OS BASE MAPS
 // uses mapbox GL plugin
+
 function defineBasemaps(basemapStyleString) {
     var basemap = L.mapboxGL({         // retrieve OS basemap using mapboxGL plugon
     style: 'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-'+ basemapStyleString + '/style.json',
