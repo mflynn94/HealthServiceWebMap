@@ -112,13 +112,15 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
     mapPane[0].style.filter = 'blur(0px)'; // change blur effect to 0
     mapPane[0].style.webkitfilter = 'blur(0px)';
     
+    console.log(lc);
     // remove all layers execpt for the basemap layers and location layer
     map.eachLayer(function (layer) {
-        if ((layer !== lc._layer) && (layer !== outdoorBasemap) && (layer !== nightBasemap) && (layer !== lightBasemap) && (layer !== roadBasemap)) {
+        if ( (layer !== lc._layer) && (layer !== outdoorBasemap) && (layer !== nightBasemap) && (layer !== lightBasemap) && (layer !== roadBasemap)) {
         map.removeLayer(layer)
         }
     });
-
+   
+    
     for (control in layerControlList) {
         map.removeControl(layerControlList[control]);  // remove all controls
     }

@@ -274,14 +274,13 @@ function setPopUpContent(fp, panelId) {
     }
 
     if (fp.Telephone == fp.Telephone) {
-        fp.Telephone = fp.Telephone .replace(/-/g," ")         // replace any "-" within phone numbers with blank spaces
         var Telephone = "<br><br><a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br>"     // removes spaces within the telephone number when adding a link
     } else {
         Telephone = ''
     }
 
     popupString = Name + fp.Address1 + "<br>" + fp.Postcode + Telephone + 
-    "<br><a href='#' " + "<span onClick='sidebar.open("  + '"' + panelId + '"' +  ")'><b>More details...</b></span></a><br><br><div class=line></div>"
+    "<br><a href='#' " + "<span onClick='sidebar.open("  + '"' + panelId + '"' +  "), map.closePopup()'><b>More details...</b></span></a><br><br><div class=line></div>"
     
     return popupString
 }

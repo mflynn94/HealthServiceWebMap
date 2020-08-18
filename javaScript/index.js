@@ -1,6 +1,6 @@
 
 
-        /*  ESTABLISH BASE MAPS USING defineBasemaps() FUNCTION DEFINED IN FUNCTIONS.JS.
+        /*  ESTABLISH BASE MAPS USING defineBasemaps() FUNCTION 
             Create basemaps for Ordnance Surveys Light, Night, Outdoor and Road Basemap. */
     
         var lightBasemap = defineBasemaps('light');
@@ -134,11 +134,13 @@
             layers: [outdoorBasemap]                                            // initialise map with just the OS outdoors basemap
         });
 
-
+        var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane"); // retrieve element
+        mapPane[0].style.filter = 'blur(0px)'; // change blur effect to 0
+        mapPane[0].style.webkitfilter = 'blur(0px)';
 
         /*  ADD SIDEBAR TO THE MAP
             initialise sidebar
-            exlude invdividual service panes off 
+            exlude invdividual service panels off 
             all sidebar settings and content information can be found in SidebarContent.js
             */
         
@@ -179,7 +181,6 @@
 
         // ADD DROPDOWN FOR USERS TO CHANGE SERVICES
         // **drop down contains functions for adding all layers and their corresponding controls**
-        // relevant functions can be found in functions.js
 
         var serviceDropdown = L.control({position: 'topright'});
         serviceDropdown.onAdd = function (map) {return addServiceDropdown()}
@@ -237,7 +238,7 @@
                         clearSidebar();                                                     // Clear the sidebar                                        
                         updateSidebar(fp, figure, paneId, panelId, panelName);              // Adds panel if it doesn't exist, and updates the sidebar with the relevant content for this feature
                         openPopupOrRefreshSidebar(layer, panelId);                          // If sidebar is open, show content there only. If not, open the pop up and the sidebar remains closed.
-                        setHighlight(e, figureHighlight);                // Highlight or remove highlight depending on initial state
+                        setHighlight(e, figureHighlight);                                   // Highlight or remove highlight depending on initial state
                         setMapView(e);                                                      // Zoom and centre on the feature
                     })
                 }   
