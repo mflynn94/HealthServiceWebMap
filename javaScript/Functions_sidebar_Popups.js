@@ -18,8 +18,8 @@ var sidebarDefaultContent =
                             "<h2>Search for your local health services \
                             </h2><div class ='line'></div>\
                             <span style='padding-top:40px'><h4>A new and engaging way to search for your nearest NHS Scotland Health Services within the Greater Glasgow and Clyde area.</h4></span>\
-                            <p> <span style='padding-bottom:40px'>Please choose the service you are looking for today. </span></p>\
-                            <p><div class ='line'></div><p>\
+                            <p> Please choose the service you are looking for today. <h2></h2></p>\
+                            <p><div class ='line'></div><p> <h2></h2>\
                             <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, " + '"GPs -"' + ")'><img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
                             \
                             <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, " + '"Dentists -"' + ")'><img src='Images/Dentists_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
@@ -31,14 +31,14 @@ var sidebarDefaultContent =
                             <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, " + '"Hospitals -"' + ")'><img src='Images/Hospitals_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
                             <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, " + '"SH Clinics -"' + ")'><div class='sidebar-text-sections'><img src='Images/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
-                            <p></div><div class ='line'></div>\
+                            <p></div> <p><h2></h2><div class ='line'></div>\
                             \
                             <br><h3>How to..</h3>\
-                            <div class='sidebar-number'>1.</div> &nbsp;Select a service above&nbsp;&nbsp; <i class='fas fa-arrow-up fa-lg'></i>\
-                            <p><div class='sidebar-number'>2.</div> &nbsp;Zoom in, press the &nbsp;<i class='fa fa-map-marker fa-2x'></i>&nbsp; button, or type in your postcode in using the &nbsp;&nbsp;<i class='fas fa-search fa-lg'></i> \
-                            <p><div class='sidebar-number'>3.</div> &nbsp;Choose a location to view more information&nbsp; <img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>\
+                            <div class=sidebar-instructions><div class='sidebar-number'>1.</div> &nbsp;Select a service above&nbsp;&nbsp; <i class='fas fa-arrow-up fa-lg'></i>\
+                            <p><div class='sidebar-number'>2.</div> &nbsp;Zoom in, press the &nbsp;<i class='fa fa-map-marker fa-2x'></i>&nbsp; button, or type in your postcode using the &nbsp;&nbsp;<i class='fas fa-search fa-lg'></i> \
+                            <p><div class='sidebar-number'>3.</div> &nbsp;Choose a location to view more details&nbsp; <img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>\
                             <p>Click &nbsp;&nbsp;<i class='fa fa-info fa-2x'></i> &nbsp;&nbsp;if you would like more information...\
-                            <p>Or come back here &nbsp; &nbsp;<i class='fa fa-home fa-2x'></i>&nbsp;&nbsp; if you get lost &nbsp;<i class='far fa-smile-beam'></i>"
+                            <p>Or come back here &nbsp; &nbsp;<i class='fa fa-home fa-2x'></i>&nbsp;&nbsp; if you get lost &nbsp;<i class='far fa-smile-beam'></i></div><br>"
                             
 
 // CREATE ALL POTENTIAL SIDEBAR PANELS
@@ -111,10 +111,35 @@ var clearSidebarButton = {
     position: 'bottom'                  // Place at bottom of sidebar
 };
 
+
+
+
+var infoContent = "<h3>Me \
+</h3><div class ='line'></div>\
+<p>I'm a Masters student in Geoinformation Technology and Cartography at the University of Glasgow, and I have designed this interactive map as part of my thesis. It aims to create an engaging way for users to search for their local health services.</p>\
+<p> Currently the system only features locations in Greater Glasgow and Clyde, but hopefully this will be expanded in the future.</p>\
+<p> The code and data for this project can be viewed at my <a href='https://github.com/mflynn94/HealthServiceWebMap'target=_blank>Github </a>\
+<p><br> <h3>Data sources</h3><div class ='line'></div>\
+<p>All data used was retrieved from various NHS sources in June 2020. These include:\
+ <li> <a href='https://www.nhsinform.scot/scotlands-service-directory' target=_blank>NHS Inform's Scotland Service Directory</a></li>\
+ <li> <a href='https://www.opendata.nhs.scot/' target=_blank>NHS Open Data Portal</a></li>\
+ <li> <a href='https://www.isdscotland.org/#:~:text=The%20Information%20Services%20Division%20(ISD,robust%20planning%20and%20decision%20making.' target=_blank>Public Health Scotland's ISD</a></li>\
+ <br>All 4 basemaps used are Ordnance Survey (2020) Zoomstack vector tiles\
+ <br><br><p> <h3>Leaflet + Extras</h3><div class ='line'></div>\
+ <p>The map was created using the open source JavaScript library <a href='https://leafletjs.com/'>Leaflet</a>. <br><br>Much of the extra functionality was achieved by using some great open-source plugins and libraries. These include: </p>\
+ <li> <a href='https://github.com/mapbox/Mapbox-gl-leaflet' target=_blank>Mapbox-gl-leaflet</a></li>\
+ <li> <a href='https://github.com/Leaflet/Leaflet.markercluster' target=_blank>Leaflet-marker-cluster</a></li>\
+ <li> <a href='https://github.com/noerw/Leaflet-sidebar-v2' target=_blank>Leaflet-sidebar-v2</a></li>\
+ <li> <a href='https://github.com/domoritz/Leaflet-locatecontrol' target=_blank>Leaflet-locatecontrol</a></li>\
+ <li> <a href='https://github.com/perliedman/Leaflet-control-geocoder' target=_blank>Leaflet-control-geocoder</a></li>\
+ <li> <a href='https://github.com/eKoopmans/Html2pdf.js' target=_blank>Html2pdf</a></li>\
+ <li> <a href='https://fontawesome.com/' target=_blank>Font Awesome</a></li><br><br>"
+
+
 var panelContentInfo = {
     id: 'infoPanel',                     // UID, used to access the panel
     tab: '<i class="fa fa-info fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='infoPanelContent'>Information and Sources will be listed here</div>",        // Contains information on sources and references
+    pane: infoContent,        // Contains information on sources and references
     title: 'Information',        // pane header
     position: 'bottom'                  // Place at bottom of sidebar
 };
@@ -328,7 +353,10 @@ function clearSelection () {
     
     if (hasClass(sidebarStatus,'collapsed')) {}                         // if sidebar is closed, do nothing
     else { sidebar.open('home') };                                      // if the sidebar is open, open the home tab
+
+    sidebar.disablePanel('click');                                      // disable clear button on sidebar
 }
+
 
 
     // FUNCTION TO DECIDE WHETHER TO OPEN POP UP ON CLICK OF FEATURE
