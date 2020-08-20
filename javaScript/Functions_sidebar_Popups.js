@@ -17,21 +17,28 @@ var popUpCustomOptions ={'minWidth': '200','className' : 'custom'}
 var sidebarDefaultContent = 
                             "<h2>Search for your local health services \
                             </h2><div class ='line'></div>\
-                            <h4>Welcome to a new and engaging way to search for your nearest NHS Scotland Health Services.</h4>\
-                            <p> Please choose the service you are looking for today. Explore the map and click on locations to find out more information. </p>\
+                            <span style='padding-top:40px'><h4>A new and engaging way to search for your nearest NHS Scotland Health Services within the Greater Glasgow and Clyde area.</h4></span>\
+                            <p> <span style='padding-bottom:40px'>Please choose the service you are looking for today. </span></p>\
                             <p><div class ='line'></div><p>\
-                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'><img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
+                            <div class = 'Allbuttons'><button type='button' class=btn onclick='addLayer(gpsLayer, null, " + '"GPs -"' + ")'><img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;GPs</span></button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'><img src='Images/Dentists_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
+                            <button type='button' class=btn onclick='addLayer(dentistsLayer, dentistControl, " + '"Dentists -"' + ")'><img src='Images/Dentists_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Dentists</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(opticiansLayer, opticiansControl, panelContentOpticians, " + '"opticiansPanel"' + ")'><img src='Images/Opticians_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
+                            <button type='button' class=btn onclick='addLayer(opticiansLayer, opticiansControl, " + '"Opticians -"' + ")'><img src='Images/Opticians_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Opticians</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(pharmaciesLayer, pharmaciesControl, panelContentPharmacies, " + '"pharmaciesPanel"' + ")'><img src='Images/Pharmacies_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
+                            <button type='button' class=btn onclick='addLayer(pharmaciesLayer, pharmaciesControl, " + '"Pharmacies -"' + ")'><img src='Images/Pharmacies_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Pharmacies</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'><img src='Images/Hospitals_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
+                            <button type='button' class=btn onclick='addLayer(hospitalsLayer, hospitalsControl, " + '"Hospitals -"' + ")'><img src='Images/Hospitals_FA_30.png' style='vertical-align:middle' width='30' height ='30'>&nbsp;&nbsp;&nbsp;Hospitals</button>\
                             \
-                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'><div class='sidebar-text-sections'><img src='Images/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
-                            <p></div><div class ='line'></div>"
+                            <button type='button' class=btn onclick='addLayer(shClinicsLayer, shClinicsControl, " + '"SH Clinics -"' + ")'><div class='sidebar-text-sections'><img src='Images/SHClinics_FA_30.png' style='vertical-align:middle' width='30' height ='30'><span style = 'font-size: 12px'>&nbsp&nbsp;Sexual Health &nbsp;&nbsp;Clinics</span></button>\
+                            <p></div><div class ='line'></div>\
+                            \
+                            <br><h3>How to..</h3>\
+                            <div class='sidebar-number'>1.</div> &nbsp;Select a service above&nbsp;&nbsp; <i class='fas fa-arrow-up fa-lg'></i>\
+                            <p><div class='sidebar-number'>2.</div> &nbsp;Zoom in, press the &nbsp;<i class='fa fa-map-marker fa-2x'></i>&nbsp; button, or type in your postcode in using the &nbsp;&nbsp;<i class='fas fa-search fa-lg'></i> \
+                            <p><div class='sidebar-number'>3.</div> &nbsp;Choose a location to view more information&nbsp; <img src='Images/GPs_FA_30.png' style='vertical-align:middle' width='30' height ='30'>\
+                            <p>Click &nbsp;&nbsp;<i class='fa fa-info fa-2x'></i> &nbsp;&nbsp;if you would like more information...\
+                            <p>Or come back here &nbsp; &nbsp;<i class='fa fa-home fa-2x'></i>&nbsp;&nbsp; if you get lost &nbsp;<i class='far fa-smile-beam'></i>"
                             
 
 // CREATE ALL POTENTIAL SIDEBAR PANELS
@@ -99,7 +106,7 @@ var panelContentSHClinic = {
 var clearSidebarButton = {
     id: 'click',                     // UID, used to access the panel
     tab: '<i class="far fa-times-circle"></i>',  // Uses relevant font awesome icon
-    button: function (event) { clearSidebar() },        // clears sidebar on click
+    button: function (event) { clearSelection() },        // clears sidebar on click
     title: 'Clear selection',
     position: 'bottom'                  // Place at bottom of sidebar
 };
@@ -156,7 +163,7 @@ function createSidebarContent(fp, figure) {
 
     // Define the Telephone variable. If the telephone property is non NaN, include this and a link to call. If not, leave the telephone variable empty.
     var Telephone;
-    if (fp.Telephone == fp.Telephone) {
+    if (fp.Telephone && fp.Telephone == fp.Telephone) {
         Telephone = "<div class='sidebar-text-sections'><i class='fa fa-phone fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><b>Telephone</b><br> <a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a></div><span></div><br>" +
         "<div class ='line'></div><br>"
     } else {
@@ -289,6 +296,8 @@ function setPopUpContent(fp, panelId) {
 // FUNCTION TO CREATE THE SIDEBAR CONTENT FOR THE SELECTED FEATURE ON THE MAP
 
 function updateSidebar(fp,figure, paneId, panelId, panelName) {
+    clearSelection();
+
     sidebar.enablePanel('click'); 
 
     if(document.getElementById(panelId) == null){           // check whether a sidebar panel for thsi ser
@@ -303,7 +312,7 @@ function updateSidebar(fp,figure, paneId, panelId, panelName) {
 
 
 // FUNCTION TO CLEAR SIDEBAR AND MAP SELECTION
-function clearSidebar () {
+function clearSelection () {
     map.closePopup();               //  Close any pop ups
     resetLayerStyles();             //  Reset styles
 

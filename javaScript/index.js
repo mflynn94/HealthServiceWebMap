@@ -13,25 +13,29 @@
             Uses defineClusterGrup function from functions.js
             These will include each service and each sub category for services to enable filtering via layer controls */
         
-        var gpsLayer = defineClusterGroups(gpsLayer,'gp'),
+        var gpsLayer = defineClusterGroups('gp'),
             
-            dentistsLayer = defineClusterGroups(dentistsLayer,'dentist'), dentistsSaturday = defineClusterGroups(dentistsSaturday,'dentist'),
+            dentistsLayer = defineClusterGroups('dentist'), 
+            dentistsSaturday = defineClusterGroups('dentist'),
             
-            opticiansLayer = defineClusterGroups(opticiansLayer,'optician'), opticiansSaturday = defineClusterGroups(opticiansSaturday,'optician'), opticiansSunday = defineClusterGroups(opticiansSunday,'optician'),
+            opticiansLayer = defineClusterGroups('optician'),
+            opticiansSaturday = defineClusterGroups('optician'), 
+            opticiansSunday = defineClusterGroups('optician'),
 
-            pharmaciesLayer = defineClusterGroups(pharmaciesLayer,'pharmacy'),
-            pharmaciesSaturday = defineClusterGroups(pharmaciesSaturday,'pharmacy'), pharmaciesSunday = defineClusterGroups(pharmaciesSunday,'pharmacy'), pharmaciesEC = defineClusterGroups(pharmaciesEC,'pharmacy'),pharmaciesFC = defineClusterGroups(pharmaciesFC,'pharmacy'),pharmaciesMAS = defineClusterGroups(pharmaciesMAS,'pharmacy'),
-            pharmaciesNE = defineClusterGroups(pharmaciesNE,'pharmacy'),pharmaciesNRT = defineClusterGroups(pharmaciesNRT,'pharmacy'),pharmaciesPCN = defineClusterGroups(pharmaciesPCN,'pharmacy'),
-            pharmaciesSBS = defineClusterGroups(pharmaciesSBS,'pharmacy'),pharmaciesSMS = defineClusterGroups(pharmaciesSMS,'pharmacy'),pharmaciesTfI = defineClusterGroups(pharmaciesTfI,'pharmacy'),pharmaciesTUTI = defineClusterGroups(pharmaciesTUTI,'pharmacy'),
+            pharmaciesLayer = defineClusterGroups('pharmacy'),
+            pharmaciesSaturday = defineClusterGroups('pharmacy'), pharmaciesSunday = defineClusterGroups('pharmacy'), pharmaciesEC = defineClusterGroups('pharmacy'),pharmaciesFC = defineClusterGroups('pharmacy'),pharmaciesMAS = defineClusterGroups('pharmacy'),
+            pharmaciesNE = defineClusterGroups('pharmacy'),pharmaciesNRT = defineClusterGroups('pharmacy'),pharmaciesPCN = defineClusterGroups('pharmacy'),
+            pharmaciesSBS = defineClusterGroups('pharmacy'),pharmaciesSMS = defineClusterGroups('pharmacy'),pharmaciesTfI = defineClusterGroups('pharmacy'),pharmaciesTUTI = defineClusterGroups('pharmacy'),
 
-            shClinicsLayer = defineClusterGroups(shClinicsLayer,'shclinic'),
-            shClinicsCont = defineClusterGroups(shClinicsCont,'shclinic'),shClinicsCSS = defineClusterGroups(shClinicsCSS,'shclinic'),shClinicsDrop = defineClusterGroups(shClinicsDrop,'shclinic'),shClinicsEC = defineClusterGroups(shClinicsEC,'shclinic'),
-            shClinicsFP = defineClusterGroups(shClinicsFP,'shclinic'),shClinicsFC = defineClusterGroups(shClinicsFC,'shclinic'),shClinicsGI = defineClusterGroups(shClinicsGI,'shclinic'),shClinicsGUM = defineClusterGroups(shClinicsGUM,'shclinic'),
-            shClinicsHep = defineClusterGroups(shClinicsHep,'shclinic'),shClinicsHV = defineClusterGroups(shClinicsHV,'shclinic'),shClinicsMM = defineClusterGroups(shClinicsMM,'shclinic'),shClinicsPT = defineClusterGroups(shClinicsPT,'shclinic'),
-            shClinicsPS = defineClusterGroups(shClinicsPS,'shclinic'),shClinicsSR = defineClusterGroups(shClinicsSR,'shclinic'),shClinicsTOPAR = defineClusterGroups(shClinicsTOPAR,'shclinic'),shClinicsTHV = defineClusterGroups(shClinicsTHV,'shclinic'),
-            shClinicsTSTI = defineClusterGroups(shClinicsTSTI,'shclinic'),shClinicsYP = defineClusterGroups(shClinicsYP,'shclinic'),
+            shClinicsLayer = defineClusterGroups('shclinic'),
+            shClinicsCont = defineClusterGroups('shclinic'),shClinicsCSS = defineClusterGroups('shclinic'),shClinicsDrop = defineClusterGroups('shclinic'),shClinicsEC = defineClusterGroups('shclinic'),
+            shClinicsFP = defineClusterGroups('shclinic'),shClinicsFC = defineClusterGroups('shclinic'),shClinicsGI = defineClusterGroups('shclinic'),shClinicsGUM = defineClusterGroups('shclinic'),
+            shClinicsHep = defineClusterGroups('shclinic'),shClinicsHV = defineClusterGroups('shclinic'),shClinicsMM = defineClusterGroups('shclinic'),shClinicsPT = defineClusterGroups('shclinic'),
+            shClinicsPS = defineClusterGroups('shclinic'),shClinicsSR = defineClusterGroups('shclinic'),shClinicsTOPAR = defineClusterGroups('shclinic'),shClinicsTHV = defineClusterGroups('shclinic'),
+            shClinicsTSTI = defineClusterGroups('shclinic'),shClinicsYP = defineClusterGroups('shclinic'),
 
-            hospitalsLayer = defineClusterGroups(hospitalsLayer,'hospital'),hospitalsAandE = defineClusterGroups(hospitalsAandE,'hospital');
+            hospitalsLayer = defineClusterGroups('hospital'),
+            hospitalsAandE = defineClusterGroups('hospital');
 
 
 
@@ -235,7 +239,7 @@
                     layer.on('mouseover', function(e) {setBigIcon(e, figure, figureBig)}),  // On mouseover, make icon larger
                     layer.on('mouseout', function(e) {setSmallIcon(e, figure, figureBig)}), // On mouseover, make icon smaller    
                     layer.on('click', function (e) {                                        // on click of feature                                                       
-                        clearSidebar();                                                     // Clear the sidebar                                        
+                                                                                                              
                         updateSidebar(fp, figure, paneId, panelId, panelName);              // Adds panel if it doesn't exist, and updates the sidebar with the relevant content for this feature
                         openPopupOrRefreshSidebar(layer, panelId);                          // If sidebar is open, show content there only. If not, open the pop up and the sidebar remains closed.
                         setHighlight(e, figureHighlight);                                   // Highlight or remove highlight depending on initial state

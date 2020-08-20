@@ -45,7 +45,7 @@ function changeClusterIcon(cluster, serviceString) {
 
     // FUNCTION TO DEFINE LAYER GROUPS AS CLUSTERS
     // Used when defining each layer, including sub categories as layers
-function defineClusterGroups (layer, service) {
+function defineClusterGroups (service) {
         var layer = L.markerClusterGroup({                  
         spiderfyOnMaxZoom: true,                            // ensures spiderfy feature is enabled
         showCoverageOnHover: false,                         // don't show bounding polygons
@@ -101,7 +101,7 @@ function designServiceFilter() {
     //   FUNCTION PERFORMED TO ADD A LAYER AND ITS CORRESPONDING CONTROL
     //   used within the dropdown control and on the sidebar buttons
 
-function addLayer(serviceLayer, serviceControl, panelName, panelId) {
+function addLayer(serviceLayer, serviceControl, serviceString) {
     
     // define a list of possible controls
     var control;
@@ -131,6 +131,9 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
     }
 
     map.addLayer(serviceLayer);  //add the required service to the map
+    var dropdownName = document.getElementById("dropdown-name");   
+    dropdownName.innerHTML = serviceString;
+
     sidebar.close();  // close sidebar
     return;
 };
@@ -144,14 +147,14 @@ function addLayer(serviceLayer, serviceControl, panelName, panelId) {
 function addServiceDropdown() {
     var div = L.DomUtil.create('div', 'Service Dropdown');                                      // Create a new leaflet control div
     div.innerHTML = "<div class='dropdown'>" +                                                  // Set divs html
-        "<button onclick='toggleDropdown()' class='dropbtn'>Change Service</button>" +          // on click of button - show the list options
+        "<button onclick='toggleDropdown()' class='dropbtn'><div id='dropdown-name'></div>Change Service&nbsp;&nbsp;<i class='fas fa-mouse-pointer'></i></button>" +          // on click of button - show the list options
         "<div id='myDropdown' class='dropdown-content'>" +
-        "<a href='#' onClick='addLayer(gpsLayer, null, panelContentGPs, " + '"gpPanel"' + ")'>GPs</a>" +           // onclick of each button, perform the AddLayer function for that service
-        "<a href='#' onClick='addLayer(dentistsLayer, dentistControl, panelContentDentists, " + '"dentistPanel"' + ")'>Dentists</a>" +
-        "<a href='#' onClick='addLayer(opticiansLayer, opticiansControl, panelContentOpticians, " + '"opticiansPanel"' + ")'>Opticians</a>" +
-        "<a href='#' onClick='addLayer(pharmaciesLayer, pharmaciesControl, panelContentPharmacies, " + '"pharmaciesPanel"' + ")'>Pharmacies</a>" +
-        "<a href='#' onClick='addLayer(hospitalsLayer, hospitalsControl, panelContentHospitals, " + '"hospitalsPanel"' + ")'>Hospitals</a>" +
-        "<a href='#' onClick='addLayer(shClinicsLayer, shClinicsControl, panelContentSHClinic, " + '"shClinicsPanel"' + ")'>SH Clinics</a></div></div></div>" 
+        "<a href='#' onClick='addLayer(gpsLayer, null, " + '"GPs -"' + ")'>GPs</a>" +           // onclick of each button, perform the AddLayer function for that service
+        "<a href='#' onClick='addLayer(dentistsLayer, dentistControl, " + '"Dentists -"' + ")'>Dentists</a>" +
+        "<a href='#' onClick='addLayer(opticiansLayer, opticiansControl, " + '"Opticians -"' + ")'>Opticians</a>" +
+        "<a href='#' onClick='addLayer(pharmaciesLayer, pharmaciesControl, " + '"Pharmacies -"' + ")'>Pharmacies</a>" +
+        "<a href='#' onClick='addLayer(hospitalsLayer, hospitalsControl, " + '"Hospitals -"' + ")'>Hospitals</a>" +
+        "<a href='#' onClick='addLayer(shClinicsLayer, shClinicsControl, " + '"SH Clinics -"' + ")'>SH Clinics</a></div></div></div>" 
         return div;
 }
 
@@ -316,7 +319,7 @@ function setSmallIcon(e, figure, figureBig) {
 
     // FUNCTION WHICH RESETS LAYER STYLES
     // restores original icon in each layer
-    // used in setOrRemoveHighlight()
+    // used in clearSidebar() and on map click
 
 function resetLayerStyles() {
     // create list of geojson layers
