@@ -52,56 +52,6 @@ var panelContent = {
 };
 
 
-var panelContentGPs = {
-    id: 'gpPanel',                              // UID, used to access the panel
-    tab: '<i class="fa fa-user-md fa-lg"</i>',  // Uses relevant font awesome icon
-    pane: "<div id='gpPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'General Practioner',        // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
-var panelContentDentists = {
-    id: 'dentistPanel',                     // UID, used to access the panel
-    tab: '<i class="fas fa-tooth fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='dentistPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'Dentist',               // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
-
-var panelContentPharmacies = {
-    id: 'pharmaciesPanel',                     // UID, used to access the panel
-    tab: '<i class="far fa-plus-square fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='pharmaciesPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'Pharmacy',        // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
-
-var panelContentOpticians = {
-    id: 'opticiansPanel',                     // UID, used to access the panel
-    tab: '<i class="fas fa-glasses fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='opticiansPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'Optician',        // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
-var panelContentHospitals = {
-    id: 'hospitalsPanel',                     // UID, used to access the panel
-    tab: '<i class="far fa-hospital fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='hospitalsPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'Hospital',        // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
-var panelContentSHClinic = {
-    id: 'shClinicsPanel',                     // UID, used to access the panel
-    tab: '<i class="fas fa-venus-mars fa-lg"></i>',  // Uses relevant font awesome icon
-    pane: "<div id='shClinicsPanelContent'>'Click on a location to view information here'</div>",        // to be dynamically updated on click of feature
-    title: 'Sexual Health Clinic',        // pane header
-    position: 'top'                  // Place at top of sidebar
-};
-
 // button to clear sidebar content if a search has been made
 var clearSidebarButton = {
     id: 'click',                     // UID, used to access the panel
@@ -111,7 +61,13 @@ var clearSidebarButton = {
     position: 'bottom'                  // Place at bottom of sidebar
 };
 
-
+var serviceSidebar = {
+    id: 'servicePanel',                     // UID, used to access the panel
+    tab: '<div id="sidebarIcon"></div>',  // Uses relevant font awesome icon
+    pane: "<div id='servicePanelContent'></div>",        // to be dynamically updated on click of feature
+    title: '<div id="serviceName"></div>',        // pane header
+    position: 'top'                  // Place at top of sidebar
+};
 
 
 var infoContent = "<h3>Me \
@@ -277,13 +233,14 @@ function createSidebarContent(fp, figure) {
     var Directions = "<div class='sidebar-text-sections'><i class='fa fa-compass fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><b>Directions</b><br><a href=" + fp.GoogleDirections+ " target=_blank>Get Directions</a></div></div>" +
                     "<br><div class ='line'></div><br>"
 
+    /*                  
     // Define the pdf download link which will open in a new window
-    var pdfDownload = "<div class='sidebar-text-sections'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><a href='#sidebar' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
+    var pdfDownload = "<div class='sidebar-text-sections'><i class='fa fa-download fa-2x' aria-hidden='true'></i> <div class = sidebar-text-right><span style=''><a href='#' " + "<span onClick='saveAsPDF(" + '"' + fp.Name + '"' + ")'>Save as PDF</span></a></span></div></div>" +
                         "<br><div class ='line'></div><br>"
-
+    */
     
     // Create the full string for adding to the sidebar on click
-    sidebarString = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Email + Directions + WA + pdfDownload
+    sidebarString = Name + fullAddress + Telephone + Services + OpeningTimes + Website + Email + Directions + WA 
     return sidebarString;
 };
 
@@ -292,8 +249,9 @@ function createSidebarContent(fp, figure) {
 // FUNCTION WHICH CREATES THE POP UP CONTENT
 // similar to above, content is dynamically created based on feature properties
 // relevant html and css added
+var testPanel = 'servicePanel'
 
-function setPopUpContent(fp, panelId) {
+function setPopUpContent(fp) {
 
     // Define the Name variable. If the feature has a property called NHSInformName, use that. If not, use the Name property.
     // For pharmacies, some have no name in the name column and so for those, use Dispenser name.
@@ -305,14 +263,14 @@ function setPopUpContent(fp, panelId) {
         Name = "<div class=box></div><h3>" + fp.DispenserName + "</h3><div class ='line'></div><br>"
     }
 
-    if (fp.Telephone == fp.Telephone) {
+    if (fp.Telephone && fp.Telephone == fp.Telephone) {
         var Telephone = "<br><br><a href=tel:" + ((fp.Telephone).replace(/\s+/g, ''))+ ">" + fp.Telephone+"</a><br>"     // removes spaces within the telephone number when adding a link
     } else {
         Telephone = ''
     }
 
     popupString = Name + fp.Address1 + "<br>" + fp.Postcode + Telephone + 
-    "<br><a href='#' " + "<span onClick='sidebar.open("  + '"' + panelId + '"' +  "), map.closePopup()'><b>More details...</b></span></a><br><br><div class=line></div>"
+    "<br><a href='#' " + "<span onClick='sidebar.open("  + '"' + testPanel + '"' +  "), map.closePopup()'><b>More details...</b></span></a><br><br><div class=line></div>"
     
     return popupString
 }
@@ -320,19 +278,24 @@ function setPopUpContent(fp, panelId) {
 
 // FUNCTION TO CREATE THE SIDEBAR CONTENT FOR THE SELECTED FEATURE ON THE MAP
 
-function updateSidebar(fp,figure, paneId, panelId, panelName) {
-    clearSelection();
-
+function updateSidebar(fp,figure, faIcon, serviceName) {
+    
     sidebar.enablePanel('click'); 
 
-    if(document.getElementById(panelId) == null){           // check whether a sidebar panel for thsi ser
-        sidebar.addPanel(panelName)                         // add the panel to the sidebar
-    };
+   if(document.getElementById("servicePanel") == null){             // check whether a sidebar panel for this service 
+    sidebar.addPanel(serviceSidebar)                                // add the panel to the sidebar
+};
 
-    createSidebarContent(fp,figure);                        // create the string based on the selected feature
-    var panelContent = document.getElementById(paneId);     // retrieve the container for the relevant paneID
-    panelContent.innerHTML = sidebarString                  // set the content of the pane as the dynamically created sidebarString
+createSidebarContent(fp,figure);                                    // create the string based on the selected feature
+var panelContent = document.getElementById("servicePanelContent");  // retrieve the container for the relevant paneID
+panelContent.innerHTML = sidebarString
 
+
+var sidebarIcon = document.getElementById("sidebarIcon")            // Retrieve the id of the panel and change the icon
+sidebarIcon.innerHTML = faIcon
+
+var serviceTitle = document.getElementById("serviceName")           // Retrieve id of the Title and change it to service name
+serviceTitle.innerHTML = serviceName
 }
 
 
@@ -342,14 +305,13 @@ function clearSelection () {
     resetLayerStyles();             //  Reset styles
 
     //define the list of possible panel id's to be removed
-    var panelIdList = ['gpPanel', 'dentistPanel', 'opticiansPanel', 'pharmaciesPanel', 'hospitalsPanel', 'shClinicsPanel']
     
-    var sidebarStatus = document.getElementById("sidebar");             //access the sidebar element
+    var sidebarStatus = document.getElementById("sidebar");             // access the sidebar element
 
-    for (i in panelIdList) {
-        if(document.getElementById(panelIdList[i]) != null){            // check if the panel id is not null (is present on the sidebar)
-            sidebar.removePanel(panelIdList[i]);                        // remove panel
-        } else {} }
+    
+        if(document.getElementById("servicePanel") != null){            // check if the panel id is not null (is present on the sidebar)
+            sidebar.removePanel("servicePanel");                        // remove panel
+        } else {} 
     
     if (hasClass(sidebarStatus,'collapsed')) {}                         // if sidebar is closed, do nothing
     else { sidebar.open('home') };                                      // if the sidebar is open, open the home tab
@@ -362,19 +324,19 @@ function clearSelection () {
     // FUNCTION TO DECIDE WHETHER TO OPEN POP UP ON CLICK OF FEATURE
     // used in addGeoJSONData()   
 
-function openPopupOrRefreshSidebar(layer, panelId) {
+function openPopupOrRefreshSidebar(layer) {
     var sidebarDiv = document.getElementById("sidebar");        
     if (hasClass(sidebarDiv,'collapsed')) {                 // if sidebar is collapsed
         layer.openPopup();                                  // open pop up
     } else {                                                // if it is open
         layer.closePopup(),                                 // ensure pop up is closed
-        sidebar.open(panelId),                              // open relevant sidebar panel
-        $("#" + panelId).hide().fadeIn('slow')              // add fade effect
+        sidebar.open("servicePanel"),                              // open relevant sidebar panel
+        $("#" +"servicePanel").hide().fadeIn('slow')              // add fade effect
     };
 }
     
 
-
+/*
 // FUNCTION TO SAVE SIDEBAR CONTENT AS PDF
 // Uses html2pdf plugin
 // This is to enable users to save details of the services they may attend
@@ -383,14 +345,16 @@ function saveAsPDF(Name) {
         margin:       1,
         filename:     Name + '.pdf',                                   // Add name of service to file output
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
+        html2canvas:  { scale: 1 },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-    var sidebarElement = document.getElementById('sidebar');           // retrieve sidebar div
+    var sidebarElement = document.getElementById('servicePanelContent');           // retrieve sidebar div
     
     var elementHTML = sidebarElement.outerHTML;
     var finalOutput = elementHTML.replace("Save as PDF", '');          // remove save as pdf statement from html
-    
-    html2pdf().set(opt).from(finalOutput).save()                       // set the options and download element as pdf
+    console.log(sidebarString);
+    html2pdf().from(sidebarElement).set(opt).save()   
+    //html2pdf(sidebarString, {return: true});                    // set the options and download element as pdf
 }
+*/

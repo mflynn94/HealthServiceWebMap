@@ -138,9 +138,7 @@
             layers: [outdoorBasemap]                                            // initialise map with just the OS outdoors basemap
         });
 
-        var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane"); // retrieve element
-        mapPane[0].style.filter = 'blur(0px)'; // change blur effect to 0
-        mapPane[0].style.webkitfilter = 'blur(0px)';
+
 
         /*  ADD SIDEBAR TO THE MAP
             initialise sidebar
@@ -170,6 +168,10 @@
 
         /* ADD ALL CONTROLS TO THE MAP      */
 
+        // ADD SCALE BAR
+        L.control.scale({
+            position: 'bottomright'
+        }).addTo(map);
 
         // ADD ZOOM CONTROL
         map.zoomControl.setPosition('bottomright'); 
@@ -182,22 +184,7 @@
         basemapControl.addTo(map);     // Basemap control added to map
         designBasemapControl();        // alter default design of the basemap control
     
-
-        // ADD DROPDOWN FOR USERS TO CHANGE SERVICES
-        // **drop down contains functions for adding all layers and their corresponding controls**
-
-        var serviceDropdown = L.control({position: 'topright'});
-        serviceDropdown.onAdd = function (map) {return addServiceDropdown()}
-        serviceDropdown.addTo(map);
-    
         
-        // ADD USER LOCATION CONTROL
-
-        var lc = L.control.locate({
-            position:'bottomright',                        //  place at bottom right of map
-        }).addTo(map);          
-        
-
         // ADD GEOCODER SEARCH BAR CONTROL
         
         var geocoder = L.Control.geocoder({
@@ -209,7 +196,24 @@
         geocoder.on('markgeocode', function(e) {            // action performed when a search is made
             addGeocodeMarker(e);                            // remove any previous marker and add a new one
         })
+
+        // ADD DROPDOWN FOR USERS TO CHANGE SERVICES
+        // **drop down contains functions for adding all layers and their corresponding controls**
+
+        var serviceDropdown = L.control({position: 'topright'});
+        serviceDropdown.onAdd = function (map) {return addServiceDropdown()}
+        serviceDropdown.addTo(map);
+    
         
+        
+
+        
+        // ADD USER LOCATION CONTROL
+
+        var lc = L.control.locate({
+            position:'topleft',                        //  place at top left of map
+        }).addTo(map);          
+
         
             /* DEFINE MAP ON CLICK INTERACTION     */
 
@@ -225,7 +229,7 @@
 
         //  function for adding all the datasets ****    
 
-        function addGeoJSONData (service, figure, figureBig, figureHighlight, layerGroup, paneId, panelId, panelName) {
+        function addGeoJSONData (service, figure, figureBig, figureHighlight, layerGroup, faIcon, serviceName) {
             geojsonLayer = L.geoJSON(service, {                                             // retrieve geoJSON
                 
                 pointToLayer: function (feature, latlng) {                                  // add each point to a layer, with its default marker
@@ -235,13 +239,13 @@
                 onEachFeature: function(feature, layer) {                                   // for each point                  // store the sidebar div in a variable
                     var fp = feature.properties;                                            // store feature properties as fp
                     filterData(service, fp, layer)                                          // add the feature to separate relevant layer groups
-                    layer.bindPopup(setPopUpContent(fp, panelId) , popUpCustomOptions);     // Set pop up content for feature
+                    layer.bindPopup(setPopUpContent(fp) , popUpCustomOptions);              // Set pop up content for feature
                     layer.on('mouseover', function(e) {setBigIcon(e, figure, figureBig)}),  // On mouseover, make icon larger
                     layer.on('mouseout', function(e) {setSmallIcon(e, figure, figureBig)}), // On mouseover, make icon smaller    
                     layer.on('click', function (e) {                                        // on click of feature                                                       
                                                                                                               
-                        updateSidebar(fp, figure, paneId, panelId, panelName);              // Adds panel if it doesn't exist, and updates the sidebar with the relevant content for this feature
-                        openPopupOrRefreshSidebar(layer, panelId);                          // If sidebar is open, show content there only. If not, open the pop up and the sidebar remains closed.
+                        updateSidebar(fp, figure, faIcon, serviceName);                                  // Add sidebar panel if it doesn't exist, and updates the sidebar with the relevant content for this feature
+                        openPopupOrRefreshSidebar(layer);                                   // If sidebar is open, show content there only. If not, open the pop up and the sidebar remains closed.
                         setHighlight(e, figureHighlight);                                   // Highlight or remove highlight depending on initial state
                         setMapView(e);                                                      // Zoom and centre on the feature
                     })
@@ -252,11 +256,11 @@
 
         // run the addGeoJSONData function for each of the services
 
-        var gpsGeojson = addGeoJSONData (GPs, gpDefaultFigure, 'Images/GPs_FA.png', 'Images/GPs_FA_highlight.png',gpsLayer, 'gpPanelContent', 'gpPanel', panelContentGPs)
-        var dentistsGeojson = addGeoJSONData (Dentists, dentistDefaultFigure, 'Images/Dentists_FA.png', 'Images/Dentists_FA_highlight.png', dentistsLayer, 'dentistPanelContent', 'dentistPanel', panelContentDentists)
-        var pharmaciesGeojson = addGeoJSONData (Pharmacies, pharmaciesDefaultFigure, 'Images/Pharmacies_FA.png', 'Images/Pharmacies_FA_highlight.png', pharmaciesLayer, 'pharmaciesPanelContent', 'pharmaciesPanel', panelContentPharmacies)
-        var opticiansGeojson = addGeoJSONData (Opticians, opticiansDefaultFigure, 'Images/Opticians_FA.png', 'Images/Opticians_FA_highlight.png', opticiansLayer, 'opticiansPanelContent', 'opticiansPanel', panelContentOpticians)
-        var hospitalsGeojson = addGeoJSONData (Hospitals, hospitalsDefaultFigure, 'Images/Hospitals_FA.png', 'Images/Hospitals_FA_highlight.png', hospitalsLayer, 'hospitalsPanelContent', 'hospitalsPanel', panelContentHospitals)
-        var shClinicsGeojson = addGeoJSONData (SHClinics, shClinicsDefaultFigure, 'Images/SHClinics_FA.png', 'Images/SHClinics_FA_highlight.png', shClinicsLayer, 'shClinicsPanelContent', 'shClinicsPanel', panelContentSHClinic)
+        var gpsGeojson = addGeoJSONData (GPs, gpDefaultFigure, 'Images/GPs_FA.png', 'Images/GPs_FA_highlight.png',gpsLayer, "<i class='fa fa-user-md fa-lg'></i>", "General Practictioner")
+        var dentistsGeojson = addGeoJSONData (Dentists, dentistDefaultFigure, 'Images/Dentists_FA.png', 'Images/Dentists_FA_highlight.png', dentistsLayer, "<i class='fas fa-tooth fa-lg'></i>", "Dentist")
+        var pharmaciesGeojson = addGeoJSONData (Pharmacies, pharmaciesDefaultFigure, 'Images/Pharmacies_FA.png', 'Images/Pharmacies_FA_highlight.png', pharmaciesLayer, "<i class='far fa-plus-square fa-lg'></i>", "Pharmacy")
+        var opticiansGeojson = addGeoJSONData (Opticians, opticiansDefaultFigure, 'Images/Opticians_FA.png', 'Images/Opticians_FA_highlight.png', opticiansLayer, "<i class='fas fa-glasses fa-lg'></i>", "Optician")
+        var hospitalsGeojson = addGeoJSONData (Hospitals, hospitalsDefaultFigure, 'Images/Hospitals_FA.png', 'Images/Hospitals_FA_highlight.png', hospitalsLayer, "<i class='far fa-hospital fa-lg'></i>", "Hospital")
+        var shClinicsGeojson = addGeoJSONData (SHClinics, shClinicsDefaultFigure, 'Images/SHClinics_FA.png', 'Images/SHClinics_FA_highlight.png', shClinicsLayer, "<i class='fas fa-venus-mars fa-lg'></i>", "Sexual Health Clinic")
         
   
