@@ -215,8 +215,7 @@ function filterData (service, fp, layer) {
     var pharmacyServiceLayers = [pharmaciesEC,pharmaciesFC,pharmaciesMAS,pharmaciesNE,pharmaciesNRT,pharmaciesPCN,pharmaciesSBS,pharmaciesSMS,pharmaciesTfI,pharmaciesTUTI]
     var shServiceList = ['Contraception', 'Counselling and Support Services','Drop-in', 'Emergency Contraception', 'Family Planning', 'Free Condoms', 'Gender Identity', 'GUM Clinic', 'Hepatitis', 'HIV Counselling', 'Men Who Have Sex With Men', 'Pregnancy Testing', 'Psychosexual Service', 'Sexual Assault or Rape', 'Termination of Pregnancy and Referral', 'Testing for HIV', 'Testing for Sexually Transmitted Infections', 'Young People']
     var shServiceLayers = [shClinicsCont, shClinicsCSS, shClinicsDrop, shClinicsEC, shClinicsFP, shClinicsFC, shClinicsGI, shClinicsGUM, shClinicsHep, shClinicsHV, shClinicsMM,shClinicsPT,shClinicsPS, shClinicsSR, shClinicsTOPAR, shClinicsTHV, shClinicsTSTI, shClinicsYP]
-
-    var AE = fp['A&E'];                                                                             // define AE variable for hospitals
+                                                                           // define AE variable for hospitals
 
     if (service == Dentists) {                                                                      //  if service is dentists
         if (fp.Saturday == fp.Saturday) layer.addTo(dentistsSaturday)                               //  if Saturday in feature properties is non NaN, add to correct layer group
@@ -235,7 +234,7 @@ function filterData (service, fp, layer) {
     }
     
     else if (service == Hospitals) {                                                                // if service is hospitals
-        if (AE == AE) layer.addTo(hospitalsAandE);                                                  // if it is an A&E, add to relevant layer
+        if (fp.Services == fp.Services) layer.addTo(hospitalsAandE);                                                  // if it is an A&E, add to relevant layer
     }
 
     else if (service == SHClinics) {                                                                // if service is an SH Clinic

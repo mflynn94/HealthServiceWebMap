@@ -98,7 +98,7 @@ var pharmaciesFilterLayers = {                           // store separate pharm
 
 var hospitalsFilterLayers = {                            // store separate hospital layers
     "<b>All</b>": hospitalsLayer,
-    "Accidents & Emergency and Minor Injuries Units" : hospitalsAandE   
+    "A&E and Minor Injuries" : hospitalsAandE,
 }
 
 var shClinicsFilterLayers = {                           // store separate sh clinic layers
