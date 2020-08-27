@@ -279,7 +279,7 @@ function setPopUpContent(fp) {
 // FUNCTION TO CREATE THE SIDEBAR CONTENT FOR THE SELECTED FEATURE ON THE MAP
 
 function updateSidebar(fp,figure, faIcon, serviceName) {
-    clearSelection();
+    clearSelection();                                               // clear sidebar
     sidebar.enablePanel('click'); 
 
    if(document.getElementById("servicePanel") == null){             // check whether a sidebar panel for this service 
