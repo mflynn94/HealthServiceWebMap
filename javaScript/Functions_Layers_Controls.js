@@ -93,7 +93,7 @@ function designServiceFilter() {
     filterLayer.innerHTML = "<div class = control-content-filter>Filter results</div>";
     filterLayer.style.width = "142px";
     filterLayer.style.height = "30px";
-    filterLayer.style.fontSize = "1.1em";
+    filterLayer.style.fontSize = "13px";
     filterLayer.style.color= "navy";
 };
 
@@ -107,10 +107,7 @@ function addLayer(serviceLayer, serviceControl, serviceString) {
     var control;
     var layerControlList = [dentistControl, opticiansControl, pharmaciesControl, hospitalsControl, shClinicsControl]; 
     
-    // remove blur effect of map pane
-    var mapPane = document.getElementsByClassName("leaflet-pane leaflet-map-pane"); // retrieve element
-    mapPane[0].style.filter = 'blur(0px)'; // change blur effect to 0
-    mapPane[0].style.webkitfilter = 'blur(0px)';
+    
     
     console.log(lc);
     // remove all layers execpt for the basemap layers and location layer
