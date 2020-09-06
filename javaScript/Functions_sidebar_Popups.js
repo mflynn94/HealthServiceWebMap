@@ -1,8 +1,13 @@
 
    
 /*
- THIS SCRIPT CONTAINS THE FUNCTIONS USED FOR UPDATING AND CLEARING THE SIDEBAR. 
+Student Number: 2485907
+Date started: 05/08/2020
+Status: Completed
+Script Purpose:  Contains functions and variables used for updating and clearing the sidebar and pop ups.
+Outputs: Sidebar panels, sidebar panel content, Pop up content
 */
+
 
 // define global variables to be used for the sidebar and pop up content
 var sidebarString;
@@ -338,6 +343,7 @@ function openPopupOrRefreshSidebar(layer) {
 
 /*
 // FUNCTION TO SAVE SIDEBAR CONTENT AS PDF
+// Not used within project due to unresolved bugs, but will be included in future versions
 // Uses html2pdf plugin
 // This is to enable users to save details of the services they may attend
 function saveAsPDF(Name) {

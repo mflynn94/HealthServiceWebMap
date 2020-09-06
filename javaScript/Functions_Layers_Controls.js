@@ -1,7 +1,11 @@
 
 
-// Script contains functions created for adding the extra functionality and interactivity to the map
-// Relates to defining map layer groups, the controls, and the geographical data
+/*
+Student Number: 2485907
+Date started: 05/08/2020
+Status: Completed
+Script Purpose:  Contains functions for adding the extra functionality and interactivity for map layers, controls and geographical data points                
+*/
 
 
 /** FUNCTIONS TO CREATE ALL THE REQUIRED LAYERS      **/
@@ -107,9 +111,6 @@ function addLayer(serviceLayer, serviceControl, serviceString) {
     var control;
     var layerControlList = [dentistControl, opticiansControl, pharmaciesControl, hospitalsControl, shClinicsControl]; 
     
-    
-    
-    console.log(lc);
     // remove all layers execpt for the basemap layers and location layer
     map.eachLayer(function (layer) {
         if ( (layer !== lc._layer) && (layer !== outdoorBasemap) && (layer !== nightBasemap) && (layer !== lightBasemap) && (layer !== roadBasemap)) {
@@ -117,7 +118,6 @@ function addLayer(serviceLayer, serviceControl, serviceString) {
         }
     });
    
-    
     for (control in layerControlList) {
         map.removeControl(layerControlList[control]);  // remove all controls
     }
@@ -334,9 +334,6 @@ function resetLayerStyles() {
 function setHighlight(e, figureHighlight) {                                                                           
     e.target.setIcon(addBigIcon(figureHighlight));          // set icon to highlighted figure
 };
-
-
-
 
 
 

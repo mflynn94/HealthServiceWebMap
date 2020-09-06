@@ -1,6 +1,16 @@
 
+/*
+Student Number: 2485907
+Date started: 18/07/2020
+Status: Completed
+Script Purpose:     Main javaScript file for the web map. It is responsible for everything that can be viewed on the web page. 
+                    It creates the layers, initialises the map, sidebar & controls, and reads the geographical data. 
+                    All additional functions used in initialisation of the layers, map controls and and data is found in Function_Layers_Controls.js  
+                    All additional functions used in relation to the sidebar or pop up content is found in Functions_Sidebar_Popups.js           
+*/
 
-/*  ESTABLISH BASE MAPS USING defineBasemaps() FUNCTION 
+/*  ESTABLISH BASE MAPS
+    Uses defineBasemaps() function from Functions_Layers_Controls.js
     Create basemaps for Ordnance Surveys Light, Night, Outdoor and Road Basemap. */
 
 var lightBasemap = defineBasemaps('light');
@@ -10,7 +20,7 @@ var roadBasemap = defineBasemaps('road');
 
 
 /*  CREATE LAYER GROUPS 
-    Uses defineClusterGrup function from functions.js
+    Uses defineClusterGrup function from Functions_Layers_Controls.js
     These will include each service and each sub category for services to enable filtering via layer controls */
 
 var gpsLayer = defineClusterGroups('gp'),
@@ -160,10 +170,8 @@ var map = L.map('map', {
 
 
 
-/*  ADD SIDEBAR TO THE MAP
-    initialise sidebar
-    exlude invdividual service panels off 
-    all sidebar settings and content information can be found in SidebarContent.js
+/*  INITIALISE SIDEBAR
+    Functionality for dynamic sidebar content found in Functions_sidebar_popups.js
     */
 
 var sidebar = L.control.sidebar({

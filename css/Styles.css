@@ -1,447 +1,453 @@
 
-    /*Style overall body and map*/    
-
-    body { margin:10; padding:10; }
-        
-        
-        #map { position:absolute; top:0; bottom:0; left:0; width: 100%}
-        
-
-        /*CUSTOMISE DEFAULT LEAFLET POP UP BOX*/
-        .custom .leaflet-popup-content-wrapper {
-            background: #ffffff;
-            border-width: 10px;
-            border-radius: 5px;
-            border-color: #09325C;
-            opacity: 1;
-            color: #09325C;
-            font-family: Helvetica;
-            font-size: 1.1em;
-        }
-        
-
-        /*CUSTOMISE DEFAULT LEAFLET BUTTON CONTROLS*/
+    /*
+Student Number: 2485907
+Date started: 05/08/2020
+Status: Completed
+Script Purpose:  Contains the css code for styling the majority of map elements, features and text
+*/
     
-        .leaflet-touch .leaflet-bar {
-            border: 1.5px solid rgba(0,0,0,0.2);
-            box-shadow: 1px;
-        }
+/*Style overall body and map*/    
 
-       .leaflet-touch .leaflet-control-layers {
-            border: 1px solid rgba(0,0,0,0.2);
-        }    
-
-        .leaflet-touch .leaflet-bar a {
-            width: 35px;
-            height: 35px;
-            color: #5d5d5e;
-            line-height: 35px;
-            vertical-align: middle;
-            margin: auto;
-            background-color: white;
-            font-size: 1.7em
-        }
-
-        @media (min-width: 600px) {
-            .leaflet-touch .leaflet-bar a {
-                width: 38px;
-                height: 40px;
-                line-height: 40px;
-                font-size: 1.8em; }
-            }
-
-        .leaflet-bar a:hover {
-            background-color: #f4f4f4;
-        }
-        .leaflet-touch .leaflet-bar button {
-            width: 35px;
-            height: 35px;
-            color: #5d5d5e;
-            line-height: 35px;
-            font-size: 1.7em;
-            vertical-align: middle;
-        }   
-
-        @media (min-width: 600px) {
-            .leaflet-touch .leaflet-bar button {
-                width: 38px;
-                height: 40px; 
-                line-height: 40px;
-                font-size: 2em} }
-
-        .leaflet-bar button:hover {
-            background-color: #f4f4f4;
-        }
-        .leaflet-bar i {
-            vertical-align: middle;
-        }
-        .leaflet-bar {
-            border:1px;
-            box-shadow:  10px 5px 5px black;
-        }
-        
+body { margin:10; padding:10; }
 
 
-        /*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
-        
-        .leaflet-control-layers {
-            border:1px solid rgba(0,0,0,0.2);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-            bottom: 0px;
-            background: #fff;
-            border-radius: 5px;
-            background-image: none;
-        }
-        .leaflet-control-layers-toggle {
-            border:1px solid rgba(0,0,0,0.2);
-            background-image: none;
-            width: 36px;
-            height: 36px;
-            font-size: 20px;
-            text-decoration: none;
-            text-align: center;
-            vertical-align: center;
-            margin: auto;
-            color:red;
-        }
-        .leaflet-retina .leaflet-control-layers-toggle {
-            background-image: none;
-        }
-        .leaflet-control-layers-expanded .leaflet-control-layers-list {
-            text-align: right;
-        }
-        .leaflet-control-layers-expanded {
-            color: #333;
-            background: #fff;
-            font-family: Helvetica;
-            font-size: 1.2em;
-        }
-        input[type="radio"] {
-            float: right;
-            text-align:right;
-        }
-
-        /*STYLE CUSTOM CONTENT FOR LAYER CONTROLS*/
-        .control-content {
-            color: rgb(180, 180, 180);
-            position: relative;
-            margin: auto;
-            padding-top: 6px;
-            text-decoration: none;
-        }
-        .control-content-filter {
-            color: #09325C;
-            position: relative;
-            margin: auto;
-            padding-top: 6px;
-            text-decoration: none;
-            font-size:1.1em;
-        }
-        
-        
-
-         /* CUSTOMISE DEFAULT STYLE FOR SIDEBAR V2 */
-
-        .leaflet-sidebar.collapsed {
-            width: 40px; }
-        .leaflet-sidebar-tabs, .leaflet-sidebar-tabs > ul {
-            position: absolute;
-            width: 40px;
-            margin: 0;
-            padding-top: 0;
-            list-style-type: none; }
-        .leaflet-sidebar-tabs > li, .leaflet-sidebar-tabs > ul > li {
-            width: 100%;
-            height: 50px;
-            padding-top: 5px;
-            margin: auto;
-            color: #5d5d5e;
-            font-size: 12pt;
-            overflow: hidden;
-            transition: all 80ms; }
-         .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
-            color: #fff;
-            background-color: #09325C; }
-        .leaflet-sidebar-header {
-            margin: -10px -20px 0;
-            height: 55px;
-            padding: 0 20px;
-            line-height: 50px;
-            font-size: 17pt;
-            color: #fff;
-            background-color: #09325C; }     
-        .leaflet-sidebar-content {
-            font-family: Helvetica;
-            color: #09325C;
-            font-size: 14px; }
+#map { position:absolute; top:0; bottom:0; left:0; width: 100%}
 
 
-        /* STYLE CONTENT WITHIN SIDEBAR */
-
-        /*style box used within sidebar content*/
-        .box {
-            width:100%;
-            background:#09325C;
-            opacity: 1;
-            height: 5px;
-        }
-        
-        /*styling for sidebar buttons*/
-        .Allbuttons {
-            margin: auto;
-            margin-left:auto;
-            margin-right:auto;
-            text-align:center;
-        }
-
-        /*styling for sidebar buttons - individual*/
-        .btn {
-            position: relative;
-            background-color: #fff;
-            border-style: solid;
-            border-width: 2px;
-            border-color: #0b3d6e;
-            border-radius: 5px;
-            color: #061f38;
-            padding: 5px 20px;
-            cursor: pointer;
-            width: 160px;
-            text-align: left;
-            margin: 7px;
-            height: 55px;
-            opacity: 0.8;
-            vertical-align: middle;
-            font-weight: bold;
-            font-size: 13px;
-            font-family: Helvetica;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-            }
-
-        /*Style buttons on hover*/
-        .btn:hover {
-            background-color: #f4f4f4;
-        }
-
-        .sidebar-instructions {
-            font-size: 13px;
-        }
-        .sidebar-number {
-            font-size: 20px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        /* dl, dt, and dd are tags for the opening times section within the sidebar*/
-        dl {
-            width: 80%;
-            overflow: hidden;
-            background:#fff;
-            padding-left: 25px;
-            margin: 0;
-            font-size: 0.95em;
-        }
-        dt {
-            float:left;
-            width: 40%;
-            left: 0;
-            padding-left: 0;
-            margin: 0
-        }
-        dd {
-            position:relative;
-            float: right;
-            width: 60%;
-            padding: 0;
-            margin: 0
-        }
-
-        /*text to the right of the icon in the sidebar*/
-        .sidebar-text-right {
-            display: inline-block;
-            width:60%;
-            padding-left: 40px;
-            margin: 0
-        }
-        /*text that follows the opening times*/
-        .sidebar-text-lunch {
-            display: block;
-            padding-left:25px;
-            padding-right:40px;
-            padding-bottom: 5px;
-            padding-top: 10px;
-        }
-        /*thin line used for breaks in content in the sidebar*/
-        .line{
-            clear:both;
-            width: 100%;
-            height:1px;
-            background:#09325C;
-            opacity: 0.5;
-            position: relative;
-            display:block;
-        }
-        /*wraps the sidebar sections*/
-        .sidebar-text-sections {
-            clear:both;
-            display: flex;
-            align-items:center;
-        }
-        /*style title of sidebar*/
-        .Title {
-            float: left;
-            width: 80%;
-            
-        }
-        /*style icon at top of sidebar*/
-        .rightImage {
-            position: relative;
-            float: right;
-            width:20%;
-        }
+/*CUSTOMISE DEFAULT LEAFLET POP UP BOX*/
+.custom .leaflet-popup-content-wrapper {
+    background: #ffffff;
+    border-width: 10px;
+    border-radius: 5px;
+    border-color: #09325C;
+    opacity: 1;
+    color: #09325C;
+    font-family: Helvetica;
+    font-size: 1.1em;
+}
 
 
-        /*STYLING FOR DROPDOWN OPTION TO CHANGE BETWEEN SERVICES*/
+/*CUSTOMISE DEFAULT LEAFLET BUTTON CONTROLS*/
 
-        /*all*/
-        .dropdown {
-            position: relative;
-        }
+.leaflet-touch .leaflet-bar {
+    border: 1.5px solid rgba(0,0,0,0.2);
+    box-shadow: 1px;
+}
 
-        /*main button*/
-        .dropbtn {
-            background-color: #09325C;
-            color: white;
-            width: 146px;
-            padding: 13px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            z-index: 800
-        }
-        .dropbtn:hover, .dropbtn:focus {
-            background-color: #09325C;
-        }
+.leaflet-touch .leaflet-control-layers {
+    border: 1px solid rgba(0,0,0,0.2);
+}    
 
-        /*listed options*/
-        .dropdown-content {
-            display: none;
-            text-align: center;
-            position: relative;
-            background-color: #f1f1f1;
-            font-family: Helvetica;
-            min-width: 150px;
-            overflow: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 800;
-        }
-        .dropdown-content a {
-            color: #09325C;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        
-        #dropdown-name {
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .dropdown a:hover {background-color: #ddd;}
+.leaflet-touch .leaflet-bar a {
+    width: 35px;
+    height: 35px;
+    color: #5d5d5e;
+    line-height: 35px;
+    vertical-align: middle;
+    margin: auto;
+    background-color: white;
+    font-size: 1.7em
+}
 
-        /*used to show the dropdown content onclick of main button*/
-        .show {display: block;}
+@media (min-width: 600px) {
+    .leaflet-touch .leaflet-bar a {
+        width: 38px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 1.8em; }
+    }
+
+.leaflet-bar a:hover {
+    background-color: #f4f4f4;
+}
+.leaflet-touch .leaflet-bar button {
+    width: 35px;
+    height: 35px;
+    color: #5d5d5e;
+    line-height: 35px;
+    font-size: 1.7em;
+    vertical-align: middle;
+}   
+
+@media (min-width: 600px) {
+    .leaflet-touch .leaflet-bar button {
+        width: 38px;
+        height: 40px; 
+        line-height: 40px;
+        font-size: 2em} }
+
+.leaflet-bar button:hover {
+    background-color: #f4f4f4;
+}
+.leaflet-bar i {
+    vertical-align: middle;
+}
+.leaflet-bar {
+    border:1px;
+    box-shadow:  10px 5px 5px black;
+}
 
 
-        /*CUSTOMING DEFAULT STYLE OF MARKER CLUSTERS
-        Matching the colours to the icons and changing size depedning on class name*/
-        
-        .marker-cluster-small div {
-            width: 24px;
-            height: 24px;
-            margin-left: 4px;
-            margin-top: 4px;
-        }
-        .marker-cluster-small div span {
-            line-height: 24px;
-        }
-        .marker-cluster-medium div {
-            width: 30px;
-            height: 30px;
-            margin-left: 5px;
-            margin-top: 5px;
-        }
-        .marker-cluster-medium div span {
-            line-height: 30px;
-        }
-        .marker-cluster-large div {
-            width: 35px;
-            height: 35px;
-            margin-left: 5px;
-            margin-top: 5px;
-        }
-        .marker-cluster-large div span {
-            line-height: 35px;
-        }
-        .gp {
-            background-color:#2f5597ff;
-            opacity: 0.8;  
-        }
-        .gp div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: navy;
-            font-size: 1.1em;
-            }
-        .dentist {
-            background-color: #2596a0ff;
-            opacity: 0.8;  
-        }
-        .dentist div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: teal;
-            font-size: 1.1em;
-            }
-        .optician {
-            background-color:#0297deff;
-            opacity: 0.8;  
-        }
-        .optician div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: #0297deff;
-            font-size: 1.1em;
-            }
-        .pharmacy {
-            background-color:#00b050ff;
-            opacity: 0.8;  
-        }
-        .pharmacy div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: green;
-            font-size: 1.1em;
-            }
-        .hospital {
-            background-color:#ff0000ff;
-            opacity: 0.8;  
-        }
-        .hospital div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: red;
-            font-size: 1.1em;
-            }
-        .shclinic {
-            background-color:#7030a0ff;
-            opacity: 0.8;  
-        }
-        .shclinic div {
-            background-color: #fff;
-            opacity: 0.95;
-            color: purple;
-            font-size: 1.1em;
-            }
+
+/*CUSTOMISE DEFAULT LEAFLET LAYER CONTROLS*/
+
+.leaflet-control-layers {
+    border:1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    bottom: 0px;
+    background: #fff;
+    border-radius: 5px;
+    background-image: none;
+}
+.leaflet-control-layers-toggle {
+    border:1px solid rgba(0,0,0,0.2);
+    background-image: none;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: center;
+    margin: auto;
+    color:red;
+}
+.leaflet-retina .leaflet-control-layers-toggle {
+    background-image: none;
+}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+    text-align: right;
+}
+.leaflet-control-layers-expanded {
+    color: #333;
+    background: #fff;
+    font-family: Helvetica;
+    font-size: 1.2em;
+}
+input[type="radio"] {
+    float: right;
+    text-align:right;
+}
+
+/*STYLE CUSTOM CONTENT FOR LAYER CONTROLS*/
+.control-content {
+    color: rgb(180, 180, 180);
+    position: relative;
+    margin: auto;
+    padding-top: 6px;
+    text-decoration: none;
+}
+.control-content-filter {
+    color: #09325C;
+    position: relative;
+    margin: auto;
+    padding-top: 6px;
+    text-decoration: none;
+    font-size:1.1em;
+}
+
+
+    /* CUSTOMISE DEFAULT STYLE FOR SIDEBAR V2 */
+
+.leaflet-sidebar.collapsed {
+    width: 40px; }
+.leaflet-sidebar-tabs, .leaflet-sidebar-tabs > ul {
+    position: absolute;
+    width: 40px;
+    margin: 0;
+    padding-top: 0;
+    list-style-type: none; }
+.leaflet-sidebar-tabs > li, .leaflet-sidebar-tabs > ul > li {
+    width: 100%;
+    height: 50px;
+    padding-top: 5px;
+    margin: auto;
+    color: #5d5d5e;
+    font-size: 12pt;
+    overflow: hidden;
+    transition: all 80ms; }
+    .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
+    color: #fff;
+    background-color: #09325C; }
+.leaflet-sidebar-header {
+    margin: -10px -20px 0;
+    height: 55px;
+    padding: 0 20px;
+    line-height: 50px;
+    font-size: 17pt;
+    color: #fff;
+    background-color: #09325C; }     
+.leaflet-sidebar-content {
+    font-family: Helvetica;
+    color: #09325C;
+    font-size: 14px; }
+
+
+/* STYLE CONTENT WITHIN SIDEBAR */
+
+/*style box used within sidebar content*/
+.box {
+    width:100%;
+    background:#09325C;
+    opacity: 1;
+    height: 5px;
+}
+
+/*styling for sidebar buttons*/
+.Allbuttons {
+    margin: auto;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+/*styling for sidebar buttons - individual*/
+.btn {
+    position: relative;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #0b3d6e;
+    border-radius: 5px;
+    color: #061f38;
+    padding: 5px 20px;
+    cursor: pointer;
+    width: 160px;
+    text-align: left;
+    margin: 7px;
+    height: 55px;
+    opacity: 0.8;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Helvetica;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    }
+
+/*Style buttons on hover*/
+.btn:hover {
+    background-color: #f4f4f4;
+}
+
+.sidebar-instructions {
+    font-size: 13px;
+}
+.sidebar-number {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* dl, dt, and dd are tags for the opening times section within the sidebar*/
+dl {
+    width: 80%;
+    overflow: hidden;
+    background:#fff;
+    padding-left: 25px;
+    margin: 0;
+    font-size: 0.95em;
+}
+dt {
+    float:left;
+    width: 40%;
+    left: 0;
+    padding-left: 0;
+    margin: 0
+}
+dd {
+    position:relative;
+    float: right;
+    width: 60%;
+    padding: 0;
+    margin: 0
+}
+
+/*text to the right of the icon in the sidebar*/
+.sidebar-text-right {
+    display: inline-block;
+    width:60%;
+    padding-left: 40px;
+    margin: 0
+}
+/*text that follows the opening times*/
+.sidebar-text-lunch {
+    display: block;
+    padding-left:25px;
+    padding-right:40px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+/*thin line used for breaks in content in the sidebar*/
+.line{
+    clear:both;
+    width: 100%;
+    height:1px;
+    background:#09325C;
+    opacity: 0.5;
+    position: relative;
+    display:block;
+}
+/*wraps the sidebar sections*/
+.sidebar-text-sections {
+    clear:both;
+    display: flex;
+    align-items:center;
+}
+/*style title of sidebar*/
+.Title {
+    float: left;
+    width: 80%;
+    
+}
+/*style icon at top of sidebar*/
+.rightImage {
+    position: relative;
+    float: right;
+    width:20%;
+}
+
+
+/*STYLING FOR DROPDOWN OPTION TO CHANGE BETWEEN SERVICES*/
+
+/*all*/
+.dropdown {
+    position: relative;
+}
+
+/*main button*/
+.dropbtn {
+    background-color: #09325C;
+    color: white;
+    width: 146px;
+    padding: 13px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 800
+}
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #09325C;
+}
+
+/*listed options*/
+.dropdown-content {
+    display: none;
+    text-align: center;
+    position: relative;
+    background-color: #f1f1f1;
+    font-family: Helvetica;
+    min-width: 150px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 800;
+}
+.dropdown-content a {
+    color: #09325C;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+#dropdown-name {
+    font-size: 14px;
+    font-weight: bold;
+}
+.dropdown a:hover {background-color: #ddd;}
+
+/*used to show the dropdown content onclick of main button*/
+.show {display: block;}
+
+
+/*CUSTOMING DEFAULT STYLE OF MARKER CLUSTERS
+Matching the colours to the icons and changing size depedning on class name*/
+
+.marker-cluster-small div {
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    margin-top: 4px;
+}
+.marker-cluster-small div span {
+    line-height: 24px;
+}
+.marker-cluster-medium div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.marker-cluster-medium div span {
+    line-height: 30px;
+}
+.marker-cluster-large div {
+    width: 35px;
+    height: 35px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.marker-cluster-large div span {
+    line-height: 35px;
+}
+.gp {
+    background-color:#2f5597ff;
+    opacity: 0.8;  
+}
+.gp div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: navy;
+    font-size: 1.1em;
+    }
+.dentist {
+    background-color: #2596a0ff;
+    opacity: 0.8;  
+}
+.dentist div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: teal;
+    font-size: 1.1em;
+    }
+.optician {
+    background-color:#0297deff;
+    opacity: 0.8;  
+}
+.optician div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: #0297deff;
+    font-size: 1.1em;
+    }
+.pharmacy {
+    background-color:#00b050ff;
+    opacity: 0.8;  
+}
+.pharmacy div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: green;
+    font-size: 1.1em;
+    }
+.hospital {
+    background-color:#ff0000ff;
+    opacity: 0.8;  
+}
+.hospital div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: red;
+    font-size: 1.1em;
+    }
+.shclinic {
+    background-color:#7030a0ff;
+    opacity: 0.8;  
+}
+.shclinic div {
+    background-color: #fff;
+    opacity: 0.95;
+    color: purple;
+    font-size: 1.1em;
+    }
             
     
     

@@ -1,12 +1,20 @@
 <!DOCTYPE html>
+<!-- Student Number: 2485907 -->
+<!-- Date started:  18/07/2020 -->
+<!-- Status:  completed -->
+<!-- Purpose: This html file is the web page which contains the map and additional elements. It accesses all the relevant files and plugins required to create the desired map -->
 
 <html>
 
     <head>
+        <!-- Text which appears in the tab of the web page -->
         <title>Health Service Finder</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
+        <!-- Link to all css style files required -->
+
+        <!-- Plugins / Libraries -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
         <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
@@ -18,26 +26,29 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
         
+        <!-- Original css -->
         <link rel="stylesheet" href="css/Styles.css" />
         
     </head>
 
     <body>
+        <!-- create div element for the map -->
         <div id="map"></div>
 
+        <!-- Link to all scripts required. This includes plugins, libraries, the geoJSON datasets, and the project's javaScript files -->
+
+        <!-- Plugins / Libraries -->
         <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
         <script src="https://rawgit.com/mapbox/mapbox-gl-leaflet/master/leaflet-mapbox-gl.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
-        
         <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>    
         <script src="Libraries/leaflet-sidebar-v2/leaflet-sidebar-v2.js"></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
         <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-        <script src="Libraries/html2pdf.js/html2pdf.bundle.min.js"></script>
-    
+        <!-- geoJSON datasets created in data processing stages of project -->
         <script src="geoJSONData/2020_07_07_Processed_Pharmacies.js"></script>
         <script src="geoJSONData/2020_07_07_Processed_Dentists.js"></script>
         <script src="geoJSONData/2020_07_07_Processed_GPs.js"></script>
@@ -45,6 +56,7 @@
         <script src="geoJSONData/2020_07_07_Processed_Opticians.js"></script>
         <script src="geoJSONData/2020_07_07_Processed_SHClinics.js"></script>
         
+        <!-- Original scripts -->
         <script src="javaScript/Functions_sidebar_Popups.js"></script>
         <script src="javaScript/Functions_Layers_Controls.js"></script>
         <script src="javaScript/index.js"></script>
