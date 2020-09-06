@@ -66,6 +66,7 @@ var clearSidebarButton = {
     position: 'bottom'                  // Place at bottom of sidebar
 };
 
+// sidebar panel for the service that is clicked on
 var serviceSidebar = {
     id: 'servicePanel',                     // UID, used to access the panel
     tab: '<div id="sidebarIcon"></div>',  // Uses relevant font awesome icon
@@ -75,6 +76,7 @@ var serviceSidebar = {
 };
 
 
+// create a variable for the content of the information panel
 var infoContent = "<h3>Me \
 </h3><div class ='line'></div>\
 <p>I'm a Masters student in Geoinformation Technology and Cartography at the University of Glasgow, and I have designed this interactive map as part of my thesis. It aims to create an engaging way for users to search for their local health services.</p>\
@@ -85,9 +87,11 @@ var infoContent = "<h3>Me \
  <li> <a href='https://www.nhsinform.scot/scotlands-service-directory' target=_blank>NHS Inform's Scotland Service Directory</a></li>\
  <li> <a href='https://www.opendata.nhs.scot/' target=_blank>NHS Open Data Portal</a></li>\
  <li> <a href='https://www.isdscotland.org/#:~:text=The%20Information%20Services%20Division%20(ISD,robust%20planning%20and%20decision%20making.' target=_blank>Public Health Scotland's ISD</a></li>\
- <br>All 4 basemaps used are Ordnance Survey (2020) Zoomstack vector tiles\
+ <p> Please note, the data is not being actively updated and information on the services may no longer be accurate.\
+ <p> The data points were geocoded by postcode, using the <a href='https://www.getthedata.com/open-postcode-geo-api' target=_blank>Open Postcode Geo API</a> \
+ <br><br>All 4 basemaps used are Ordnance Survey (2020) <a href = 'https://www.ordnancesurvey.co.uk/business-government/products/open-zoomstack' target=_blank>Zoomstack Vector Tiles</a>\
  <br><br><p> <h3>Leaflet + Extras</h3><div class ='line'></div>\
- <p>The map was created using the open source JavaScript library <a href='https://leafletjs.com/'>Leaflet</a>. <br><br>Much of the extra functionality was achieved by using some great open-source plugins and libraries. These include: </p>\
+ <p>The map was created using the open source JavaScript library <a href='https://leafletjs.com/' target=_blank>Leaflet</a>. <br><br>Much of the extra functionality was achieved by using some great open-source plugins and libraries. These include: </p>\
  <li> <a href='https://github.com/mapbox/Mapbox-gl-leaflet' target=_blank>Mapbox-gl-leaflet</a></li>\
  <li> <a href='https://github.com/Leaflet/Leaflet.markercluster' target=_blank>Leaflet-marker-cluster</a></li>\
  <li> <a href='https://github.com/noerw/Leaflet-sidebar-v2' target=_blank>Leaflet-sidebar-v2</a></li>\
