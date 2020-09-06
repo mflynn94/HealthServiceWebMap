@@ -158,7 +158,7 @@ input[type="radio"] {
     list-style-type: none; }
 .leaflet-sidebar-tabs > li, .leaflet-sidebar-tabs > ul > li {
     width: 100%;
-    height: 50px;
+    height: 45px;
     padding-top: 5px;
     margin: auto;
     color: #5d5d5e;
@@ -170,7 +170,7 @@ input[type="radio"] {
     background-color: #09325C; }
 .leaflet-sidebar-header {
     margin: -10px -20px 0;
-    height: 55px;
+    height: 50px;
     padding: 0 20px;
     line-height: 50px;
     font-size: 17pt;
